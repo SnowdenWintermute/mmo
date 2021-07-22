@@ -1,0 +1,3 @@
+  - When writing to globally available data in a non-atomic way, access must be locked to other writers
+  - Locks create a potential for deadlocks (two processes try to lock something at the same time)
+  

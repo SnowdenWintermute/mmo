@@ -1,0 +1,2 @@
+1. Receive player token
+2. Assign player to the lowest loaded client node

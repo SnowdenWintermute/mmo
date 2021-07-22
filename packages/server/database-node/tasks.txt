@@ -1,0 +1,11 @@
+1. Store the database in RAM for performance
+2. Receive and apply write requests from zone nodes to RAM database
+3. Frequently write RAM database to hard disk
+4. Frequently send backups to database backup node
+    a.  hourly or more frequently
+5. Upon restarting, check integrity of database for any invalid entries
+    a.  delete or correct the entry
+    b.  else restore database from backup
+
+Notes
+  - Database actions should be atomic
