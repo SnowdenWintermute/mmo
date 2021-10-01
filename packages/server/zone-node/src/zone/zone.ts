@@ -1,8 +1,5 @@
-const receivingQueue: userInput[] = [] 
+import {userInput} from './types'
 
-interface userInput {
-  sender: String,
-  data: String
-}
+const receivingQueue: userInput[] = [] 
 
 module.exports = {receivingQueue}
