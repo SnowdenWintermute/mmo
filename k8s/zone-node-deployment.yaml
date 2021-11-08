@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zone-node-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: zone-node
+  template:
+    metadata:
+      labels:
+        component: zone-node
+    spec:
+      containers:
+        - name: zone-node
+          image: snowd3n/permadeath-zone-node
+          ports:
+            - containerPort: 5001

@@ -11,9 +11,12 @@ const inputHandler = require("./inputHandler/inputHandler");
 // start game loop
 // queue receiving inputs
 // queue outgoing packets
+console.log("zone node started");
 wss.on("connection", (socket) => {
-    socket.on("message", (event) => {
-        console.log(event.toString());
+    console.log("a client connected");
+    socket.on("message", (data) => {
+        console.log(data.toString());
     });
 });
+app.get("/", (req, res) => res.send("hello from zone node"));
 server.listen(port, () => console.log("listening on " + port));

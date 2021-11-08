@@ -1,4 +1,3 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.receivingQueue = void 0;
-exports.receivingQueue = [];
+// import { userInput } from "@permadeath/message-types/src/types";
+// export const receivingQueue: userInput[] = [];

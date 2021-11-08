@@ -1,24 +1,38 @@
-import { WebSocket } from "ws";
+// import axios from "axios";
 
-const handleSocketConnection = (ws: WebSocket) =>
-  ws.addEventListener("open", (event: any) => {
+// const testAxios = async () => {
+//   setInterval(async () => {
+//     console.log("trying axios");
+//     const res = await axios.get("http://zone-node-cluster-ip-service:5001");
+//     console.log(res.data);
+//   }, 3000);
+// };
+
+// testAxios();
+
+import { WebSocket } from "ws";
+const WS_ADDRESS = "ws://zone-node-cluster-ip-service:5001";
+
+const handleSocketConnection = (address: string) => {
+  const ws = new WebSocket(address);
+  ws.onopen = (event: any) => {
     console.log("connected to zone node");
     const pingServer = () => {
-      setTimeout(() => {
+      const pingTimeout = setTimeout(() => {
         console.log("pinging...");
-        ws.send("hello from client");
+        ws.send("some text");
         pingServer();
-      }, 1000);
+      }, 3000);
     };
     pingServer();
-    ws.send("whatup");
-    ws.onclose = (e) => {
-      console.log("connection terminated, reconnecting...");
-      setTimeout(
-        () => handleSocketConnection(new WebSocket("ws://localhost:5001")),
-        1000
-      );
-    };
-  });
+  };
+  ws.onerror = (error) => {
+    console.log(error);
+  };
+  ws.onclose = (e) => {
+    console.log("connection terminated, reconnecting...");
+    setTimeout(() => handleSocketConnection(WS_ADDRESS), 3000);
+  };
+};
 
-handleSocketConnection(new WebSocket("ws://localhost:5001"));
+handleSocketConnection(WS_ADDRESS);

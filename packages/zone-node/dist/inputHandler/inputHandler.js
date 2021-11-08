@@ -1,9 +1,9 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const inputHandler = (socket) => {
-    console.log("Client connected ", socket);
-    socket.on("message", (text) => {
-        console.log("Message from client " + text);
-    });
-};
-module.exports = inputHandler;
+// import { receivingQueue } from "../zone/zone";
+// const inputHandler = (socket: any) => {
+//   console.log("Client connected ", socket);
+//   socket.on("message", (text: string) => {
+//     console.log("Message from client " + text);
+//   });
+// };
+// module.exports = inputHandler;

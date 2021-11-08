@@ -1,0 +1,25 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./k8s/client-node-deployment.yaml
+      - ./k8s/zone-node-deployment.yaml
+      - ./k8s/client-node-cluster-ip-service.yaml
+      - ./k8s/zone-node-cluster-ip-service.yaml
+build:
+  local:
+    push: false
+  artifacts:
+    - image: snowd3n/permadeath-client-node
+      context: .
+      docker:
+        dockerfile: dockerfiles/client-node.dev.Dockerfile
+      sync:
+        infer: ["**/*"]
+    - image: snowd3n/permadeath-zone-node
+      context: .
+      docker:
+        dockerfile: dockerfiles/zone-node.dev.Dockerfile
+      sync:
+        infer: ["**/*"]
