@@ -13,7 +13,6 @@ wss.on("connection", (socket: any) => {
   console.log("a client connected");
   socket.on("message", (data: any) => {
     console.log(add(1, 2, 3));
-    // console.log(add(1, 2, 3));
     console.log(data.toString());
   });
 });

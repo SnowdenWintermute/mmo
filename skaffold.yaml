@@ -7,6 +7,7 @@ deploy:
       - ./k8s/zone-node-deployment.yaml
       - ./k8s/client-node-cluster-ip-service.yaml
       - ./k8s/zone-node-cluster-ip-service.yaml
+      - ./k8s/zone-node-hpa.yaml
 build:
   local:
     push: false

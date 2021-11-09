@@ -15,10 +15,12 @@ const WS_ADDRESS = "ws://zone-node-cluster-ip-service:5001";
 
 const handleSocketConnection = (address: string) => {
   const ws = new WebSocket(address);
+  let pingTimeout: NodeJS.Timeout;
   ws.onopen = (event: any) => {
     console.log("connected to zone node");
     const pingServer = () => {
-      const pingTimeout = setTimeout(() => {
+      clearTimeout(pingTimeout);
+      pingTimeout = setTimeout(() => {
         console.log("pinging...");
         ws.send("some text");
         pingServer();
@@ -30,6 +32,7 @@ const handleSocketConnection = (address: string) => {
     console.log(error);
   };
   ws.onclose = (e) => {
+    clearTimeout(pingTimeout);
     console.log("connection terminated, reconnecting...");
     setTimeout(() => handleSocketConnection(WS_ADDRESS), 3000);
   };
