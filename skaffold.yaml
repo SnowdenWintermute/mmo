@@ -3,24 +3,36 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./k8s/client-node-deployment.yaml
+      - ./k8s/proxy-node-deployment.yaml
+      - ./k8s/proxy-node-cluster-ip-service.yaml
       - ./k8s/zone-node-deployment.yaml
-      - ./k8s/client-node-cluster-ip-service.yaml
       - ./k8s/zone-node-cluster-ip-service.yaml
       - ./k8s/zone-node-hpa.yaml
+      - ./k8s/redis-deployment.yaml
+      - ./k8s/redis-cluster-ip-service.yaml
+      - ./k8s/postgres-deployment.yaml
+      - ./k8s/postgres-cluster-ip-service.yaml
+      - ./k8s/postgres-persistent-volume-claim.yaml
+      - ./k8s/database-node-deployment.yaml
 build:
   local:
     push: false
   artifacts:
-    - image: snowd3n/permadeath-client-node
+    - image: snowd3n/permadeath-proxy-node
       context: .
       docker:
-        dockerfile: dockerfiles/client-node.dev.Dockerfile
+        dockerfile: dockerfiles/proxy-node.dev.Dockerfile
       sync:
         infer: ["**/*"]
     - image: snowd3n/permadeath-zone-node
       context: .
       docker:
         dockerfile: dockerfiles/zone-node.dev.Dockerfile
+      sync:
+        infer: ["**/*"]
+    - image: snowd3n/permadeath-database-node
+      context: .
+      docker:
+        dockerfile: dockerfiles/database-node.dev.Dockerfile
       sync:
         infer: ["**/*"]
