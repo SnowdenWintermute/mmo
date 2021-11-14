@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: postgres-deployment
+  name: postgres-statefulset
 spec:
+  serviceName: "postgres"
   replicas: 1
   selector:
     matchLabels:
@@ -13,18 +14,18 @@ spec:
         component: postgres
     spec:
       volumes:
-        - name: postgres-storage
+        - name: postgres-volume-mount
           persistentVolumeClaim:
-            claimName: postgres-persistent-volume-claim
+            claimName: postgres-pvc
       containers:
         - name: postgres
           image: postgres
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: postgres-storage
+            - name: postgres-volume-mount
               mountPath: /var/lib/postgresql/data
-              subPath: postgres
+              # subPath: postgres
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:

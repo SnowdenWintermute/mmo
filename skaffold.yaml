@@ -10,10 +10,12 @@ deploy:
       - ./k8s/zone-node-hpa.yaml
       - ./k8s/redis-deployment.yaml
       - ./k8s/redis-cluster-ip-service.yaml
-      - ./k8s/postgres-deployment.yaml
+      - ./k8s/postgres-statefulset.yaml
       - ./k8s/postgres-cluster-ip-service.yaml
+      - ./k8s/postgres-persistent-volume.yaml
       - ./k8s/postgres-persistent-volume-claim.yaml
-      - ./k8s/database-node-deployment.yaml
+      - ./k8s/database-node-statefulset.yaml
+      - ./k8s/database-node-headless-service.yaml
 build:
   local:
     push: false

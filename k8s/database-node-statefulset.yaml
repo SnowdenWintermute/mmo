@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: database-node-deployment
+  name: database-node-statefulset
 spec:
+  serviceName: database
   replicas: 1
   selector:
     matchLabels:
@@ -18,6 +19,8 @@ spec:
           ports:
             - containerPort: 80
           env:
+            - name: PORT
+              value: "80"
             - name: REDIS_HOST
               value: redis-cluster-ip-service
             - name: REDIS_PORT
