@@ -6,8 +6,7 @@ const axios = require("axios");
 const app = express();
 const server = require("http").createServer(app);
 const { add } = require("@permadeath/message-types");
-console.log("zone node started");
-
+// const Zone = require("./Zone");
 const ws = require("ws");
 const wss = new ws.Server({ server });
 
