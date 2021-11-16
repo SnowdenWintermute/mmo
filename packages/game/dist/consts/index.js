@@ -1,4 +1,4 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.playerMaxVeiwDistance = void 0;
-exports.playerMaxVeiwDistance = 50;
+exports.playerMaxViewDistance = void 0;
+exports.playerMaxViewDistance = 50;

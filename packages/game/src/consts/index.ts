@@ -1,1 +1,1 @@
-export const playerMaxVeiwDistance = 50;
+export const playerMaxViewDistance = 50;
