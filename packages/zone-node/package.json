@@ -1,5 +1,5 @@
 {
-  "name": "zone-node",
+  "name": "@permadeath/zone-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

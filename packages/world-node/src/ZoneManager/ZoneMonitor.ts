@@ -1,4 +1,6 @@
-import { Point } from "@permadeath/game/dist/base/Point";
+import { Point } from "@permadeath/game/src/base/Point";
+import { Territory } from "@permadeath/zone-node/src/Zone/types/Territory";
+import { DirectionalIdList } from "./types/DirectionalIdList";
 
 enum mergeOrSplitStatus {
   STABLE = "STABLE",
@@ -11,19 +13,8 @@ enum mergeOrSplitStatus {
 
 export class ZoneMonitor {
   zoneId: number;
-  origin: Point;
-  width: number;
-  height: number;
-  borderingZoneIds: {
-    north: number | null;
-    south: number | null;
-    east: number | null;
-    west: number | null;
-    northEast: number | null;
-    northWest: number | null;
-    southEast: number | null;
-    southWest: number | null;
-  };
+  territory: Territory;
+  borderingZoneIds: DirectionalIdList;
   numOwnedEntities: number | null;
   numConnectedPlayers: number | null;
   mergeOrSplitStatus: mergeOrSplitStatus;
@@ -32,12 +23,14 @@ export class ZoneMonitor {
     origin: Point,
     width: number,
     height: number,
-    borderingZoneIds: Object
+    borderingZoneIds: DirectionalIdList
   ) {
     this.zoneId = zoneId;
-    this.origin = origin;
-    this.width = width;
-    this.height = height;
+    this.territory = {
+      origin: origin,
+      width: width,
+      height: height,
+    };
     this.borderingZoneIds = borderingZoneIds;
     this.numOwnedEntities = null;
     this.numConnectedPlayers = null;

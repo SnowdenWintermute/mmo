@@ -1,0 +1,10 @@
+declare const dns: any;
+declare const port: string | undefined;
+declare const express: any;
+declare const axios: any;
+declare const app: any;
+declare const server: any;
+declare const add: any;
+declare const ws: any;
+declare const wss: any;
+declare let testAddress: string;

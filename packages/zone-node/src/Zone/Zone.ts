@@ -1,11 +1,10 @@
 import { Point } from "@permadeath/game/src/base/Point";
 import { Entity } from "@permadeath/game/src/entities/Entity";
-import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
+import { playerMaxViewDistance } from "@permadeath/game/src/consts";
+import { Territory } from "./types/Territory";
 export class Zone {
   id: number;
-  origin: Point;
-  width: number;
-  height: number;
+  territory: Territory;
   entities: { [name: string]: Entity };
   players: Object;
   borderingZoneEntities: Object;
@@ -14,9 +13,11 @@ export class Zone {
   corners: Object;
   constructor(id: number, origin: Point, width: number, height: number) {
     this.id = id;
-    this.origin = origin;
-    this.width = width;
-    this.height = height;
+    this.territory = {
+      origin: origin,
+      width: width,
+      height: height,
+    };
     this.entities = {};
     this.players = {};
     this.borderingZoneEntities = {
@@ -32,26 +33,32 @@ export class Zone {
     this.borderThickness = playerMaxViewDistance;
     this.borders = {
       north: {
-        origin: new Point(this.origin.x, this.origin.y),
+        origin: new Point(this.territory.origin.x, this.territory.origin.y),
         height: this.borderThickness,
-        width: this.width,
+        width: this.territory.width,
         entities: {},
       },
       south: {
-        origin: new Point(this.origin.x, this.height - this.borderThickness),
+        origin: new Point(
+          this.territory.origin.x,
+          this.territory.height - this.borderThickness
+        ),
         height: this.borderThickness,
-        width: this.width,
+        width: this.territory.width,
         entities: {},
       },
       east: {
-        origin: new Point(this.origin.x, this.origin.y),
-        height: this.height,
+        origin: new Point(this.territory.origin.x, this.territory.origin.y),
+        height: this.territory.height,
         width: this.borderThickness,
         entities: {},
       },
       west: {
-        origin: new Point(this.width - this.borderThickness, this.origin.y),
-        height: this.height,
+        origin: new Point(
+          this.territory.width - this.borderThickness,
+          this.territory.origin.y
+        ),
+        height: this.territory.height,
         width: this.borderThickness,
         entities: {},
       },
@@ -61,26 +68,26 @@ export class Zone {
       height: this.borderThickness,
       northEast: {
         origin: new Point(
-          this.origin.x + this.width - this.borderThickness,
-          this.origin.y
+          this.territory.origin.x + this.territory.width - this.borderThickness,
+          this.territory.origin.y
         ),
         entities: {},
       },
       northWest: {
-        origin: new Point(this.origin.x, this.origin.y),
+        origin: new Point(this.territory.origin.x, this.territory.origin.y),
         entities: {},
       },
       southEast: {
         origin: new Point(
-          this.origin.x + this.width,
-          this.origin.y + this.height - this.borderThickness
+          this.territory.origin.x + this.territory.width,
+          this.territory.origin.y + this.territory.height - this.borderThickness
         ),
         entities: {},
       },
       southWest: {
         origin: new Point(
-          this.origin.x,
-          this.origin.y + this.height - this.borderThickness
+          this.territory.origin.x,
+          this.territory.origin.y + this.territory.height - this.borderThickness
         ),
         entities: {},
       },
