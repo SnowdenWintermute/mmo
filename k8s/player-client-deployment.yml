@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: player-client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: player-client
+  template:
+    metadata:
+      labels:
+        component: player-client
+    spec:
+      containers:
+        - name: player-client
+          image: snowd3n/permadeath-player-client:latest
+          ports:
+            - containerPort: 3000

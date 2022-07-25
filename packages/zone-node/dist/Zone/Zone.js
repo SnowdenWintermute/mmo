@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Zone = void 0;
 const Point_1 = require("@permadeath/game/src/base/Point");
-const consts_1 = require("@permadeath/game/dist/consts");
+const consts_1 = require("@permadeath/game/src/consts");
 class Zone {
     constructor(id, origin, width, height) {
         this.id = id;

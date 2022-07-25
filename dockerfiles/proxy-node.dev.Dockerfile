@@ -7,5 +7,4 @@ COPY packages/proxy-node ./packages/proxy-node
 
 RUN yarn install --pure-lockfile --non-interactive
 WORKDIR /usr/src/app/packages/proxy-node
-RUN yarn -version
 CMD ["yarn", "serve"]
