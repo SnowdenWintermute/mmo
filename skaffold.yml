@@ -1,4 +1,4 @@
-apiVersion: skaffold/v2beta12
+apiVersion: skaffold/v2beta29
 kind: Config
 deploy:
   kubectl:
@@ -10,7 +10,6 @@ deploy:
       - ./k8s/zone-node-cluster-ip.yml
       - ./k8s/player-client-deployment.yml
       - ./k8s/player-client-cluster-ip.yml
-      # - ./k8s/player-client-node-port.yml
       # - ./k8s/zone-node-hpa.yml
       # - ./k8s/redis-deployment.yml
       # - ./k8s/redis-cluster-ip.yml
@@ -42,9 +41,19 @@ build:
         dockerfile: dockerfiles/player-client.dev.Dockerfile
       sync:
         infer: ["**/*"]
-    # - image: snowd3n/permadeath-database-node
+    # - image: snowd3n/permadeath-pc-test
     #   context: .
     #   docker:
-    #     dockerfile: dockerfiles/database-node.dev.Dockerfile
+    #     dockerfile: dockerfiles/pc-test.dev.Dockerfile
     #   sync:
     #     infer: ["**/*"]
+# portForward:
+#   - resourceType: deployment
+#     resourceName: pc-test
+#     port: 3000
+# - image: snowd3n/permadeath-database-node
+#   context: .
+#   docker:
+#     dockerfile: dockerfiles/database-node.dev.Dockerfile
+#   sync:
+#     infer: ["**/*"]

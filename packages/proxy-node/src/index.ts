@@ -1,32 +1,19 @@
-// import axios from "axios";
-
-// const testAxios = async () => {
-//   setInterval(async () => {
-//     console.log("trying axios");
-//     const res = await axios.get("http://zone-node-cluster-ip:5001");
-//     console.log(res.data);
-//   }, 3000);
-// };
-
-// testAxios();
-
+require("dotenv").config();
+const port = process.env.PORT;
+const express = require("express");
+const app = express();
+const server = require("http").createServer(app);
+const ws = require("ws");
+const wss = new ws.Server({ server });
 import { WebSocket } from "ws";
-const WS_ADDRESS = "ws://zone-node-cluster-ip:5001";
+const ZONE_NODE_WS_ADDRESS = "ws://zone-node-cluster-ip:5001";
 
-const handleSocketConnection = (address: string) => {
+const connectToZoneNode = (address: string) => {
   const ws = new WebSocket(address);
   let pingTimeout: NodeJS.Timeout;
   ws.onopen = (event: any) => {
     console.log("connected to zone node");
-    // const pingServer = () => {
-    //   clearTimeout(pingTimeout);
-    //   pingTimeout = setTimeout(() => {
-    //     // console.log("pinging...");
-    //     ws.send("some text");
-    //     pingServer();
-    //   }, 3000);
-    // };
-    // pingServer();
+    ws.send("test message from proxy node");
   };
   ws.onerror = (error) => {
     console.log(error);
@@ -34,8 +21,17 @@ const handleSocketConnection = (address: string) => {
   ws.onclose = (e) => {
     clearTimeout(pingTimeout);
     console.log("connection terminated, reconnecting...");
-    setTimeout(() => handleSocketConnection(WS_ADDRESS), 6000);
+    setTimeout(() => connectToZoneNode(ZONE_NODE_WS_ADDRESS), 6000);
   };
 };
 
-handleSocketConnection(WS_ADDRESS);
+wss.on("connection", (socket: any) => {
+  console.log("player client connected to proxy node");
+  socket.on("message", (data: any) => {
+    console.log(data.toString());
+    socket.send("message from proxy node");
+  });
+});
+
+connectToZoneNode(ZONE_NODE_WS_ADDRESS);
+server.listen(port, () => console.log("listening on " + port));

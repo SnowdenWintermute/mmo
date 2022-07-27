@@ -1,25 +1,11 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import "@permadeath/message-types";
-import { UserInput } from "@permadeath/message-types";
+import ConnectionTester from "./components/ConnectionTester/ConnectionTester";
+import "./css/baseline.scss";
 
 function App() {
-  const a = new UserInput("butt", "butts");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>o{JSON.stringify(a)}</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ConnectionTester />
     </div>
   );
 }

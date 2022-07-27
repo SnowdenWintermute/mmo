@@ -24,13 +24,13 @@ spec:
                 name: player-client-cluster-ip
                 port:
                   number: 3000
-          # - path: /api/?(.*)
-          #   # UPDATE PATH
-          #   pathType: Prefix
-          #   # ADD PATHTYPE
-          #   backend:
-          #     service:
-          #       # UPDATE SERVICE FIELDS
-          #       name: server-cluster-ip-service
-          #       port:
-          #         number: 5000
+          - path: /api/?(.*)
+            # UPDATE PATH
+            pathType: Prefix
+            # ADD PATHTYPE
+            backend:
+              service:
+                # UPDATE SERVICE FIELDS
+                name: proxy-node-cluster-ip
+                port:
+                  number: 5002

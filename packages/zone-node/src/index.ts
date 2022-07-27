@@ -11,9 +11,8 @@ const ws = require("ws");
 const wss = new ws.Server({ server });
 
 wss.on("connection", (socket: any) => {
-  console.log("a client connected");
+  console.log("a client connected to this zone node");
   socket.on("message", (data: any) => {
-    // console.log(add(1, 2, 3));
     console.log(data.toString());
   });
 });
