@@ -76,5 +76,5 @@ app.get("/world-map", async (req: any, res: any) => {
   }
 });
 const { PORT } = process.env;
-// setInterval(() => console.log(PORT), 1000);
+
 app.listen(PORT, () => console.log("database on port " + PORT));

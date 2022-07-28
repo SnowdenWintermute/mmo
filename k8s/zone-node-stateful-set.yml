@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: zone-node-deployment
+  name: zone-node-stateful-set
 spec:
+  serviceName: zone-node
   replicas: 1
   selector:
     matchLabels:
@@ -20,3 +21,12 @@ spec:
           resources:
             requests:
               cpu: 1000m
+          env:
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name

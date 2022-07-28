@@ -1,14 +1,14 @@
 {
   "name": "@permadeath/message-types",
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist",
+  "typings": "dist",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc",
     "watch": "tsc --watch",
     "preserve": "npm run build",
-    "serve": "concurrently \"tsc --watch\" \"nodemon dist/index.js\""
+    "serve": "concurrently \"tsc --watch\""
   },
   "devDependencies": {
     "concurrently": "^6.2.2",

@@ -1,7 +1,7 @@
 1. Store the database in RAM for performance
-2. Receive and apply write requests from zone nodes to RAM database
-3. Frequently write RAM database to hard disk
-4. Frequently send backups to database backup node
+2. Receive and apply write requests from zone nodes to RAM database (redis container)
+3. Frequently write RAM database to hard disk (pg container with a persistent volume claim)
+4. Frequently send backups to database backup node (second pg container with a different pvc(cloud service?))
     a.  hourly or more frequently
 5. Upon restarting, check integrity of database for any invalid entries
     a.  delete or correct the entry

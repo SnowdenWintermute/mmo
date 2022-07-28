@@ -1,4 +1,4 @@
-exports.testText = "test shared text";
+// exports.testText = "test shared text";
 export const UserInput = class UserInput {
   sender: string;
   data: string;
@@ -8,4 +8,4 @@ export const UserInput = class UserInput {
   }
 };
 
-export const add = (a: number, b: number, c: number) => a + b + c + 10;
+export const add = (a: number, b: number, c: number) => a + b + c;

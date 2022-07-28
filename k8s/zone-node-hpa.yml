@@ -6,8 +6,8 @@ metadata:
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
-    kind: Deployment
-    name: zone-node-deployment
+    kind: StatefulSet
+    name: zone-node-stateful-set
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 70

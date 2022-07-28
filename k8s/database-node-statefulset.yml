@@ -22,13 +22,13 @@ spec:
             - name: PORT
               value: "80"
             - name: REDIS_HOST
-              value: redis-cluster-ip-service
+              value: redis-cluster-ip
             - name: REDIS_PORT
               value: "6379"
             - name: PG_USER
               value: postgres
             - name: PG_HOST
-              value: postgres-cluster-ip-service
+              value: postgres-cluster-ip
             - name: PG_PORT
               value: "5432"
             - name: PG_DATABASE

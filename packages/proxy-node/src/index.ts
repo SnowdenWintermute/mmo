@@ -33,5 +33,5 @@ wss.on("connection", (socket: any) => {
   });
 });
 
-connectToZoneNode(ZONE_NODE_WS_ADDRESS);
+// connectToZoneNode(ZONE_NODE_WS_ADDRESS);
 server.listen(port, () => console.log("listening on " + port));
