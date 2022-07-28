@@ -7,4 +7,6 @@ declare const server: any;
 declare const add: any;
 declare const ws: any;
 declare const wss: any;
-declare let testAddress: string;
+declare const Point: any;
+declare const Entity: any;
+declare const loopClg: () => void;

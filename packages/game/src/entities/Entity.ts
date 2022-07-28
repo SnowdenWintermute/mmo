@@ -3,10 +3,12 @@ export class Entity {
   name: string;
   pos: Point;
   speed: number;
+  // test: string;
   constructor(name: string, pos: Point, speed: number) {
     this.name = name;
     this.pos = pos;
     this.speed = speed;
+    // this.test = "e";
   }
 
   move = (angle: number) => {

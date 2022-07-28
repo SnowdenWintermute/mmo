@@ -9,9 +9,12 @@ const { add } = require("@permadeath/message-types");
 console.log(add(1, 2, 3));
 const ws = require("ws");
 const wss = new ws.Server({ server });
-const { Point } = require("@permadeath/game");
-const { Entity } = require("@permadeath/game");
-// import Zone from "./Zone/Zone";
+// const { Point } = require("@permadeath/game");
+import { Point } from "@permadeath/game/dist/base/Point.js";
+// const { Entity } = require("@permadeath/game");
+import { Entity } from "@permadeath/game/dist/entities/Entity.js";
+// const Zone = require("./Zone/Zone");
+import Zone from "./Zone/Zone";
 
 wss.on("connection", (socket: any) => {
   console.log("a client connected to this zone node");
@@ -28,8 +31,10 @@ const loopClg = () => {
   setTimeout(() => {
     // console.log(podId);
     console.log(add(1, 2, 3));
-    console.log(Entity);
+    console.log(new Zone(1, new Point(0, 0), 100, 100));
+    console.log(new Entity("testEntity", new Point(0, 0), 10));
     console.log(Point);
+    console.log();
     loopClg();
   }, 1000);
 };

@@ -1,9 +1,10 @@
 {
   "name": "@permadeath/game",
   "version": "1.0.0",
-  "main": "dist",
-  "typings": "dist/**/*.d.ts",
+  "main": "dist/index",
+  "typings": "dist/index",
   "license": "MIT",
+  "type": "commonjs",
   "scripts": {
     "build": "rimraf dist && tsc",
     "watch": "tsc --watch",
