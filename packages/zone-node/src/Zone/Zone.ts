@@ -5,10 +5,14 @@ import { Point } from "@permadeath/game/dist/base/Point.js";
 import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
 import { Territory } from "./types/Territory";
+import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
 export default class Zone {
   id: number;
   territory: Territory;
-  entities: { [name: string]: Entity };
+  entities: {
+    static: { [name: string]: Entity };
+    mobile: { [name: string]: MobileEntity };
+  };
   players: Object;
   borderingZoneEntities: Object;
   borderThickness: number;
@@ -21,7 +25,10 @@ export default class Zone {
       width: width,
       height: height,
     };
-    this.entities = {};
+    this.entities = {
+      static: {},
+      mobile: {},
+    };
     this.players = {};
     this.borderingZoneEntities = {
       north: {},

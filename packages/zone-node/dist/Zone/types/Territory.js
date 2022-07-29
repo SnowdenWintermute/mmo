@@ -1,7 +1,2 @@
 "use strict";
-// import { Point } from "@permadeath/game";
-// export type Territory = {
-//   origin: Point;
-//   width: number;
-//   height: number;
-// };
+Object.defineProperty(exports, "__esModule", { value: true });

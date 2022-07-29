@@ -4,5 +4,4 @@ export declare class Entity {
     pos: Point;
     speed: number;
     constructor(name: string, pos: Point, speed: number);
-    move: (angle: number) => void;
 }

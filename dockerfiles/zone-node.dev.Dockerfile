@@ -12,6 +12,11 @@ WORKDIR /usr/src/app/packages/game
 RUN yarn install
 RUN yarn run build
 WORKDIR /usr/src/app
+COPY packages/utils ./packages/utils
+WORKDIR /usr/src/app/packages/utils
+RUN yarn install
+RUN yarn run build
+WORKDIR /usr/src/app
 COPY packages/zone-node ./packages/zone-node
 
 RUN yarn install --pure-lockfile --non-interactive
