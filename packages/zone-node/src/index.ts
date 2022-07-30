@@ -13,31 +13,25 @@ import { Point } from "@permadeath/game/dist/base/Point.js";
 import { tickRate } from "@permadeath/game/dist/consts";
 import { Entity } from "@permadeath/game/dist/entities/Entity";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
-import fillZoneWithTestEntities from "./utils/fillZoneWithTestMobileEntities";
+import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
+import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
 import Zone from "./Zone/Zone";
+
+let gameLoopInterval: NodeJS.Timer;
+const connectedProxyNodes = {};
 
 wss.on("connection", (socket: any) => {
   console.log("a client connected to this zone node");
-  socket.on("message", (data: any) => {
-    console.log(data.toString());
-  });
+  socket.on("message", (data: any) => console.log(data.toString()));
 });
 
 if (process.env.MY_POD_NAME) {
   const podName = process.env.MY_POD_NAME;
   const podId = parseInt(podName.replace(/\D/g, ""));
   const zone = new Zone(podId, new Point(0, 0), 100, 100);
-  console.log("Zone created");
-  fillZoneWithTestEntities(5, zone);
-  setInterval(() => {
-    for (const mob in zone.entities.mobile) {
-      zone.entities.mobile[mob].move();
-    }
-    console.clear();
-    console.log(zone.entities.mobile);
-    // console.log(zone.entities.mobile);
-  }, tickRate);
-  console.log(zone);
+  console.log(`Zone ${podId} created`);
+  fillZoneWithTestMobileEntities(5, zone);
+  gameLoopInterval = createGameLoopInterval(zone, tickRate);
 }
 
 server.listen(port, () => console.log("listening on " + port));
