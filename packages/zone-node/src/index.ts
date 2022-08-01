@@ -9,6 +9,8 @@ const { add } = require("@permadeath/message-types");
 console.log(add(1, 2, 3));
 const ws = require("ws");
 const wss = new ws.Server({ server });
+import WebSocket from "ws";
+import { loopClg } from "@permadeath/utils/dist";
 import { Point } from "@permadeath/game/dist/base/Point.js";
 import { tickRate } from "@permadeath/game/dist/consts";
 import { Entity } from "@permadeath/game/dist/entities/Entity";
@@ -20,9 +22,11 @@ import Zone from "./Zone/Zone";
 let gameLoopInterval: NodeJS.Timer;
 const connectedProxyNodes = {};
 
-wss.on("connection", (socket: any) => {
+wss.on("connection", (socket: WebSocket) => {
   console.log("a client connected to this zone node");
-  socket.on("message", (data: any) => console.log(data.toString()));
+  // loopClg(JSON.stringify(socket), 1000);
+
+  socket.on("message", (data: any) => console.log(data.toString(), socket));
 });
 
 if (process.env.MY_POD_NAME) {
@@ -31,15 +35,7 @@ if (process.env.MY_POD_NAME) {
   const zone = new Zone(podId, new Point(0, 0), 100, 100);
   console.log(`Zone ${podId} created`);
   fillZoneWithTestMobileEntities(5, zone);
-  gameLoopInterval = createGameLoopInterval(zone, tickRate);
+  // gameLoopInterval = createGameLoopInterval(zone, tickRate);
 }
 
 server.listen(port, () => console.log("listening on " + port));
-
-// const loopClg = () => {
-//   setTimeout(() => {
-//     console.log();
-//     loopClg();
-//   }, 1000);
-// };
-// loopClg();

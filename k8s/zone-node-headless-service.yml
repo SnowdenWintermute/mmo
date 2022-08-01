@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: zone-node-cluster-ip
+  name: zone-node-headless-service
 spec:
-  type: ClusterIP
+  clusterIP: None
   selector:
     component: zone-node
   ports:
     - port: 5001
-      targetPort: 5001
+      targetPort: 80

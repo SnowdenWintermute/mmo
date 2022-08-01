@@ -5,9 +5,9 @@ deploy:
     manifests:
       - ./k8s/ingress.yml
       - ./k8s/zone-node-stateful-set.yml
-      - ./k8s/zone-node-cluster-ip.yml
-      # - ./k8s/proxy-node-deployment.yml
-      # - ./k8s/proxy-node-cluster-ip.yml
+      - ./k8s/zone-node-headless-service.yml
+      - ./k8s/proxy-node-deployment.yml
+      - ./k8s/proxy-node-cluster-ip.yml
       # - ./k8s/player-client-deployment.yml
       # - ./k8s/player-client-cluster-ip.yml
       # - ./k8s/zone-node-hpa.yml
@@ -23,12 +23,12 @@ build:
   local:
     push: false
   artifacts:
-    # - image: snowd3n/permadeath-proxy-node
-    #   context: .
-    #   docker:
-    #     dockerfile: dockerfiles/proxy-node.dev.Dockerfile
-    #   sync:
-    #     infer: ["**/*"]
+    - image: snowd3n/permadeath-proxy-node
+      context: .
+      docker:
+        dockerfile: dockerfiles/proxy-node.dev.Dockerfile
+      sync:
+        infer: ["**/*"]
     - image: snowd3n/permadeath-zone-node
       context: .
       docker:

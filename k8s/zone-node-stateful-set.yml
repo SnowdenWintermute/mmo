@@ -4,7 +4,7 @@ metadata:
   name: zone-node-stateful-set
 spec:
   serviceName: zone-node
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       component: zone-node
@@ -17,7 +17,7 @@ spec:
         - name: zone-node
           image: snowd3n/permadeath-zone-node
           ports:
-            - containerPort: 5001
+            - containerPort: 80
           resources:
             requests:
               cpu: 1000m
