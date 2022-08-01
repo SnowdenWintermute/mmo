@@ -8,31 +8,35 @@ const server = require("http").createServer(app);
 const { add } = require("@permadeath/message-types");
 console.log(add(1, 2, 3));
 const ws = require("ws");
-const wss = new ws.Server({ server });
+const wss = new ws.Server({ server }, { clientTracking: true });
 import WebSocket from "ws";
 import { loopClg } from "@permadeath/utils/dist";
 import { Point } from "@permadeath/game/dist/base/Point.js";
-import { tickRate } from "@permadeath/game/dist/consts";
-import { Entity } from "@permadeath/game/dist/entities/Entity";
-import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
+import { tickRate, updateBroadcastRate } from "@permadeath/game/dist/consts";
 import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
 import Zone from "./Zone/Zone";
 
 let gameLoopInterval: NodeJS.Timer;
+let broadcastInterval: NodeJS.Timer;
+let zone: Zone;
 const connectedProxyNodes = {};
 
 wss.on("connection", (socket: WebSocket) => {
   console.log("a client connected to this zone node");
-  // loopClg(JSON.stringify(socket), 1000);
-
-  socket.on("message", (data: any) => console.log(data.toString(), socket));
+  // console.log(wss.clients);
+  broadcastInterval = setInterval(() => {
+    wss.clients.forEach((client: WebSocket) => {
+      client.send(JSON.stringify(zone.entities));
+      // client.send("ayylmao");
+    });
+  }, updateBroadcastRate);
 });
 
 if (process.env.MY_POD_NAME) {
   const podName = process.env.MY_POD_NAME;
   const podId = parseInt(podName.replace(/\D/g, ""));
-  const zone = new Zone(podId, new Point(0, 0), 100, 100);
+  zone = new Zone(podId, new Point(0, 0), 100, 100);
   console.log(`Zone ${podId} created`);
   fillZoneWithTestMobileEntities(5, zone);
   // gameLoopInterval = createGameLoopInterval(zone, tickRate);
