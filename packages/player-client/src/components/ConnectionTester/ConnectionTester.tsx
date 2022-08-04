@@ -15,6 +15,10 @@ const ConnectionTester = () => {
   }[readyState];
 
   useEffect(() => {
+    console.log("first");
+  });
+
+  useEffect(() => {
     if (lastMessage !== null) {
       setMessageHistory((prev) => prev.concat(lastMessage));
     }
