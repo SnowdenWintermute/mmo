@@ -10,6 +10,9 @@
     "preserve": "npm run build",
     "serve": "concurrently \"tsc --watch\""
   },
+  "dependencies": {
+    "@permadeath/game": "*"
+  },
   "devDependencies": {
     "concurrently": "^6.2.2",
     "nodemon": "^2.0.13",

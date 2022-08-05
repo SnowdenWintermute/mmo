@@ -8,8 +8,8 @@ deploy:
       - ./k8s/zone-node-headless-service.yml
       - ./k8s/proxy-node-deployment.yml
       - ./k8s/proxy-node-cluster-ip.yml
-      - ./k8s/player-client-deployment.yml
-      - ./k8s/player-client-cluster-ip.yml
+      # - ./k8s/player-client-deployment.yml
+      # - ./k8s/player-client-cluster-ip.yml
       # - ./k8s/zone-node-hpa.yml
       # - ./k8s/redis-deployment.yml
       # - ./k8s/redis-cluster-ip.yml
@@ -35,12 +35,12 @@ build:
         dockerfile: dockerfiles/zone-node.dev.Dockerfile
       sync:
         infer: ["**/*"]
-    - image: snowd3n/permadeath-player-client
-      context: .
-      docker:
-        dockerfile: dockerfiles/player-client.dev.Dockerfile
-      sync:
-        infer: ["**/*"]
+    # - image: snowd3n/permadeath-player-client
+    #   context: .
+    #   docker:
+    #     dockerfile: dockerfiles/player-client.dev.Dockerfile
+    #   sync:
+    #     infer: ["**/*"]
     # - image: snowd3n/permadeath-database-node
     #   context: .
     #   docker:
