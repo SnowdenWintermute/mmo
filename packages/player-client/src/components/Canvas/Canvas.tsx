@@ -27,9 +27,7 @@ const Canvas = (props: Props) => {
   }, [draw]);
 
   return (
-    <div>
-      <canvas ref={canvasRef} {...rest} />
-    </div>
+    <canvas ref={canvasRef} style={{ border: "1px solid white" }} {...rest} />
   );
 };
 

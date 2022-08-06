@@ -7,31 +7,44 @@ import { Point } from "@permadeath/game/dist/base/Point";
 import { createRandomArrayMobileEntitiesInArea } from "@permadeath/utils/dist/index";
 
 const WorldViewer = () => {
+  const [drawFunctionExists, setDrawFunctionExists] = useState<Boolean>(false);
   const drawRef = useRef<(ctx: CanvasRenderingContext2D) => void>();
   const mobileEntitiesRef = useRef<MobileEntity[]>([]);
   useEffect(() => {
-    const newEntities = createRandomArrayMobileEntitiesInArea(10, {
+    const newEntities = createRandomArrayMobileEntitiesInArea(100, {
       topLeft: new Point(0, 0),
-      botRight: new Point(100, 100),
+      botRight: new Point(1000, 1000),
     });
-    mobileEntitiesRef.current.concat(newEntities);
+    mobileEntitiesRef.current = newEntities;
+    console.log(mobileEntitiesRef.current);
   }, []);
 
   useEffect(() => {
-    drawRef.current = createNextFrameDrawFunction(mobileEntitiesRef.current);
-  }, []);
-  if (!drawRef.current) return "loading";
-  return (
-    <div>
-      <h1 style={{ color: "white" }}>world viewer</h1>
-      <Canvas
-        draw={drawRef.current}
-        height={window.innerHeight}
-        width={window.innerWidth}
-        className={""}
-      />
-    </div>
-  );
+    const currDrawFunction = createNextFrameDrawFunction(
+      mobileEntitiesRef.current
+    );
+    drawRef.current = currDrawFunction;
+
+    setDrawFunctionExists(Boolean(drawRef.current));
+  });
+
+  if (drawFunctionExists && drawRef.current)
+    return (
+      <div style={{ height: "0px" }}>
+        <h1 style={{ color: "white", position: "absolute", right: "20px" }}>
+          world viewer
+        </h1>
+        <Canvas
+          draw={drawRef.current}
+          height={window.innerHeight - 6}
+          width={window.innerWidth - 2}
+          className={""}
+        />
+      </div>
+    );
+  else {
+  }
+  return <p>"loading"</p>;
 };
 
 export default WorldViewer;

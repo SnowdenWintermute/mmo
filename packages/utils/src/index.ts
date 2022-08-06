@@ -31,5 +31,6 @@ export const createRandomArrayMobileEntitiesInArea = (
         }
       )
     );
+  console.log(entities);
   return entities;
 };
