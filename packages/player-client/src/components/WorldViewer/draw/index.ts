@@ -9,8 +9,8 @@ export default function draw(ctx: CanvasRenderingContext2D) {
 export function createNextFrameDrawFunction(
   mobileEntities: Array<MobileEntity>
 ) {
+  console.log("new draw func created");
   return (ctx: CanvasRenderingContext2D) => {
-    console.log(mobileEntities);
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     mobileEntities.forEach((entity) => {
       ctx.fillStyle = "#FFF";

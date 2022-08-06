@@ -9,6 +9,7 @@ import { createRandomArrayMobileEntitiesInArea } from "@permadeath/utils/dist/in
 const WorldViewer = () => {
   const [drawFunctionExists, setDrawFunctionExists] = useState<Boolean>(false);
   const drawRef = useRef<(ctx: CanvasRenderingContext2D) => void>();
+  const drawInterval = useRef<NodeJS.Timer>();
   const mobileEntitiesRef = useRef<MobileEntity[]>([]);
   useEffect(() => {
     const newEntities = createRandomArrayMobileEntitiesInArea(100, {
@@ -20,13 +21,16 @@ const WorldViewer = () => {
   }, []);
 
   useEffect(() => {
-    const currDrawFunction = createNextFrameDrawFunction(
-      mobileEntitiesRef.current
-    );
-    drawRef.current = currDrawFunction;
+    drawInterval.current = setInterval(() => {
+      const currDrawFunction = createNextFrameDrawFunction(
+        mobileEntitiesRef.current
+      );
+      drawRef.current = currDrawFunction;
+      setDrawFunctionExists(Boolean(drawRef.current));
+    }, 33);
 
-    setDrawFunctionExists(Boolean(drawRef.current));
-  });
+    return () => clearInterval(drawInterval.current);
+  }, []);
 
   if (drawFunctionExists && drawRef.current)
     return (
@@ -36,6 +40,7 @@ const WorldViewer = () => {
         </h1>
         <Canvas
           draw={drawRef.current}
+          frameRate={33}
           height={window.innerHeight - 6}
           width={window.innerWidth - 2}
           className={""}
