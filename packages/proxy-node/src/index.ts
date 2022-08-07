@@ -7,6 +7,12 @@ const ws = require("ws");
 const wss = new ws.Server({ server });
 import { WebSocket } from "ws";
 const dns = require("node:dns");
+import Zone from "@permadeath/zone-node/dist/Zone/Zone";
+import { proxyToClientBroadcastRate } from "@permadeath/game/dist/consts";
+
+const zones: { [key: string]: Zone } = {};
+const broadcastRate = 500;
+let broadcastInterval: NodeJS.Timer;
 
 const connectToZoneNode = (address: string) => {
   const ws = new WebSocket(address);
@@ -15,7 +21,11 @@ const connectToZoneNode = (address: string) => {
     console.log("connected to zone node");
     ws.send("test message from proxy node");
   };
-  ws.onmessage = (message) => console.log(message.data);
+  ws.onmessage = (message) => {
+    const data = JSON.parse(message.data.toString());
+    zones[data.id] = data;
+    // console.log(zones[0].entities.mobile["1"].pos);
+  };
   ws.onerror = (error) => {
     console.log(error);
   };
@@ -32,6 +42,9 @@ wss.on("connection", (socket: any) => {
     console.log(data.toString());
     socket.send("message from proxy node");
   });
+  broadcastInterval = setInterval(() => {
+    socket.send(JSON.stringify(zones));
+  }, proxyToClientBroadcastRate);
 });
 
 dns.lookup(

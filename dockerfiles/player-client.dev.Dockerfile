@@ -7,6 +7,7 @@ COPY package.json .
 COPY packages/message-types ./packages/message-types
 COPY packages/game ./packages/game
 COPY packages/utils ./packages/utils
+COPY packages/zone-node ./packages/zone-node
 RUN yarn cache list
 WORKDIR /usr/src/app/packages/message-types
 RUN yarn install
@@ -15,6 +16,9 @@ WORKDIR /usr/src/app/packages/game
 RUN yarn install
 RUN yarn run build
 WORKDIR /usr/src/app/packages/utils
+RUN yarn install
+RUN yarn run build
+WORKDIR /usr/src/app/packages/zone-node
 RUN yarn install
 RUN yarn run build
 

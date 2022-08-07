@@ -12,7 +12,10 @@ const wss = new ws.Server({ server }, { clientTracking: true });
 import WebSocket from "ws";
 import { loopClg } from "@permadeath/utils/dist";
 import { Point } from "@permadeath/game/dist/base/Point.js";
-import { tickRate, updateBroadcastRate } from "@permadeath/game/dist/consts";
+import {
+  tickRate,
+  zoneToProxyBroadcastRate,
+} from "@permadeath/game/dist/consts";
 import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
 import Zone from "./Zone/Zone";
@@ -23,14 +26,12 @@ let zone: Zone;
 const connectedProxyNodes = {};
 
 wss.on("connection", (socket: WebSocket) => {
-  console.log("a client connected to this zone node");
-  // console.log(wss.clients);
+  console.log("a proxy connected to this zone node");
   broadcastInterval = setInterval(() => {
     wss.clients.forEach((client: WebSocket) => {
-      client.send(JSON.stringify(zone.entities));
-      // client.send("ayylmao");
+      client.send(JSON.stringify(zone));
     });
-  }, updateBroadcastRate);
+  }, zoneToProxyBroadcastRate);
 });
 
 if (process.env.MY_POD_NAME) {
@@ -38,8 +39,8 @@ if (process.env.MY_POD_NAME) {
   const podId = parseInt(podName.replace(/\D/g, ""));
   zone = new Zone(podId, new Point(0, 0), 100, 100);
   console.log(`Zone ${podId} created`);
-  fillZoneWithTestMobileEntities(5, zone);
-  // gameLoopInterval = createGameLoopInterval(zone, tickRate);
+  fillZoneWithTestMobileEntities(50, zone);
+  gameLoopInterval = createGameLoopInterval(zone, tickRate);
 }
 
 server.listen(port, () => console.log("listening on " + port));

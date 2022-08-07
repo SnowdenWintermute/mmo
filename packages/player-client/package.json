@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "web-vitals": "^2.1.4",
-    "axios": "0.27.2"
+    "axios": "0.27.2",
+    "@permadeath/zone-node": "*"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

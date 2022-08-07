@@ -1,7 +1,4 @@
-// import { Point } from "@permadeath/game";
 import { Point } from "@permadeath/game/dist/base/Point.js";
-// const { Point } = require("@permadeath/game");
-// const { Entity } = require("@permadeath/game");
 import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
 import { Territory } from "./types/Territory";
@@ -102,12 +99,5 @@ export default class Zone {
         entities: {},
       },
     };
-  }
-}
-
-export class Test {
-  somenum: number;
-  constructor(somenum: number) {
-    this.somenum = somenum;
   }
 }

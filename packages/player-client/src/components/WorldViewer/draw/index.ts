@@ -6,15 +6,14 @@ export default function draw(ctx: CanvasRenderingContext2D) {
   ctx.fillRect(0, 0, 100, 100);
 }
 
-export function createNextFrameDrawFunction(
-  mobileEntities: Array<MobileEntity>
-) {
-  console.log("new draw func created");
+export function createNextFrameDrawFunction(mobileEntities: {
+  [key: string]: MobileEntity;
+}) {
   return (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    mobileEntities.forEach((entity) => {
+    Object.keys(mobileEntities).forEach((key) => {
       ctx.fillStyle = "#FFF";
-      ctx.fillRect(entity.pos.x, entity.pos.y, 1, 1);
+      ctx.fillRect(mobileEntities[key].pos.x, mobileEntities[key].pos.y, 1, 1);
     });
   };
 }

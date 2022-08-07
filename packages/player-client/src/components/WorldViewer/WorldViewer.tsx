@@ -1,55 +1,46 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import Display from "./Display";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import Canvas from "../Canvas/Canvas";
-import draw, { createNextFrameDrawFunction } from "./draw";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
-import { Point } from "@permadeath/game/dist/base/Point";
-import { createRandomArrayMobileEntitiesInArea } from "@permadeath/utils/dist/index";
+import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 
 const WorldViewer = () => {
-  const [drawFunctionExists, setDrawFunctionExists] = useState<Boolean>(false);
-  const drawRef = useRef<(ctx: CanvasRenderingContext2D) => void>();
-  const drawInterval = useRef<NodeJS.Timer>();
-  const mobileEntitiesRef = useRef<MobileEntity[]>([]);
-  useEffect(() => {
-    const newEntities = createRandomArrayMobileEntitiesInArea(100, {
-      topLeft: new Point(0, 0),
-      botRight: new Point(1000, 1000),
-    });
-    mobileEntitiesRef.current = newEntities;
-    console.log(mobileEntitiesRef.current);
-  }, []);
+  const socketUrl = "ws://192.168.49.2/api";
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+  const [messageHistory, setMessageHistory] = useState<MessageEvent[]>([]);
+  const zones = useRef<{ [id: string]: Zone }>({});
+
+  const connectionStatus = {
+    [ReadyState.CONNECTING]: "Connecting",
+    [ReadyState.OPEN]: "Open",
+    [ReadyState.CLOSING]: "Closing",
+    [ReadyState.CLOSED]: "Closed",
+    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
+  }[readyState];
 
   useEffect(() => {
-    drawInterval.current = setInterval(() => {
-      const currDrawFunction = createNextFrameDrawFunction(
-        mobileEntitiesRef.current
+    if (lastMessage !== null) {
+      //   console.log(JSON.parse(lastMessage.data));
+      const newZoneData: { [key: string]: Zone } = JSON.parse(
+        lastMessage?.data
       );
-      drawRef.current = currDrawFunction;
-      setDrawFunctionExists(Boolean(drawRef.current));
-    }, 33);
+      Object.keys(newZoneData).forEach((key) => {
+        const zoneId: keyof typeof zones.current = key;
+        zones.current[zoneId] = newZoneData[key];
+      });
+      console.log(zones.current["0"].entities.mobile["1"].pos);
+    }
+  }, [lastMessage]);
 
-    return () => clearInterval(drawInterval.current);
-  }, []);
-
-  if (drawFunctionExists && drawRef.current)
-    return (
-      <div style={{ height: "0px" }}>
-        <h1 style={{ color: "white", position: "absolute", right: "20px" }}>
-          world viewer
-        </h1>
-        <Canvas
-          draw={drawRef.current}
-          frameRate={33}
-          height={window.innerHeight - 6}
-          width={window.innerWidth - 2}
-          className={""}
-        />
-      </div>
-    );
-  else {
-  }
-  return <p>"loading"</p>;
+  return (
+    <div>
+      {zones.current["0"] ? (
+        <Display mobileEntities={zones.current["0"]?.entities?.mobile} />
+      ) : (
+        <p>fetching data...</p>
+      )}
+    </div>
+  );
 };
 
 export default WorldViewer;

@@ -3,16 +3,14 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY yarn.lock .
 COPY packages/message-types ./packages/message-types
+COPY packages/utils ./packages/utils
+COPY packages/game ./packages/game
 WORKDIR /usr/src/app/packages/message-types
 RUN yarn install
 RUN yarn run build
-WORKDIR /usr/src/app
-COPY packages/game ./packages/game
 WORKDIR /usr/src/app/packages/game
 RUN yarn install
 RUN yarn run build
-WORKDIR /usr/src/app
-COPY packages/utils ./packages/utils
 WORKDIR /usr/src/app/packages/utils
 RUN yarn install
 RUN yarn run build
