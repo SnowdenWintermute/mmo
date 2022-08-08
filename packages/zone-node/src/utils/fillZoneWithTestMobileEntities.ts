@@ -1,6 +1,7 @@
 import { Point } from "@permadeath/game/dist/base/Point";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
 import { randomInt } from "@permadeath/utils/dist";
+import { worldHeight, worldWidth } from "@permadeath/game/dist/consts";
 import Zone from "../Zone/Zone";
 
 export default function fillZoneWithTestMobileEntities(
@@ -20,10 +21,42 @@ export default function fillZoneWithTestMobileEntities(
         (origin.x + bottomRightCorner.x) / 2,
         (origin.y + bottomRightCorner.y) / 2
       ),
-      randomInt(1, 5),
-      (pos: Point, speed: number) => {
-        pos.x += Math.random() >= 0.5 ? 1 : -1 * speed;
-        pos.y += Math.random() >= 0.5 ? 1 : -1 * speed;
-      }
+      randomInt(1, 2),
+      (pos: Point, destination: Point, speed: number) => {
+        if (
+          pos.x <= 0 ||
+          pos.y <= 0 ||
+          pos.x >= 1000 ||
+          pos.y >= 1000 ||
+          (pos.x === destination.x && pos.y === destination.y)
+        ) {
+          destination.x = randomInt(0, worldWidth);
+          destination.y = randomInt(0, worldHeight);
+        }
+
+        const elapsed = 33;
+
+        // On starting movement
+        const distance = Math.sqrt(
+          Math.pow(destination.x - pos.x, 2) +
+            Math.pow(destination.y - pos.y, 2)
+        );
+        const directionX = (destination.x - pos.x) / distance;
+        const directionY = (destination.y - pos.y) / distance;
+
+        const newX = pos.x + directionX * speed;
+        const newY = pos.y + directionY * speed;
+        if (
+          Math.sqrt(Math.pow(newX - pos.x, 2) + Math.pow(newY - pos.y, 2)) >=
+          distance
+        ) {
+          pos.x = destination.x;
+          pos.y = destination.y;
+        } else {
+          pos.x = newX;
+          pos.y = newY;
+        }
+      },
+      new Point(randomInt(0, worldWidth), randomInt(0, worldHeight))
     );
 }
