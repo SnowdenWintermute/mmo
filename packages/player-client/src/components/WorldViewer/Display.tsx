@@ -21,9 +21,8 @@ const Display = (props: Props) => {
       // console.log(props.mobileEntities["1"].pos);
       setDrawFunctionExists(Boolean(drawRef.current));
     }, 33);
-
     return () => clearInterval(drawInterval.current);
-  }, []);
+  }, [props.mobileEntities]);
 
   if (drawFunctionExists && drawRef.current)
     return (

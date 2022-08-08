@@ -39,7 +39,7 @@ if (process.env.MY_POD_NAME) {
   const podId = parseInt(podName.replace(/\D/g, ""));
   zone = new Zone(podId, new Point(0, 0), 100, 100);
   console.log(`Zone ${podId} created`);
-  fillZoneWithTestMobileEntities(50, zone);
+  fillZoneWithTestMobileEntities(100, zone);
   gameLoopInterval = createGameLoopInterval(zone, tickRate);
 }
 

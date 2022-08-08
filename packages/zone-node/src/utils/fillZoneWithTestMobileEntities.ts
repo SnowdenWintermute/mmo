@@ -17,8 +17,8 @@ export default function fillZoneWithTestMobileEntities(
     zone.entities.mobile[i] = new MobileEntity(
       "entity " + i,
       new Point(
-        randomInt(origin.x, bottomRightCorner.x),
-        randomInt(origin.y, bottomRightCorner.y)
+        (origin.x + bottomRightCorner.x) / 2,
+        (origin.y + bottomRightCorner.y) / 2
       ),
       randomInt(1, 5),
       (pos: Point, speed: number) => {

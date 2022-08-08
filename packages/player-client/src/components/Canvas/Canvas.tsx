@@ -21,7 +21,6 @@ const Canvas = (props: Props) => {
         const context = canvas.getContext("2d");
         if (context) draw(context);
         animationFrameIdRef.current = requestAnimationFrame(() => {});
-        console.log("rendered frame");
       }
     }, frameRate);
     return () => {
