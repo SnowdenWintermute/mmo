@@ -24,7 +24,6 @@ const connectToZoneNode = (address: string) => {
   ws.onmessage = (message) => {
     const data = JSON.parse(message.data.toString());
     zones[data.id] = data;
-    // console.log(zones[0].entities.mobile["1"].pos);
   };
   ws.onerror = (error) => {
     console.log(error);

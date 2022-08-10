@@ -16,6 +16,7 @@ const ws = require("ws");
 const wss = new ws.Server({ server }, { clientTracking: true });
 const Point_js_1 = require("@permadeath/game/dist/base/Point.js");
 const consts_1 = require("@permadeath/game/dist/consts");
+const createGameLoopInterval_1 = __importDefault(require("./gameLoop/createGameLoopInterval"));
 const fillZoneWithTestMobileEntities_1 = __importDefault(require("./utils/fillZoneWithTestMobileEntities"));
 const Zone_1 = __importDefault(require("./Zone/Zone"));
 let gameLoopInterval;
@@ -23,21 +24,19 @@ let broadcastInterval;
 let zone;
 const connectedProxyNodes = {};
 wss.on("connection", (socket) => {
-    console.log("a client connected to this zone node");
-    // console.log(wss.clients);
+    console.log("a proxy connected to this zone node");
     broadcastInterval = setInterval(() => {
         wss.clients.forEach((client) => {
-            client.send(JSON.stringify(zone.entities));
-            // client.send("ayylmao");
+            client.send(JSON.stringify(zone));
         });
-    }, consts_1.updateBroadcastRate);
+    }, consts_1.zoneToProxyBroadcastRate);
 });
 if (process.env.MY_POD_NAME) {
     const podName = process.env.MY_POD_NAME;
     const podId = parseInt(podName.replace(/\D/g, ""));
-    zone = new Zone_1.default(podId, new Point_js_1.Point(0, 0), 100, 100);
+    zone = new Zone_1.default(podId, new Point_js_1.Point(podId * 100, 0), 100, 100);
     console.log(`Zone ${podId} created`);
-    (0, fillZoneWithTestMobileEntities_1.default)(5, zone);
-    // gameLoopInterval = createGameLoopInterval(zone, tickRate);
+    (0, fillZoneWithTestMobileEntities_1.default)(200, zone);
+    gameLoopInterval = (0, createGameLoopInterval_1.default)(zone, consts_1.tickRate);
 }
 server.listen(port, () => console.log("listening on " + port));

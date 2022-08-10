@@ -16,11 +16,25 @@ export default class Zone {
     players: Object;
     borderingZoneEntities: Object;
     borderThickness: number;
-    borders: Object;
-    corners: Object;
+    borders: {
+        [key: string]: {
+            origin: Point;
+            width: number;
+            height: number;
+            entities: {
+                [key: string]: Entity | MobileEntity;
+            };
+        };
+    };
+    corners: {
+        [key: string]: {
+            width: number;
+            height: number;
+            origin: Point;
+            entities: {
+                [key: string]: Entity | MobileEntity;
+            };
+        };
+    };
     constructor(id: number, origin: Point, width: number, height: number);
-}
-export declare class Test {
-    somenum: number;
-    constructor(somenum: number);
 }

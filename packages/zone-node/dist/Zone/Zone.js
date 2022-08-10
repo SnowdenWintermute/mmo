@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Test = void 0;
-// import { Point } from "@permadeath/game";
 const Point_js_1 = require("@permadeath/game/dist/base/Point.js");
 const consts_1 = require("@permadeath/game/dist/consts");
 class Zone {
@@ -55,21 +53,27 @@ class Zone {
             },
         };
         this.corners = {
-            width,
-            height: this.borderThickness,
             northEast: {
+                width,
+                height: this.borderThickness,
                 origin: new Point_js_1.Point(this.territory.origin.x + this.territory.width - this.borderThickness, this.territory.origin.y),
                 entities: {},
             },
             northWest: {
+                width,
+                height: this.borderThickness,
                 origin: new Point_js_1.Point(this.territory.origin.x, this.territory.origin.y),
                 entities: {},
             },
             southEast: {
+                width,
+                height: this.borderThickness,
                 origin: new Point_js_1.Point(this.territory.origin.x + this.territory.width, this.territory.origin.y + this.territory.height - this.borderThickness),
                 entities: {},
             },
             southWest: {
+                width,
+                height: this.borderThickness,
                 origin: new Point_js_1.Point(this.territory.origin.x, this.territory.origin.y + this.territory.height - this.borderThickness),
                 entities: {},
             },
@@ -77,9 +81,3 @@ class Zone {
     }
 }
 exports.default = Zone;
-class Test {
-    constructor(somenum) {
-        this.somenum = somenum;
-    }
-}
-exports.Test = Test;

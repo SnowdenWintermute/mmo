@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Canvas from "../Canvas/Canvas";
 import { createNextFrameDrawFunction } from "./draw";
-import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
+import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 
 interface Props {
-  mobileEntities: { [key: string]: MobileEntity };
+  zones: { [key: string]: Zone };
+  connectionStatus: string;
 }
 
 const Display = (props: Props) => {
@@ -14,22 +15,28 @@ const Display = (props: Props) => {
 
   useEffect(() => {
     drawInterval.current = setInterval(() => {
-      const currDrawFunction = createNextFrameDrawFunction(
-        props.mobileEntities
-      );
+      const currDrawFunction = createNextFrameDrawFunction(props.zones);
       drawRef.current = currDrawFunction;
-      // console.log(props.mobileEntities["1"].pos);
       setDrawFunctionExists(Boolean(drawRef.current));
     }, 33);
     return () => clearInterval(drawInterval.current);
-  }, [props.mobileEntities]);
+  }, [props.zones]);
 
   if (drawFunctionExists && drawRef.current)
     return (
       <div style={{ height: "0px" }}>
-        <h1 style={{ color: "white", position: "absolute", right: "20px" }}>
+        <p
+          style={{
+            color: "white",
+            position: "absolute",
+            top: "10px",
+            right: "20px",
+          }}
+        >
           world viewer
-        </h1>
+          <br />
+          websocket status: {props.connectionStatus.toLowerCase()}
+        </p>
         <Canvas
           draw={drawRef.current}
           frameRate={33}

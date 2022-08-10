@@ -15,8 +15,8 @@ export default function fillZoneWithTestMobileEntities(
     origin.y + territory.height
   );
   for (let i = numberOfEntities; i > 0; i--)
-    zone.entities.mobile[i] = new MobileEntity(
-      "entity " + i,
+    zone.entities.mobile[i - 1] = new MobileEntity(
+      "entity " + (i - 1),
       new Point(
         (origin.x + bottomRightCorner.x) / 2,
         (origin.y + bottomRightCorner.y) / 2
@@ -35,8 +35,6 @@ export default function fillZoneWithTestMobileEntities(
         }
 
         const elapsed = 33;
-
-        // On starting movement
         const distance = Math.sqrt(
           Math.pow(destination.x - pos.x, 2) +
             Math.pow(destination.y - pos.y, 2)

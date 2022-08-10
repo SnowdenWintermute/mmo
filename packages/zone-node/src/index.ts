@@ -37,18 +37,10 @@ wss.on("connection", (socket: WebSocket) => {
 if (process.env.MY_POD_NAME) {
   const podName = process.env.MY_POD_NAME;
   const podId = parseInt(podName.replace(/\D/g, ""));
-  zone = new Zone(podId, new Point(0, 0), 100, 100);
+  zone = new Zone(podId, new Point(podId * 300, 0), 300, 300);
   console.log(`Zone ${podId} created`);
-  fillZoneWithTestMobileEntities(2000, zone);
+  fillZoneWithTestMobileEntities(200, zone);
   gameLoopInterval = createGameLoopInterval(zone, tickRate);
-  setInterval(
-    () =>
-      console.log(
-        zone.entities.mobile["1"].pos,
-        zone.entities.mobile["1"].destination
-      ),
-    3000
-  );
 }
 
 server.listen(port, () => console.log("listening on " + port));

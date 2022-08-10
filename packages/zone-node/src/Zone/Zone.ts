@@ -13,8 +13,22 @@ export default class Zone {
   players: Object;
   borderingZoneEntities: Object;
   borderThickness: number;
-  borders: Object;
-  corners: Object;
+  borders: {
+    [key: string]: {
+      origin: Point;
+      width: number;
+      height: number;
+      entities: { [key: string]: Entity | MobileEntity };
+    };
+  };
+  corners: {
+    [key: string]: {
+      width: number;
+      height: number;
+      origin: Point;
+      entities: { [key: string]: Entity | MobileEntity };
+    };
+  };
   constructor(id: number, origin: Point, width: number, height: number) {
     this.id = id;
     this.territory = {
@@ -55,25 +69,25 @@ export default class Zone {
         entities: {},
       },
       east: {
-        origin: new Point(this.territory.origin.x, this.territory.origin.y),
-        height: this.territory.height,
-        width: this.borderThickness,
-        entities: {},
-      },
-      west: {
         origin: new Point(
-          this.territory.width - this.borderThickness,
+          this.territory.origin.x + this.territory.width - this.borderThickness,
           this.territory.origin.y
         ),
         height: this.territory.height,
         width: this.borderThickness,
         entities: {},
       },
+      west: {
+        origin: new Point(this.territory.origin.x, this.territory.origin.y),
+        height: this.territory.height,
+        width: this.borderThickness,
+        entities: {},
+      },
     };
     this.corners = {
-      width,
-      height: this.borderThickness,
       northEast: {
+        width,
+        height: this.borderThickness,
         origin: new Point(
           this.territory.origin.x + this.territory.width - this.borderThickness,
           this.territory.origin.y
@@ -81,10 +95,14 @@ export default class Zone {
         entities: {},
       },
       northWest: {
+        width,
+        height: this.borderThickness,
         origin: new Point(this.territory.origin.x, this.territory.origin.y),
         entities: {},
       },
       southEast: {
+        width,
+        height: this.borderThickness,
         origin: new Point(
           this.territory.origin.x + this.territory.width,
           this.territory.origin.y + this.territory.height - this.borderThickness
@@ -92,6 +110,8 @@ export default class Zone {
         entities: {},
       },
       southWest: {
+        width,
+        height: this.borderThickness,
         origin: new Point(
           this.territory.origin.x,
           this.territory.origin.y + this.territory.height - this.borderThickness

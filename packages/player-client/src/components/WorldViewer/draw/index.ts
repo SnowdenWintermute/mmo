@@ -1,19 +1,19 @@
-import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
+import Zone from "@permadeath/zone-node/dist/Zone/Zone";
+import drawBorders from "./drawBorders";
+import drawMobs from "./drawMobs";
+import drawTerritory from "./drawTerritory";
 
-export default function draw(ctx: CanvasRenderingContext2D) {
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.fillStyle = "#000000";
-  ctx.fillRect(0, 0, 100, 100);
-}
-
-export function createNextFrameDrawFunction(mobileEntities: {
-  [key: string]: MobileEntity;
-}) {
+export function createNextFrameDrawFunction(zones: { [key: string]: Zone }) {
   return (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    Object.keys(mobileEntities).forEach((key) => {
-      ctx.fillStyle = "#FFF";
-      ctx.fillRect(mobileEntities[key].pos.x, mobileEntities[key].pos.y, 1, 1);
-    });
+    for (
+      let zoneIndex = 0;
+      zoneIndex < Object.keys(zones).length;
+      zoneIndex++
+    ) {
+      drawTerritory(ctx, zones[zoneIndex]);
+      drawBorders(ctx, zones[zoneIndex]);
+      drawMobs(ctx, zones[zoneIndex]);
+    }
   };
 }

@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Display from "./Display";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
 import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 
 const WorldViewer = () => {
@@ -20,7 +19,6 @@ const WorldViewer = () => {
 
   useEffect(() => {
     if (lastMessage !== null) {
-      //   console.log(JSON.parse(lastMessage.data));
       const newZoneData: { [key: string]: Zone } = JSON.parse(
         lastMessage?.data
       );
@@ -28,16 +26,15 @@ const WorldViewer = () => {
         const zoneId: keyof typeof zones.current = key;
         zones.current[zoneId] = newZoneData[key];
       });
-      console.log(zones.current["0"].entities.mobile["1"].pos);
     }
   }, [lastMessage]);
 
   return (
     <div>
       {zones.current["0"] ? (
-        <Display mobileEntities={zones.current["0"]?.entities?.mobile} />
+        <Display zones={zones.current} connectionStatus={connectionStatus} />
       ) : (
-        <p>fetching data...</p>
+        <p>{connectionStatus}...</p>
       )}
     </div>
   );
