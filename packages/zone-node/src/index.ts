@@ -1,15 +1,12 @@
 require("dotenv").config();
-const dns = require("dns");
 const port = process.env.PORT;
 const express = require("express");
-const axios = require("axios");
 const app = express();
 const server = require("http").createServer(app);
+const redis = require("redis");
 const { add } = require("@permadeath/message-types");
+const keys = require("./keys");
 console.log(add(1, 2, 3));
-const ws = require("ws");
-const wss = new ws.Server({ server }, { clientTracking: true });
-import WebSocket from "ws";
 import { loopClg } from "@permadeath/utils/dist";
 import { Point } from "@permadeath/game/dist/base/Point.js";
 import {
@@ -25,22 +22,31 @@ let broadcastInterval: NodeJS.Timer;
 let zone: Zone;
 const connectedProxyNodes = {};
 
-wss.on("connection", (socket: WebSocket) => {
-  console.log("a proxy connected to this zone node");
-  broadcastInterval = setInterval(() => {
-    wss.clients.forEach((client: WebSocket) => {
-      client.send(JSON.stringify(zone));
-    });
-  }, zoneToProxyBroadcastRate);
+const publisher = redis.createClient({
+  host: keys.redisHost,
+  port: keys.redisPort,
+  retry_strategy: () => 1000,
 });
 
 if (process.env.MY_POD_NAME) {
   const podName = process.env.MY_POD_NAME;
-  const podId = parseInt(podName.replace(/\D/g, ""));
-  zone = new Zone(podId, new Point(podId * 300, 0), 300, 300);
-  console.log(`Zone ${podId} created`);
-  fillZoneWithTestMobileEntities(200, zone);
-  gameLoopInterval = createGameLoopInterval(zone, tickRate);
-}
+  (async () => {
+    const podId = parseInt(podName.replace(/\D/g, ""));
+    zone = new Zone(podId, new Point(podId * 300, 0), 300, 300);
+    console.log(`Zone ${podId} created`);
+    fillZoneWithTestMobileEntities(200, zone);
+    gameLoopInterval = createGameLoopInterval(zone, tickRate);
 
+    const article = {
+      id: "123456",
+      name: "Using Redis Pub/Sub with Node.js",
+      blog: "Logrocket Blog",
+    };
+    await publisher.connect();
+    broadcastInterval = setInterval(
+      publisher.publish("zone-update", JSON.stringify(zone)),
+      zoneToProxyBroadcastRate
+    );
+  })();
+}
 server.listen(port, () => console.log("listening on " + port));
