@@ -33,4 +33,4 @@ spec:
                 # UPDATE SERVICE FIELDS
                 name: proxy-node-cluster-ip
                 port:
-                  number: 5002
+                  number: 80

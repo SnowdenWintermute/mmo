@@ -23,8 +23,7 @@ let zone: Zone;
 const connectedProxyNodes = {};
 
 const publisher = redis.createClient({
-  host: keys.redisHost,
-  port: keys.redisPort,
+  url: `redis://${keys.redisHost}:${keys.redisPort}`,
   retry_strategy: () => 1000,
 });
 
@@ -37,16 +36,10 @@ if (process.env.MY_POD_NAME) {
     fillZoneWithTestMobileEntities(200, zone);
     gameLoopInterval = createGameLoopInterval(zone, tickRate);
 
-    const article = {
-      id: "123456",
-      name: "Using Redis Pub/Sub with Node.js",
-      blog: "Logrocket Blog",
-    };
     await publisher.connect();
-    broadcastInterval = setInterval(
-      publisher.publish("zone-update", JSON.stringify(zone)),
-      zoneToProxyBroadcastRate
-    );
+    broadcastInterval = setInterval(() => {
+      publisher.publish("zone-updates", JSON.stringify(zone));
+    }, zoneToProxyBroadcastRate);
   })();
 }
 server.listen(port, () => console.log("listening on " + port));

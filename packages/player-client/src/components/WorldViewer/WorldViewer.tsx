@@ -5,7 +5,9 @@ import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 
 const WorldViewer = () => {
   const socketUrl = "ws://192.168.49.2/api";
-  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl, {
+    shouldReconnect: (closeEvent) => true,
+  });
   const [messageHistory, setMessageHistory] = useState<MessageEvent[]>([]);
   const zones = useRef<{ [id: string]: Zone }>({});
 

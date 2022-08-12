@@ -16,7 +16,7 @@ spec:
         - name: proxy-node
           image: snowd3n/permadeath-proxy-node
           ports:
-            - containerPort: 5002
+            - containerPort: 80
           env:
             - name: PORT
               value: "80"

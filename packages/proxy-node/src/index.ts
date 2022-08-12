@@ -18,14 +18,14 @@ const redis = require("redis");
 
 (async () => {
   const client = redis.createClient({
-    host: keys.redisHost,
-    port: keys.redisPort,
+    url: `redis://${keys.redisHost}:${keys.redisPort}`,
     retry_strategy: () => 1000,
   });
   const subscriber = client.duplicate();
   await subscriber.connect();
   await subscriber.subscribe("zone-updates", (message: string) => {
-    console.log(message); // 'message'
+    const updatedZone = JSON.parse(message);
+    zones[updatedZone.id] = updatedZone;
   });
 })();
 
