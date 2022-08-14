@@ -5,7 +5,7 @@ export default function drawTerritory(
   zone: Zone
 ) {
   ctx.strokeStyle = "rgba(28, 182, 234, 0.62)";
-  const { origin, width, height } = zone.territory;
+  const { origin, width, height } = zone.territory.current;
   ctx.beginPath();
   ctx.rect(origin.x, origin.y, width, height);
   ctx.stroke();

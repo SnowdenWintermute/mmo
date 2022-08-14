@@ -16,7 +16,6 @@
     "@permadeath/game": "*",
     "@permadeath/message-types": "*",
     "@permadeath/zone-node": "*",
-    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "redis": "^4.2.0",
     "ws": "^8.2.3"

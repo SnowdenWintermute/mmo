@@ -1,0 +1,4 @@
+1. Subscribe to updated zone states
+2. Detect when new zones come online
+3. Allocate new zones territory in the world
+4. Tell zones when to start merging (or let them do it? is it better to keep all zone creation/deletion logic here?)

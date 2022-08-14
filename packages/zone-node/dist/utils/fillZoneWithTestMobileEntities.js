@@ -6,8 +6,8 @@ const dist_1 = require("@permadeath/utils/dist");
 const consts_1 = require("@permadeath/game/dist/consts");
 function fillZoneWithTestMobileEntities(numberOfEntities, zone) {
     const { territory } = zone;
-    const { origin } = territory;
-    const bottomRightCorner = new Point_1.Point(origin.x + territory.width, origin.y + territory.height);
+    const { origin } = territory.current;
+    const bottomRightCorner = new Point_1.Point(origin.x + territory.current.width, origin.y + territory.current.height);
     for (let i = numberOfEntities; i > 0; i--)
         zone.entities.mobile[i - 1] = new MobileEntity_1.MobileEntity("entity " + (i - 1), new Point_1.Point((origin.x + bottomRightCorner.x) / 2, (origin.y + bottomRightCorner.y) / 2), (0, dist_1.randomInt)(1, 2), (pos, destination, speed) => {
             if (pos.x <= 0 ||

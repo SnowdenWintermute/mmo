@@ -9,10 +9,10 @@ export default function fillZoneWithTestMobileEntities(
   zone: Zone
 ) {
   const { territory } = zone;
-  const { origin } = territory;
+  const { origin } = territory.current;
   const bottomRightCorner = new Point(
-    origin.x + territory.width,
-    origin.y + territory.height
+    origin.x + territory.current.width,
+    origin.y + territory.current.height
   );
   for (let i = numberOfEntities; i > 0; i--)
     zone.entities.mobile[i - 1] = new MobileEntity(

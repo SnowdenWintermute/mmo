@@ -3,8 +3,17 @@ import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
 import { Territory } from "./types/Territory";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
+import { Border } from "./types/Border";
+export enum ZoneStatus {
+  UNASSIGNED, // has no assigned territory
+  NOMINAL, // operating within min/max cpu limits
+  REQUESTING_SUPPORT, // operating beyond the upper cpu threshold
+  SHRINKING, // handing off entities and territory to a bordering node
+  GROWING, // accepting entities and territory from a bording node
+}
 export default class Zone {
   id: number;
+  status: ZoneStatus;
   territory: Territory;
   entities: {
     static: { [name: string]: Entity };
@@ -13,14 +22,7 @@ export default class Zone {
   players: Object;
   borderingZoneEntities: Object;
   borderThickness: number;
-  borders: {
-    [key: string]: {
-      origin: Point;
-      width: number;
-      height: number;
-      entities: { [key: string]: Entity | MobileEntity };
-    };
-  };
+  borders: { [key: string]: Border };
   corners: {
     [key: string]: {
       width: number;
@@ -31,10 +33,18 @@ export default class Zone {
   };
   constructor(id: number, origin: Point, width: number, height: number) {
     this.id = id;
+    this.status = ZoneStatus.UNASSIGNED;
     this.territory = {
-      origin: origin,
-      width: width,
-      height: height,
+      current: {
+        origin: origin,
+        width: width,
+        height: height,
+      },
+      target: {
+        origin: origin,
+        width: width,
+        height: height,
+      },
     };
     this.entities = {
       static: {},
@@ -54,33 +64,45 @@ export default class Zone {
     this.borderThickness = playerMaxViewDistance;
     this.borders = {
       north: {
-        origin: new Point(this.territory.origin.x, this.territory.origin.y),
+        origin: new Point(
+          this.territory.current.origin.x,
+          this.territory.current.origin.y
+        ),
         height: this.borderThickness,
-        width: this.territory.width,
+        width: this.territory.current.width,
+        borderingZoneIds: null,
         entities: {},
       },
       south: {
         origin: new Point(
-          this.territory.origin.x,
-          this.territory.height - this.borderThickness
+          this.territory.current.origin.x,
+          this.territory.current.height - this.borderThickness
         ),
         height: this.borderThickness,
-        width: this.territory.width,
+        width: this.territory.current.width,
+        borderingZoneIds: null,
         entities: {},
       },
       east: {
         origin: new Point(
-          this.territory.origin.x + this.territory.width - this.borderThickness,
-          this.territory.origin.y
+          this.territory.current.origin.x +
+            this.territory.current.width -
+            this.borderThickness,
+          this.territory.current.origin.y
         ),
-        height: this.territory.height,
+        height: this.territory.current.height,
         width: this.borderThickness,
+        borderingZoneIds: null,
         entities: {},
       },
       west: {
-        origin: new Point(this.territory.origin.x, this.territory.origin.y),
-        height: this.territory.height,
+        origin: new Point(
+          this.territory.current.origin.x,
+          this.territory.current.origin.y
+        ),
+        height: this.territory.current.height,
         width: this.borderThickness,
+        borderingZoneIds: null,
         entities: {},
       },
     };
@@ -89,23 +111,30 @@ export default class Zone {
         width,
         height: this.borderThickness,
         origin: new Point(
-          this.territory.origin.x + this.territory.width - this.borderThickness,
-          this.territory.origin.y
+          this.territory.current.origin.x +
+            this.territory.current.width -
+            this.borderThickness,
+          this.territory.current.origin.y
         ),
         entities: {},
       },
       northWest: {
         width,
         height: this.borderThickness,
-        origin: new Point(this.territory.origin.x, this.territory.origin.y),
+        origin: new Point(
+          this.territory.current.origin.x,
+          this.territory.current.origin.y
+        ),
         entities: {},
       },
       southEast: {
         width,
         height: this.borderThickness,
         origin: new Point(
-          this.territory.origin.x + this.territory.width,
-          this.territory.origin.y + this.territory.height - this.borderThickness
+          this.territory.current.origin.x + this.territory.current.width,
+          this.territory.current.origin.y +
+            this.territory.current.height -
+            this.borderThickness
         ),
         entities: {},
       },
@@ -113,8 +142,10 @@ export default class Zone {
         width,
         height: this.borderThickness,
         origin: new Point(
-          this.territory.origin.x,
-          this.territory.origin.y + this.territory.height - this.borderThickness
+          this.territory.current.origin.x,
+          this.territory.current.origin.y +
+            this.territory.current.height -
+            this.borderThickness
         ),
         entities: {},
       },

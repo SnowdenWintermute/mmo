@@ -1,13 +1,9 @@
-require("dotenv").config();
 const port = process.env.PORT;
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const redis = require("redis");
-const { add } = require("@permadeath/message-types");
 const keys = require("./keys");
-console.log(add(1, 2, 3));
-import { loopClg } from "@permadeath/utils/dist";
 import { Point } from "@permadeath/game/dist/base/Point.js";
 import {
   tickRate,
@@ -42,4 +38,6 @@ if (process.env.MY_POD_NAME) {
     }, zoneToProxyBroadcastRate);
   })();
 }
-server.listen(port, () => console.log("listening on " + port));
+server.listen(port, () =>
+  console.log(process.env.MY_POD_NAME + " listening on " + port)
+);
