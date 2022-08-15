@@ -9,6 +9,7 @@ import {
   tickRate,
   zoneToProxyBroadcastRate,
 } from "@permadeath/game/dist/consts";
+import createNewMobileEntityAtLocation from "./entity-creation/createMobileEntityAtLocation";
 import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
 import Zone from "./Zone/Zone";
@@ -16,7 +17,6 @@ import Zone from "./Zone/Zone";
 let gameLoopInterval: NodeJS.Timer;
 let broadcastInterval: NodeJS.Timer;
 let zone: Zone;
-const connectedProxyNodes = {};
 
 const publisher = redis.createClient({
   url: `redis://${keys.redisHost}:${keys.redisPort}`,
@@ -31,7 +31,15 @@ if (process.env.MY_POD_NAME) {
     console.log(`Zone ${podId} created`);
     fillZoneWithTestMobileEntities(200, zone);
     gameLoopInterval = createGameLoopInterval(zone, tickRate);
-
+    const subscriber = publisher.duplicate();
+    await subscriber.subscribe(
+      `zone-${zone.id}-proxied-client-requests`,
+      (message: string) => {
+        const parsedMessage = JSON.parse(message);
+        if (parsedMessage.type === "create-mobile-entity-at-location")
+          createNewMobileEntityAtLocation(zone, parsedMessage.data);
+      }
+    );
     await publisher.connect();
     broadcastInterval = setInterval(() => {
       publisher.publish("zone-updates", JSON.stringify(zone));

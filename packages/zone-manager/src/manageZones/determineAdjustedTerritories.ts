@@ -1,6 +1,9 @@
 import { Territory } from "@permadeath/zone-node/dist/Zone/types/Territory";
+import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 
-export default function determineAdjustedTerritories(zones) {
+export default function determineAdjustedTerritories(zones: {
+  [key: string]: Zone;
+}) {
   const adjustedTerritories = {};
   let zoneEntitiesXPositions: number[] = [];
   let zoneEntitiesYPositions: number[] = [];
