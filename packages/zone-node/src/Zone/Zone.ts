@@ -13,6 +13,7 @@ export enum ZoneStatus {
 }
 export default class Zone {
   id: number;
+  ip: string;
   status: ZoneStatus;
   territory: Territory;
   entities: {
@@ -31,8 +32,15 @@ export default class Zone {
       entities: { [key: string]: Entity | MobileEntity };
     };
   };
-  constructor(id: number, origin: Point, width: number, height: number) {
+  constructor(
+    id: number,
+    ip: string,
+    origin: Point,
+    width: number,
+    height: number
+  ) {
     this.id = id;
+    this.ip = ip;
     this.status = ZoneStatus.UNASSIGNED;
     this.territory = {
       current: {

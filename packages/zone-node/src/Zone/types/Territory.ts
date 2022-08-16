@@ -1,5 +1,4 @@
 import { Point } from "@permadeath/game/dist/base/Point";
-// const { Point } = require("@permadeath/game");
 
 export type Territory = {
   current: {

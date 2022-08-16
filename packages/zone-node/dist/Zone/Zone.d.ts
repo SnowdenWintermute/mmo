@@ -2,6 +2,7 @@ import { Point } from "@permadeath/game/dist/base/Point.js";
 import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { Territory } from "./types/Territory";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
+import { Border } from "./types/Border";
 export declare enum ZoneStatus {
     UNASSIGNED = 0,
     NOMINAL = 1,
@@ -11,6 +12,7 @@ export declare enum ZoneStatus {
 }
 export default class Zone {
     id: number;
+    ip: string;
     status: ZoneStatus;
     territory: Territory;
     entities: {
@@ -25,14 +27,7 @@ export default class Zone {
     borderingZoneEntities: Object;
     borderThickness: number;
     borders: {
-        [key: string]: {
-            origin: Point;
-            width: number;
-            height: number;
-            entities: {
-                [key: string]: Entity | MobileEntity;
-            };
-        };
+        [key: string]: Border;
     };
     corners: {
         [key: string]: {
@@ -44,5 +39,5 @@ export default class Zone {
             };
         };
     };
-    constructor(id: number, origin: Point, width: number, height: number);
+    constructor(id: number, ip: string, origin: Point, width: number, height: number);
 }

@@ -1,14 +1,17 @@
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
 import { Point } from "@permadeath/game/dist/base/Point";
 
-export const randomInt = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
+export const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export const loopClg = (props: any, loopTime: number) => {
   setInterval(() => {
     console.log(props);
   }, loopTime);
   //
+};
+
+export const between = (x: number, min: number, max: number) => {
+  return x >= min && x <= max;
 };
 
 // export const createRandomArrayMobileEntitiesInArea = (

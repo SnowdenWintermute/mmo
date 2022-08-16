@@ -12,8 +12,9 @@ var ZoneStatus;
     ZoneStatus[ZoneStatus["GROWING"] = 4] = "GROWING";
 })(ZoneStatus = exports.ZoneStatus || (exports.ZoneStatus = {}));
 class Zone {
-    constructor(id, origin, width, height) {
+    constructor(id, ip, origin, width, height) {
         this.id = id;
+        this.ip = ip;
         this.status = ZoneStatus.UNASSIGNED;
         this.territory = {
             current: {
@@ -46,28 +47,34 @@ class Zone {
         this.borders = {
             north: {
                 origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y),
-                height: this.borderThickness,
                 width: this.territory.current.width,
+                height: this.borderThickness,
+                borderingZoneIds: null,
                 entities: {},
             },
             south: {
-                origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.height - this.borderThickness),
-                height: this.borderThickness,
+                origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y +
+                    this.territory.current.height -
+                    this.borderThickness),
                 width: this.territory.current.width,
+                height: this.borderThickness,
+                borderingZoneIds: null,
                 entities: {},
             },
             east: {
                 origin: new Point_js_1.Point(this.territory.current.origin.x +
                     this.territory.current.width -
                     this.borderThickness, this.territory.current.origin.y),
-                height: this.territory.current.height,
                 width: this.borderThickness,
+                height: this.territory.current.height,
+                borderingZoneIds: null,
                 entities: {},
             },
             west: {
                 origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y),
-                height: this.territory.current.height,
                 width: this.borderThickness,
+                height: this.territory.current.height,
+                borderingZoneIds: null,
                 entities: {},
             },
         };
