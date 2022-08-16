@@ -28,7 +28,7 @@ const Display = (props: Props) => {
         <p
           style={{
             color: "white",
-            position: "absolute",
+            position: "fixed",
             top: "10px",
             right: "20px",
           }}
@@ -40,8 +40,8 @@ const Display = (props: Props) => {
         <Canvas
           draw={drawRef.current}
           frameRate={33}
-          height={window.innerHeight - 6}
-          width={window.innerWidth - 2}
+          height={1000}
+          width={1000}
           className={""}
         />
       </div>

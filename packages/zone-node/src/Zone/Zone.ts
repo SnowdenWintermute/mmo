@@ -68,18 +68,20 @@ export default class Zone {
           this.territory.current.origin.x,
           this.territory.current.origin.y
         ),
-        height: this.borderThickness,
         width: this.territory.current.width,
+        height: this.borderThickness,
         borderingZoneIds: null,
         entities: {},
       },
       south: {
         origin: new Point(
           this.territory.current.origin.x,
-          this.territory.current.height - this.borderThickness
+          this.territory.current.origin.y +
+            this.territory.current.height -
+            this.borderThickness
         ),
-        height: this.borderThickness,
         width: this.territory.current.width,
+        height: this.borderThickness,
         borderingZoneIds: null,
         entities: {},
       },
@@ -90,8 +92,8 @@ export default class Zone {
             this.borderThickness,
           this.territory.current.origin.y
         ),
-        height: this.territory.current.height,
         width: this.borderThickness,
+        height: this.territory.current.height,
         borderingZoneIds: null,
         entities: {},
       },
@@ -100,8 +102,8 @@ export default class Zone {
           this.territory.current.origin.x,
           this.territory.current.origin.y
         ),
-        height: this.territory.current.height,
         width: this.borderThickness,
+        height: this.territory.current.height,
         borderingZoneIds: null,
         entities: {},
       },

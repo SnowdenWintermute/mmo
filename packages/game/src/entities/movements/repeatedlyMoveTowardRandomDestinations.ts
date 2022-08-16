@@ -10,8 +10,8 @@ export default function repeatedlyMoveTowardRandomDestinations(
   if (
     pos.x <= 0 ||
     pos.y <= 0 ||
-    pos.x >= 1000 ||
-    pos.y >= 1000 ||
+    pos.x >= worldWidth ||
+    pos.y >= worldHeight ||
     (pos.x === destination.x && pos.y === destination.y)
   ) {
     destination.x = randomInt(0, worldWidth);

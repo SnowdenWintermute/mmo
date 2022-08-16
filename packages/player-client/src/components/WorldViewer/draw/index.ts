@@ -11,9 +11,16 @@ export function createNextFrameDrawFunction(zones: { [key: string]: Zone }) {
       zoneIndex < Object.keys(zones).length;
       zoneIndex++
     ) {
-      drawTerritory(ctx, zones[zoneIndex]);
-      drawBorders(ctx, zones[zoneIndex]);
-      drawMobs(ctx, zones[zoneIndex]);
+      const zone = zones[zoneIndex];
+      drawTerritory(ctx, zone);
+      drawBorders(ctx, zone);
+      drawMobs(ctx, zone);
+      ctx.font = "12px serif";
+      ctx.fillText(
+        zone.id.toString(),
+        zone.territory.current.origin.x + 10,
+        zone.territory.current.origin.y + 20
+      );
     }
   };
 }
