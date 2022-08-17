@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zone-manager-delpoyment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: zone-manager
+  template:
+    metadata:
+      labels:
+        component: zone-manager
+    spec:
+      containers:
+        - name: zone-manager
+          image: snowd3n/permadeath-zone-manager
+          ports:
+            - containerPort: 80
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: REDIS_HOST
+              value: redis-cluster-ip
+            - name: REDIS_PORT
+              value: "6379"

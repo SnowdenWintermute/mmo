@@ -2,3 +2,22 @@
 2. Detect when new zones come online
 3. Allocate new zones territory in the world
 4. Tell zones when to start merging (or let them do it? is it better to keep all zone creation/deletion logic here?)
+
+STEPS
+
+// SPLITTING
+
+  // check each zone to see if it is reaching split capacity threshold (certain number of entities or cpu/mem usage)
+  // check if there is a zone publishing on the zone-updates channel which is already bordering the zone in need
+  //    - if yes, publish on the zone in need's personal channel that it should request to start a hand-off with the bordering zone via WS
+  // if no bordering zone with extra capacity, check for a new zone on the zone-updates channel (would have no assigned territory)
+  // assign territory to the new zone
+  //    - place origin at the origin of the ZIN
+  //    - determine if the ZIN should be split horizontally or vertically based on which even split
+  //      of entities would yeild the most even split of territory
+  //    - order the ZIN to initiate a ws connection with the new zone and hand off half it's entities (may need to do in batches)
+  //    - as entities are handed off, the ZIN should also hand off the territory they occupy
+  // MERGING
+  // check each zone to see if it is reaching it's merge threshold
+  // check if any nearby zone has excess capacity to accept the entities of the unpopulated zone
+  // order the UZ to begin yeilding it's territory as it hands off entities in batches via websocket

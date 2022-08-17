@@ -4,6 +4,8 @@ deploy:
   kubectl:
     manifests:
       - ./k8s/ingress.yml
+      - ./k8s/zone-manager-deployment.yml
+      - ./k8s/zone-manager-cluster-ip.yml
       - ./k8s/zone-node-stateful-set.yml
       - ./k8s/zone-node-headless-service.yml
       - ./k8s/proxy-node-deployment.yml
@@ -33,6 +35,12 @@ build:
       context: .
       docker:
         dockerfile: dockerfiles/zone-node.dev.Dockerfile
+      sync:
+        infer: ["**/*"]
+    - image: snowd3n/permadeath-zone-manager
+      context: .
+      docker:
+        dockerfile: dockerfiles/zone-manager.dev.Dockerfile
       sync:
         infer: ["**/*"]
     - image: snowd3n/permadeath-player-client
