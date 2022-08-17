@@ -13,6 +13,17 @@ enum Border {
   southWest = "southWest",
 }
 
+const borderOpposites = {
+  north: Border.south,
+  south: Border.north,
+  east: Border.west,
+  west: Border.east,
+  northEast: Border.southWest,
+  southWest: Border.northEast,
+  northWest: Border.southEast,
+  southEast: Border.northWest,
+};
+
 interface ZoneNeighborList {
   [id: string]: {
     north?: { [id: string]: { ip: string } } | null;
@@ -28,17 +39,17 @@ interface ZoneNeighborList {
 
 export default function determineZoneNeighbors(zones: { [key: string]: Zone }) {
   const zoneNeighborList: ZoneNeighborList = {};
-
+  const zonesAlreadyFullyCompared: string[] = [];
   for (const zoneId in zones) {
-    const currZone = zones[zoneId];
-    zoneNeighborList[currZone.id] = {};
-    const territory = currZone.territory.current;
+    const zone = zones[zoneId];
+    zoneNeighborList[zoneId] = {};
+    const territory = zone.territory.current;
     const currRect = new Rectangle(territory.origin, territory.width, territory.height);
-    // console.log("currRect: " + JSON.stringify(currRect));
+    console.log(zonesAlreadyFullyCompared);
     for (const otherZoneId in zones) {
       let border: Border | null = null;
       const otherZone = zones[otherZoneId];
-      if (otherZoneId !== zoneId) {
+      if (otherZoneId !== zoneId && !zonesAlreadyFullyCompared.includes(otherZoneId)) {
         const comparingTerritory = otherZone.territory.current;
         const otherRect = new Rectangle(comparingTerritory.origin, comparingTerritory.width, comparingTerritory.height);
         if (
@@ -86,14 +97,32 @@ export default function determineZoneNeighbors(zones: { [key: string]: Zone }) {
         )
           border = Border.southWest;
       }
-      console.log("border: " + border);
+      // console.log("border: " + border);
       if (border) {
-        zoneNeighborList[zoneId][border] = {
-          ...zoneNeighborList[zoneId][border],
-          [otherZoneId]: { ip: otherZone.ip },
-        };
+        if (zoneNeighborList[zoneId]?.hasOwnProperty(border))
+          zoneNeighborList[zoneId][border] = {
+            ...zoneNeighborList[zoneId][border],
+            [otherZoneId]: { ip: otherZone.ip },
+          };
+        else
+          zoneNeighborList[zoneId][border] = {
+            [otherZoneId]: { ip: otherZone.ip },
+          };
+        const oppositeBorder = borderOpposites[border];
+        if (!zoneNeighborList[otherZoneId]) zoneNeighborList[otherZoneId] = {};
+        if (zoneNeighborList[otherZoneId]?.hasOwnProperty(oppositeBorder))
+          zoneNeighborList[otherZoneId][oppositeBorder] = {
+            ...zoneNeighborList[otherZoneId][oppositeBorder],
+            [zoneId]: { ip: zone.ip },
+          };
+        else
+          zoneNeighborList[otherZoneId][oppositeBorder] = {
+            [zoneId]: { ip: zone.ip },
+          };
       }
     }
+    zonesAlreadyFullyCompared.push(zoneId);
   }
+  // console.log(zoneNeighborList);
   return zoneNeighborList;
 }
