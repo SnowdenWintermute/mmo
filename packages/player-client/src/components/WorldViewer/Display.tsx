@@ -37,13 +37,7 @@ const Display = (props: Props) => {
           <br />
           websocket status: {props.connectionStatus.toLowerCase()}
         </p>
-        <Canvas
-          draw={drawRef.current}
-          frameRate={33}
-          height={1000}
-          width={1000}
-          className={""}
-        />
+        <Canvas draw={drawRef.current} frameRate={33} height={1000} width={1000} className={""} />
       </div>
     );
   else {
