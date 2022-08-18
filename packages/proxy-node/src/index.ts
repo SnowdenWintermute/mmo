@@ -35,6 +35,4 @@ wss.on("connection", (socket: WebSocket) => {
   }, proxyToClientBroadcastRate);
 });
 
-server.listen(port, () =>
-  console.log(process.env.MY_POD_NAME + " listening on " + port)
-);
+server.listen(port, () => console.log(process.env.MY_POD_NAME + " listening on " + port));

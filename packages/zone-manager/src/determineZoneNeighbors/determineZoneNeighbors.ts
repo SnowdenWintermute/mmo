@@ -2,7 +2,7 @@ import { Rectangle } from "@permadeath/game/dist/base/Rectangle";
 import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 import rectangleBorderingDirection, { BorderDirection } from "./rectangleBorderingDirection";
 
-interface ZoneNeighborList {
+export interface ZoneNeighborList {
   [id: string]: {
     north?: string[];
     south?: string[];
