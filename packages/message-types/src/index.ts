@@ -8,4 +8,6 @@ export const UserInput = class UserInput {
   }
 };
 
-export const add = (a: number, b: number, c: number) => a + b + c;
+export enum MessageTypes {
+  ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST = "ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST",
+}

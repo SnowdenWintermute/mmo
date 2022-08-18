@@ -11,5 +11,6 @@ export default function setUpZoneBasedOnPodId(podId: number) {
   else if (podId === 1) zone = new Zone(podId, podIp, new Point(worldWidth / 2, 0), worldWidth / 2, worldHeight / 2);
   else if (podId == 2) zone = new Zone(podId, podIp, new Point(0, worldHeight / 2), worldWidth / 2, worldHeight / 2);
   else zone = new Zone(podId, podIp, new Point(worldWidth / 2, worldHeight / 2), worldWidth / 2, worldHeight / 2);
+  console.log(`Zone ${podId} created`);
   return zone;
 }

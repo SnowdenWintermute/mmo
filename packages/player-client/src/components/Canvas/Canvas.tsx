@@ -25,14 +25,11 @@ const Canvas = (props: Props) => {
     }, frameRate);
     return () => {
       clearInterval(renderIntervalRef.current);
-      if (animationFrameIdRef.current)
-        window.cancelAnimationFrame(animationFrameIdRef.current);
+      if (animationFrameIdRef.current) window.cancelAnimationFrame(animationFrameIdRef.current);
     };
   }, [draw]);
 
-  return (
-    <canvas ref={canvasRef} style={{ border: "1px solid white" }} {...rest} />
-  );
+  return <canvas ref={canvasRef} {...rest} />;
 };
 
 export default Canvas;

@@ -3,7 +3,10 @@ import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
 import { Territory } from "./types/Territory";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
-import { Border } from "./types/Border";
+import { Edge } from "./types/Edge";
+import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
+import { CardinalDirection } from "@permadeath/game/dist/enums/CardinalDirection";
+import { OrdinalDirection } from "@permadeath/game/dist/enums/OrdinalDirection";
 export enum ZoneStatus {
   UNASSIGNED, // has no assigned territory
   NOMINAL, // operating within min/max cpu limits
@@ -21,24 +24,18 @@ export default class Zone {
     mobile: { [name: string]: MobileEntity };
   };
   players: Object;
-  borderingZoneEntities: Object;
-  borderThickness: number;
-  borders: { [key: string]: Border };
+  neighboringZones: { [key in CardinalOrdinalDirection]?: Object };
+  edgeThickness: number;
+  edges: { [key in CardinalDirection]: Edge };
   corners: {
-    [key: string]: {
+    [key in OrdinalDirection]: {
       width: number;
       height: number;
       origin: Point;
-      entities: { [key: string]: Entity | MobileEntity };
+      entities: { [id: string]: Entity | MobileEntity };
     };
   };
-  constructor(
-    id: number,
-    ip: string,
-    origin: Point,
-    width: number,
-    height: number
-  ) {
+  constructor(id: number, ip: string, origin: Point, width: number, height: number) {
     this.id = id;
     this.ip = ip;
     this.status = ZoneStatus.UNASSIGNED;
@@ -59,103 +56,71 @@ export default class Zone {
       mobile: {},
     };
     this.players = {};
-    this.borderingZoneEntities = {
-      north: {},
-      south: {},
-      east: {},
-      west: {},
-      northEast: {},
-      northWest: {},
-      southEast: {},
-      southWest: {},
-    };
-    this.borderThickness = playerMaxViewDistance;
-    this.borders = {
+    this.neighboringZones = {};
+    this.edgeThickness = playerMaxViewDistance;
+    this.edges = {
       north: {
-        origin: new Point(
-          this.territory.current.origin.x,
-          this.territory.current.origin.y
-        ),
+        origin: new Point(this.territory.current.origin.x, this.territory.current.origin.y),
         width: this.territory.current.width,
-        height: this.borderThickness,
-        borderingZoneIds: null,
+        height: this.edgeThickness,
         entities: {},
       },
       south: {
         origin: new Point(
           this.territory.current.origin.x,
-          this.territory.current.origin.y +
-            this.territory.current.height -
-            this.borderThickness
+          this.territory.current.origin.y + this.territory.current.height - this.edgeThickness
         ),
         width: this.territory.current.width,
-        height: this.borderThickness,
-        borderingZoneIds: null,
+        height: this.edgeThickness,
         entities: {},
       },
       east: {
         origin: new Point(
-          this.territory.current.origin.x +
-            this.territory.current.width -
-            this.borderThickness,
+          this.territory.current.origin.x + this.territory.current.width - this.edgeThickness,
           this.territory.current.origin.y
         ),
-        width: this.borderThickness,
+        width: this.edgeThickness,
         height: this.territory.current.height,
-        borderingZoneIds: null,
         entities: {},
       },
       west: {
-        origin: new Point(
-          this.territory.current.origin.x,
-          this.territory.current.origin.y
-        ),
-        width: this.borderThickness,
+        origin: new Point(this.territory.current.origin.x, this.territory.current.origin.y),
+        width: this.edgeThickness,
         height: this.territory.current.height,
-        borderingZoneIds: null,
         entities: {},
       },
     };
     this.corners = {
       northEast: {
         width,
-        height: this.borderThickness,
+        height: this.edgeThickness,
         origin: new Point(
-          this.territory.current.origin.x +
-            this.territory.current.width -
-            this.borderThickness,
+          this.territory.current.origin.x + this.territory.current.width - this.edgeThickness,
           this.territory.current.origin.y
         ),
         entities: {},
       },
       northWest: {
         width,
-        height: this.borderThickness,
-        origin: new Point(
-          this.territory.current.origin.x,
-          this.territory.current.origin.y
-        ),
+        height: this.edgeThickness,
+        origin: new Point(this.territory.current.origin.x, this.territory.current.origin.y),
         entities: {},
       },
       southEast: {
         width,
-        height: this.borderThickness,
+        height: this.edgeThickness,
         origin: new Point(
           this.territory.current.origin.x + this.territory.current.width,
-          this.territory.current.origin.y +
-            this.territory.current.height -
-            this.borderThickness
+          this.territory.current.origin.y + this.territory.current.height - this.edgeThickness
         ),
         entities: {},
       },
       southWest: {
         width,
-        height: this.borderThickness,
+        height: this.edgeThickness,
         origin: new Point(
           this.territory.current.origin.x,
-          this.territory.current.origin.y +
-            this.territory.current.height -
-            this.borderThickness
+          this.territory.current.origin.y + this.territory.current.height - this.edgeThickness
         ),
         entities: {},
       },

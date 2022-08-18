@@ -5,7 +5,7 @@ deploy:
     manifests:
       - ./k8s/ingress.yml
       - ./k8s/zone-manager-deployment.yml
-      - ./k8s/zone-manager-cluster-ip.yml
+      # - ./k8s/zone-manager-cluster-ip.yml
       - ./k8s/zone-node-stateful-set.yml
       - ./k8s/zone-node-headless-service.yml
       - ./k8s/proxy-node-deployment.yml

@@ -1,7 +1,7 @@
-const port = process.env.PORT;
-const express = require("express");
-const app = express();
-const server = require("http").createServer(app);
+// const port = process.env.PORT;
+// const express = require("express");
+// const app = express();
+// const server = require("http").createServer(app);
 const redis = require("redis");
 const keys = require("./keys");
 
@@ -24,10 +24,10 @@ const publisher: RedisClientType = redis.createClient({
     const updatedZone = JSON.parse(message);
     zones[updatedZone.id] = updatedZone;
   });
+  await publisher.connect();
+  zoneManagementInterval = setInterval(() => {
+    manageZones(zones, publisher);
+  }, 3000);
 })();
 
-zoneManagementInterval = setInterval(() => {
-  manageZones(zones, publisher);
-}, 1000);
-
-server.listen(port, () => console.log(process.env.MY_POD_NAME + " listening on " + port));
+// server.listen(port, () => console.log(process.env.MY_POD_NAME + " listening on " + port));

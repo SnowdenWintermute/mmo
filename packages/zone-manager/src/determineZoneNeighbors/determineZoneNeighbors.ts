@@ -1,6 +1,7 @@
 import { Rectangle } from "@permadeath/game/dist/base/Rectangle";
 import Zone from "@permadeath/zone-node/dist/Zone/Zone";
-import rectangleBorderingDirection, { BorderDirection } from "./rectangleBorderingDirection";
+import rectangleBorderingDirection from "./rectangleBorderingDirection";
+import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
 
 export interface ZoneNeighborList {
   [id: string]: {
@@ -16,14 +17,14 @@ export interface ZoneNeighborList {
 }
 
 const borderOpposites = {
-  north: BorderDirection.south,
-  south: BorderDirection.north,
-  east: BorderDirection.west,
-  west: BorderDirection.east,
-  northEast: BorderDirection.southWest,
-  southWest: BorderDirection.northEast,
-  northWest: BorderDirection.southEast,
-  southEast: BorderDirection.northWest,
+  north: CardinalOrdinalDirection.south,
+  south: CardinalOrdinalDirection.north,
+  east: CardinalOrdinalDirection.west,
+  west: CardinalOrdinalDirection.east,
+  northEast: CardinalOrdinalDirection.southWest,
+  southWest: CardinalOrdinalDirection.northEast,
+  northWest: CardinalOrdinalDirection.southEast,
+  southEast: CardinalOrdinalDirection.northWest,
 };
 
 export default function determineZoneNeighbors(zones: { [key: string]: Zone }) {
