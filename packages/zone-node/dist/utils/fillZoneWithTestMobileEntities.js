@@ -11,8 +11,8 @@ const repeatedlyMoveTowardRandomDestinations_1 = __importDefault(require("@perma
 const { v1: uuidv1 } = require("uuid");
 function fillZoneWithTestMobileEntities(numberOfEntities, zone) {
     const { territory } = zone;
-    const { origin } = territory.current;
-    const bottomRightCorner = new Point_1.Point(origin.x + territory.current.width, origin.y + territory.current.height);
+    const { origin } = territory;
+    const bottomRightCorner = new Point_1.Point(origin.x + territory.width, origin.y + territory.height);
     for (let i = numberOfEntities; i > 0; i--) {
         const id = uuidv1();
         zone.entities.mobile[i - 1] = new MobileEntity_1.MobileEntity(id, id, new Point_1.Point((origin.x + bottomRightCorner.x) / 2, (origin.y + bottomRightCorner.y) / 2), (0, dist_1.randomInt)(1, 2), repeatedlyMoveTowardRandomDestinations_1.default, new Point_1.Point((0, dist_1.randomInt)(0, consts_1.worldWidth), (0, dist_1.randomInt)(0, consts_1.worldHeight)));

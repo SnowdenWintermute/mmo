@@ -20,17 +20,17 @@ export default function createZoneNeighborTerritoryList(
   zoneNeighborList: ZoneNeighborList,
   zones: { [key: string]: Zone }
 ) {
-  const zoneNeigborIpList: ZoneNeigborTerritoryList = {};
+  const zoneNeighborTerritoryList: ZoneNeigborTerritoryList = {};
 
   for (const zoneId in zoneNeighborList) {
-    zoneNeigborIpList[zoneId] = {};
+    zoneNeighborTerritoryList[zoneId] = {};
     let border: keyof typeof CardinalOrdinalDirection;
     for (border in zoneNeighborList[zoneId]) {
-      zoneNeigborIpList[zoneId][border] = {};
+      zoneNeighborTerritoryList[zoneId][border] = {};
       zoneNeighborList[zoneId][border]!.forEach((borderingZoneId) => {
-        zoneNeigborIpList[zoneId][border]![borderingZoneId] = zones[zoneId].territory;
+        zoneNeighborTerritoryList[zoneId][border]![borderingZoneId] = zones[borderingZoneId].territory;
       });
     }
   }
-  return zoneNeigborIpList;
+  return zoneNeighborTerritoryList;
 }

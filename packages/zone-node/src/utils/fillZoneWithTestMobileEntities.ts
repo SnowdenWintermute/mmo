@@ -6,25 +6,16 @@ import Zone from "../Zone/Zone";
 import repeatedlyMoveTowardRandomDestinations from "@permadeath/game/dist/entities/movements/repeatedlyMoveTowardRandomDestinations";
 const { v1: uuidv1 } = require("uuid");
 
-export default function fillZoneWithTestMobileEntities(
-  numberOfEntities: number,
-  zone: Zone
-) {
+export default function fillZoneWithTestMobileEntities(numberOfEntities: number, zone: Zone) {
   const { territory } = zone;
-  const { origin } = territory.current;
-  const bottomRightCorner = new Point(
-    origin.x + territory.current.width,
-    origin.y + territory.current.height
-  );
+  const { origin } = territory;
+  const bottomRightCorner = new Point(origin.x + territory.width, origin.y + territory.height);
   for (let i = numberOfEntities; i > 0; i--) {
     const id = uuidv1();
     zone.entities.mobile[i - 1] = new MobileEntity(
       id,
       id,
-      new Point(
-        (origin.x + bottomRightCorner.x) / 2,
-        (origin.y + bottomRightCorner.y) / 2
-      ),
+      new Point((origin.x + bottomRightCorner.x) / 2, (origin.y + bottomRightCorner.y) / 2),
       randomInt(1, 2),
       repeatedlyMoveTowardRandomDestinations,
       new Point(randomInt(0, worldWidth), randomInt(0, worldHeight))

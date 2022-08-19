@@ -8,5 +8,6 @@ export declare class Rectangle {
     bottomY: number;
     leftX: number;
     rightX: number;
+    containsPoint: (point: Point) => boolean;
     constructor(origin: Point, width: number, height: number);
 }

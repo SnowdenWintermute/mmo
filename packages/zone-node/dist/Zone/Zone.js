@@ -17,96 +17,66 @@ class Zone {
         this.ip = ip;
         this.status = ZoneStatus.UNASSIGNED;
         this.territory = {
-            current: {
-                origin: origin,
-                width: width,
-                height: height,
-            },
-            target: {
-                origin: origin,
-                width: width,
-                height: height,
-            },
+            origin: origin,
+            width: width,
+            height: height,
         };
         this.entities = {
             static: {},
             mobile: {},
         };
         this.players = {};
-        this.borderingZoneEntities = {
-            north: {},
-            south: {},
-            east: {},
-            west: {},
-            northEast: {},
-            northWest: {},
-            southEast: {},
-            southWest: {},
-        };
-        this.borderThickness = consts_1.playerMaxViewDistance;
-        this.borders = {
+        this.neighboringZones = {};
+        this.edgeThickness = consts_1.playerMaxViewDistance;
+        this.edges = {
             north: {
-                origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y),
-                width: this.territory.current.width,
-                height: this.borderThickness,
-                borderingZoneIds: null,
+                origin: new Point_js_1.Point(this.territory.origin.x, this.territory.origin.y),
+                width: this.territory.width,
+                height: this.edgeThickness,
                 entities: {},
             },
             south: {
-                origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y +
-                    this.territory.current.height -
-                    this.borderThickness),
-                width: this.territory.current.width,
-                height: this.borderThickness,
-                borderingZoneIds: null,
+                origin: new Point_js_1.Point(this.territory.origin.x, this.territory.origin.y + this.territory.height - this.edgeThickness),
+                width: this.territory.width,
+                height: this.edgeThickness,
                 entities: {},
             },
             east: {
-                origin: new Point_js_1.Point(this.territory.current.origin.x +
-                    this.territory.current.width -
-                    this.borderThickness, this.territory.current.origin.y),
-                width: this.borderThickness,
-                height: this.territory.current.height,
-                borderingZoneIds: null,
+                origin: new Point_js_1.Point(this.territory.origin.x + this.territory.width - this.edgeThickness, this.territory.origin.y),
+                width: this.edgeThickness,
+                height: this.territory.height,
                 entities: {},
             },
             west: {
-                origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y),
-                width: this.borderThickness,
-                height: this.territory.current.height,
-                borderingZoneIds: null,
+                origin: new Point_js_1.Point(this.territory.origin.x, this.territory.origin.y),
+                width: this.edgeThickness,
+                height: this.territory.height,
                 entities: {},
             },
         };
         this.corners = {
             northEast: {
                 width,
-                height: this.borderThickness,
-                origin: new Point_js_1.Point(this.territory.current.origin.x +
-                    this.territory.current.width -
-                    this.borderThickness, this.territory.current.origin.y),
+                height: this.edgeThickness,
+                origin: new Point_js_1.Point(this.territory.origin.x + this.territory.width - this.edgeThickness, this.territory.origin.y),
                 entities: {},
             },
             northWest: {
                 width,
-                height: this.borderThickness,
-                origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y),
+                height: this.edgeThickness,
+                origin: new Point_js_1.Point(this.territory.origin.x, this.territory.origin.y),
                 entities: {},
             },
             southEast: {
                 width,
-                height: this.borderThickness,
-                origin: new Point_js_1.Point(this.territory.current.origin.x + this.territory.current.width, this.territory.current.origin.y +
-                    this.territory.current.height -
-                    this.borderThickness),
+                height: this.edgeThickness,
+                origin: new Point_js_1.Point(this.territory.origin.x + this.territory.width, this.territory.origin.y + this.territory.height - this.edgeThickness),
                 entities: {},
             },
             southWest: {
                 width,
-                height: this.borderThickness,
-                origin: new Point_js_1.Point(this.territory.current.origin.x, this.territory.current.origin.y +
-                    this.territory.current.height -
-                    this.borderThickness),
+                height: this.edgeThickness,
+                origin: new Point_js_1.Point(this.territory.origin.x, this.territory.origin.y + this.territory.height - this.edgeThickness),
                 entities: {},
             },
         };

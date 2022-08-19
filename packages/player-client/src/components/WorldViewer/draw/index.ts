@@ -12,7 +12,7 @@ export function createNextFrameDrawFunction(zones: { [key: string]: Zone }) {
       drawEdges(ctx, zone);
       drawMobs(ctx, zone);
       ctx.font = "12px serif";
-      ctx.fillText(zone.id.toString(), zone.territory.current.origin.x + 10, zone.territory.current.origin.y + 20);
+      ctx.fillText(zone.id.toString(), zone.territory.origin.x + 10, zone.territory.origin.y + 20);
     }
   };
 }

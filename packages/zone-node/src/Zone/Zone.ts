@@ -24,7 +24,7 @@ export default class Zone {
     mobile: { [name: string]: MobileEntity };
   };
   players: Object;
-  neighboringZones: { [key in CardinalOrdinalDirection]?: Object };
+  neighboringZones: { [key in CardinalOrdinalDirection]?: Territory };
   edgeThickness: number;
   edges: { [key in CardinalDirection]: Edge };
   corners: {
@@ -40,16 +40,9 @@ export default class Zone {
     this.ip = ip;
     this.status = ZoneStatus.UNASSIGNED;
     this.territory = {
-      current: {
-        origin: origin,
-        width: width,
-        height: height,
-      },
-      target: {
-        origin: origin,
-        width: width,
-        height: height,
-      },
+      origin: origin,
+      width: width,
+      height: height,
     };
     this.entities = {
       static: {},
@@ -60,33 +53,30 @@ export default class Zone {
     this.edgeThickness = playerMaxViewDistance;
     this.edges = {
       north: {
-        origin: new Point(this.territory.current.origin.x, this.territory.current.origin.y),
-        width: this.territory.current.width,
+        origin: new Point(this.territory.origin.x, this.territory.origin.y),
+        width: this.territory.width,
         height: this.edgeThickness,
         entities: {},
       },
       south: {
         origin: new Point(
-          this.territory.current.origin.x,
-          this.territory.current.origin.y + this.territory.current.height - this.edgeThickness
+          this.territory.origin.x,
+          this.territory.origin.y + this.territory.height - this.edgeThickness
         ),
-        width: this.territory.current.width,
+        width: this.territory.width,
         height: this.edgeThickness,
         entities: {},
       },
       east: {
-        origin: new Point(
-          this.territory.current.origin.x + this.territory.current.width - this.edgeThickness,
-          this.territory.current.origin.y
-        ),
+        origin: new Point(this.territory.origin.x + this.territory.width - this.edgeThickness, this.territory.origin.y),
         width: this.edgeThickness,
-        height: this.territory.current.height,
+        height: this.territory.height,
         entities: {},
       },
       west: {
-        origin: new Point(this.territory.current.origin.x, this.territory.current.origin.y),
+        origin: new Point(this.territory.origin.x, this.territory.origin.y),
         width: this.edgeThickness,
-        height: this.territory.current.height,
+        height: this.territory.height,
         entities: {},
       },
     };
@@ -94,24 +84,21 @@ export default class Zone {
       northEast: {
         width,
         height: this.edgeThickness,
-        origin: new Point(
-          this.territory.current.origin.x + this.territory.current.width - this.edgeThickness,
-          this.territory.current.origin.y
-        ),
+        origin: new Point(this.territory.origin.x + this.territory.width - this.edgeThickness, this.territory.origin.y),
         entities: {},
       },
       northWest: {
         width,
         height: this.edgeThickness,
-        origin: new Point(this.territory.current.origin.x, this.territory.current.origin.y),
+        origin: new Point(this.territory.origin.x, this.territory.origin.y),
         entities: {},
       },
       southEast: {
         width,
         height: this.edgeThickness,
         origin: new Point(
-          this.territory.current.origin.x + this.territory.current.width,
-          this.territory.current.origin.y + this.territory.current.height - this.edgeThickness
+          this.territory.origin.x + this.territory.width,
+          this.territory.origin.y + this.territory.height - this.edgeThickness
         ),
         entities: {},
       },
@@ -119,8 +106,8 @@ export default class Zone {
         width,
         height: this.edgeThickness,
         origin: new Point(
-          this.territory.current.origin.x,
-          this.territory.current.origin.y + this.territory.current.height - this.edgeThickness
+          this.territory.origin.x,
+          this.territory.origin.y + this.territory.height - this.edgeThickness
         ),
         entities: {},
       },

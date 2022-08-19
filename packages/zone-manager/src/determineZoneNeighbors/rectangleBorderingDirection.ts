@@ -3,6 +3,7 @@ import { between } from "@permadeath/utils/dist/index";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
 
 export default function rectangleBorderingDirection(a: Rectangle, b: Rectangle) {
+  // @todo: add return null case up top
   if (
     a.origin.y - 1 === b.bottomY &&
     (between(a.origin.x, b.bottomLeftCorner.x, b.bottomRightCorner.x) ||

@@ -9,6 +9,7 @@ export class Rectangle {
   bottomY: number;
   leftX: number;
   rightX: number;
+  containsPoint: (point: Point) => boolean;
   constructor(origin: Point, width: number, height: number) {
     this.origin = origin;
     this.topRightCorner = new Point(origin.x + width - 1, origin.y);
@@ -18,5 +19,9 @@ export class Rectangle {
     this.leftX = origin.x;
     this.topY = origin.y;
     this.rightX = origin.x + width - 1;
+    this.containsPoint = function (point: Point) {
+      const { x, y } = point;
+      return this.origin.x <= x && x <= this.origin.x + width && this.origin.y <= y && y <= this.origin.y + height;
+    };
   }
 }

@@ -12,6 +12,10 @@ class Rectangle {
         this.leftX = origin.x;
         this.topY = origin.y;
         this.rightX = origin.x + width - 1;
+        this.containsPoint = function (point) {
+            const { x, y } = point;
+            return this.origin.x <= x && x <= this.origin.x + width && this.origin.y <= y && y <= this.origin.y + height;
+        };
     }
 }
 exports.Rectangle = Rectangle;

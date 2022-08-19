@@ -2,7 +2,10 @@ import { Point } from "@permadeath/game/dist/base/Point.js";
 import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { Territory } from "./types/Territory";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
-import { Border } from "./types/Border";
+import { Edge } from "./types/Edge";
+import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
+import { CardinalDirection } from "@permadeath/game/dist/enums/CardinalDirection";
+import { OrdinalDirection } from "@permadeath/game/dist/enums/OrdinalDirection";
 export declare enum ZoneStatus {
     UNASSIGNED = 0,
     NOMINAL = 1,
@@ -24,18 +27,20 @@ export default class Zone {
         };
     };
     players: Object;
-    borderingZoneEntities: Object;
-    borderThickness: number;
-    borders: {
-        [key: string]: Border;
+    neighboringZones: {
+        [key in CardinalOrdinalDirection]?: Territory;
+    };
+    edgeThickness: number;
+    edges: {
+        [key in CardinalDirection]: Edge;
     };
     corners: {
-        [key: string]: {
+        [key in OrdinalDirection]: {
             width: number;
             height: number;
             origin: Point;
             entities: {
-                [key: string]: Entity | MobileEntity;
+                [id: string]: Entity | MobileEntity;
             };
         };
     };

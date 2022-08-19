@@ -9,5 +9,5 @@ export default function handleZoneSpecificMessages(message: string, zone: Zone) 
       zone.neighboringZones[direction] = parsedMessage.data[direction];
     }
   }
-  if (zone.id === 1) console.log(JSON.stringify(zone.neighboringZones));
+  // if (zone.id === 1) console.log(JSON.stringify(zone.neighboringZones));
 }
