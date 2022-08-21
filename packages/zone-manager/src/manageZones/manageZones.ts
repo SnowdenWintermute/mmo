@@ -2,10 +2,10 @@ import determineZoneNeighbors from "../determineZoneNeighbors/determineZoneNeigh
 import Zone, { ZoneStatus } from "@permadeath/zone-node/dist/Zone/Zone";
 import { RedisClientType } from "@redis/client";
 import createZoneNeighborTerritoryList from "../createZoneNeighborTerritoryList/createZoneNeighborTerritoryList";
-import publishZoneSpecificNeighborIps from "../publishZoneSpecificNeighborIps/publishZoneSpecificNeighborIps";
+import publishZoneSpecificNeighborTerritories from "../publishZoneSpecificNeighborTerritories/publishZoneSpecificNeighborTerritories";
 
 export default function manageZones(zones: { [key: string]: Zone }, publisher: RedisClientType) {
   const zoneNeighborList = determineZoneNeighbors(zones);
-  const zoneNeighborIpList = createZoneNeighborTerritoryList(zoneNeighborList, zones);
-  publishZoneSpecificNeighborIps(zoneNeighborIpList, publisher);
+  const zoneNeighborTerritoryList = createZoneNeighborTerritoryList(zoneNeighborList, zones);
+  publishZoneSpecificNeighborTerritories(zoneNeighborTerritoryList, publisher);
 }

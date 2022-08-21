@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@permadeath/game": "*",
-    "@permadeath/message-types": "*",
+    "@permadeath/messages": "*",
     "@permadeath/utils": "*",
     "@permadeath/zone-node": "*",
     "dotenv": "^10.0.0",

@@ -25,9 +25,7 @@ var __awaiter =
         }
       }
       function step(result) {
-        result.done
-          ? resolve(result.value)
-          : adopt(result.value).then(fulfilled, rejected);
+        result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
       }
       step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
@@ -39,8 +37,8 @@ var __importDefault =
   };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = require("ws");
-const message_types_1 = require("@permadeath/message-types");
-const message_types_2 = require("@permadeath/message-types");
+const message_types_1 = require("@permadeath/messages");
+const message_types_2 = require("@permadeath/messages");
 const axios_1 = __importDefault(require("axios"));
 const WS_ADDRESS = "ws://zone-node-cluster-ip-service";
 let reconnectAttemps = 0;

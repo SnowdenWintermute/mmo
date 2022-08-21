@@ -3,11 +3,11 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY yarn.lock .
 COPY packages/proxy-node ./packages/proxy-node
-COPY packages/message-types ./packages/message-types
+COPY packages/messages ./packages/messages
 
 RUN yarn install --pure-lockfile --non-interactive
 
-WORKDIR /usr/src/app/packages/message-types
+WORKDIR /usr/src/app/packages/messages
 RUN yarn build
 WORKDIR /usr/src/app/packages/proxy-node
 RUN yarn build
@@ -19,8 +19,8 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY yarn.lock .
 
-COPY --from=build /usr/src/app/packages/message-types/package.json /usr/src/app/packages/message-types/package.json
-COPY --from=build /usr/src/app/packages/message-types/dist /usr/src/app/packages/message-types/dist
+COPY --from=build /usr/src/app/packages/messages/package.json /usr/src/app/packages/messages/package.json
+COPY --from=build /usr/src/app/packages/messages/dist /usr/src/app/packages/messages/dist
 
 COPY --from=build /usr/src/app/packages/proxy-node/package.json /usr/src/app/packages/proxy-node/package.json
 COPY --from=build /usr/src/app/packages/proxy-node/dist /usr/src/app/packages/proxy-node/dist

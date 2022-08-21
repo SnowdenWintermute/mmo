@@ -21,9 +21,7 @@ const WorldViewer = () => {
 
   useEffect(() => {
     if (lastMessage !== null) {
-      const newZoneData: { [key: string]: Zone } = JSON.parse(
-        lastMessage?.data
-      );
+      const newZoneData: { [key: string]: Zone } = JSON.parse(lastMessage?.data);
       Object.keys(newZoneData).forEach((key) => {
         const zoneId: keyof typeof zones.current = key;
         zones.current[zoneId] = newZoneData[key];

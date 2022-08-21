@@ -8,8 +8,8 @@ export default function moveEntitiesAndDetermineZoneDepartures(zone: Zone) {
     [zoneId: string]: { [id: string]: MobileEntity };
   } = {};
 
-  for (const entity in zone.entities.mobile) {
-    const currEntity = zone.entities.mobile[entity];
+  for (const entityId in zone.entities.mobile) {
+    const currEntity = zone.entities.mobile[entityId];
     moveEntity(currEntity);
     const zoneDepartingTo = determineZoneDepartingTo(currEntity, zone);
     if (zoneDepartingTo) {

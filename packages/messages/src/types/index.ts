@@ -10,4 +10,5 @@ export const UserInput = class UserInput {
 
 export enum MessageTypes {
   ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST = "ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST",
+  ENTITY_HANDOFF = "ENTITY_HANDOFF",
 }

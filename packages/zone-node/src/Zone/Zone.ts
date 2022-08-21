@@ -20,6 +20,7 @@ export default class Zone {
   status: ZoneStatus;
   territory: Territory;
   entities: {
+    arriving: MobileEntity[];
     static: { [name: string]: Entity };
     mobile: { [name: string]: MobileEntity };
   };
@@ -45,6 +46,7 @@ export default class Zone {
       height: height,
     };
     this.entities = {
+      arriving: [],
       static: {},
       mobile: {},
     };

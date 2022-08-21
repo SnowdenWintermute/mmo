@@ -1,5 +1,5 @@
 {
-  "name": "@permadeath/message-types",
+  "name": "@permadeath/messages",
   "version": "1.0.0",
   "main": "dist",
   "typings": "dist",

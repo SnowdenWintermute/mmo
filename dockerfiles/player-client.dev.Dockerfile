@@ -4,12 +4,12 @@ ENV CI=true
 WORKDIR /usr/src/app
 COPY package.json .
 # COPY yarn.lock .
-COPY packages/message-types ./packages/message-types
+COPY packages/messages ./packages/messages
 COPY packages/game ./packages/game
 COPY packages/utils ./packages/utils
 COPY packages/zone-node ./packages/zone-node
 RUN yarn cache list
-WORKDIR /usr/src/app/packages/message-types
+WORKDIR /usr/src/app/packages/messages
 RUN yarn install
 RUN yarn run build
 WORKDIR /usr/src/app/packages/game
@@ -35,7 +35,7 @@ CMD ["yarn", "start"]
 # WORKDIR /usr/src/app
 # COPY package.json .
 # COPY yarn.lock .
-# COPY packages/message-types ./packages/message-types
+# COPY packages/messages ./packages/messages
 # COPY packages/game ./packages/game
 # RUN yarn install --non-interactive
 # COPY packages/player-client ./packages/player-client

@@ -1,7 +1,7 @@
 
 import { WebSocket } from "ws";
-import { UserInput } from "@permadeath/message-types";
-import { add } from "@permadeath/message-types";
+import { UserInput } from "@permadeath/messages";
+import { add } from "@permadeath/messages";
 import axios from "axios";
 const WS_ADDRESS = "ws://zone-node-cluster-ip-service:5001";
 let reconnectAttemps = 0;

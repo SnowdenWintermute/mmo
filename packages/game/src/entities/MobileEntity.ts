@@ -1,19 +1,13 @@
 import { Entity } from "..";
 import { Point } from "../base/Point";
+import { MovementTypes } from "./movements/MovementTypes";
 
 export class MobileEntity extends Entity {
-  move: Function;
+  movementType: number;
   destination: Point;
-  constructor(
-    id: string,
-    name: string,
-    pos: Point,
-    speed: number,
-    move: Function,
-    destination: Point
-  ) {
+  constructor(id: string, name: string, pos: Point, speed: number, movementType: number, destination: Point) {
     super(id, name, pos, speed);
     this.destination = destination;
-    this.move = () => move(this.pos, this.destination, this.speed);
+    this.movementType = movementType;
   }
 }

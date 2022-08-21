@@ -2,10 +2,10 @@ FROM node:alpine as build
 WORKDIR /usr/src/app
 COPY package.json .
 COPY yarn.lock .
-COPY packages/message-types ./packages/message-types
+COPY packages/messages ./packages/messages
 COPY packages/utils ./packages/utils
 COPY packages/game ./packages/game
-WORKDIR /usr/src/app/packages/message-types
+WORKDIR /usr/src/app/packages/messages
 RUN yarn install
 RUN yarn run build
 WORKDIR /usr/src/app/packages/game

@@ -24,7 +24,7 @@ if (!process.env.MY_POD_NAME || !process.env.MY_POD_IP)
 const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = setUpZoneBasedOnPodId(podId);
-fillZoneWithTestMobileEntities(10, zone);
+fillZoneWithTestMobileEntities(50, zone);
 const subscriber = publisher.duplicate();
 
 (async () => {

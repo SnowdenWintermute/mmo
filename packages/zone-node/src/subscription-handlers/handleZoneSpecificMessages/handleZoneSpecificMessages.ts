@@ -1,4 +1,4 @@
-import { MessageTypes } from "@permadeath/message-types/dist";
+import { MessageTypes } from "@permadeath/messages/dist/types";
 import Zone from "../../Zone/Zone";
 
 export default function handleZoneSpecificMessages(message: string, zone: Zone) {
@@ -9,5 +9,8 @@ export default function handleZoneSpecificMessages(message: string, zone: Zone) 
       zone.neighboringZones[direction] = parsedMessage.data[direction];
     }
   }
-  // if (zone.id === 1) console.log(JSON.stringify(zone.neighboringZones));
+  if (parsedMessage.type === MessageTypes.ENTITY_HANDOFF) {
+    const arrivingEntity = parsedMessage.data;
+    zone.entities.arriving.push(arrivingEntity);
+  }
 }
