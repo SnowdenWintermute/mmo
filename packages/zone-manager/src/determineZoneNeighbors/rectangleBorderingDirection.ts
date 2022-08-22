@@ -1,8 +1,8 @@
-import { Rectangle } from "@permadeath/game/dist/base/Rectangle";
+import { DetailedRectangle } from "@permadeath/game/dist/base/Rectangles";
 import { between } from "@permadeath/utils/dist/index";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
 
-export default function rectangleBorderingDirection(a: Rectangle, b: Rectangle) {
+export default function rectangleBorderingDirection(a: DetailedRectangle, b: DetailedRectangle) {
   // @todo: add return null case up top
   if (
     a.origin.y - 1 === b.bottomY &&

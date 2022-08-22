@@ -11,5 +11,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   }
-  // "references": [{ "path": "../game" }]
+  // "references": [
+  //   { "path": "../zone-manager" },
+  //   { "path": "../game" },
+  //   { "path": "../messages" },
+  //   { "path": "../utils" }
+  // ]
 }

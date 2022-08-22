@@ -12,11 +12,10 @@ function setUpZoneBasedOnPodId(podId) {
         throw new Error("no ip address supplied by environment variable");
     let zone;
     if (podId === 0)
-        zone = new Zone_1.default(podId, podIp, new Point_js_1.Point(0, 0), consts_1.worldWidth / 2, consts_1.worldHeight / 2);
+        zone = new Zone_1.default(podId, podIp, new Point_js_1.Point(0, 0), consts_1.worldWidth / 2, consts_1.worldHeight);
     else if (podId === 1)
         zone = new Zone_1.default(podId, podIp, new Point_js_1.Point(consts_1.worldWidth / 2, 0), consts_1.worldWidth / 2, consts_1.worldHeight / 2);
-    else if (podId == 2)
-        zone = new Zone_1.default(podId, podIp, new Point_js_1.Point(0, consts_1.worldHeight / 2), consts_1.worldWidth / 2, consts_1.worldHeight / 2);
+    // else if (podId == 2) zone = new Zone(podId, podIp, new Point(0, worldHeight / 2), worldWidth / 2, worldHeight / 2);
     else
         zone = new Zone_1.default(podId, podIp, new Point_js_1.Point(consts_1.worldWidth / 2, consts_1.worldHeight / 2), consts_1.worldWidth / 2, consts_1.worldHeight / 2);
     console.log(`Zone ${podId} created`);

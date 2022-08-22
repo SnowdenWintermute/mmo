@@ -10,6 +10,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
+    // "composite": true
   }
-  // "references": [{ "path": "../game" }]
+  // "references": [{ "path": "../game" }, { "path": "../zone-node" }, { "path": "../messages" }, { "path": "../utils" }]
 }

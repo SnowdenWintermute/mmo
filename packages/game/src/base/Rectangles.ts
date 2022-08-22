@@ -2,6 +2,17 @@ import { Point } from "./Point";
 
 export class Rectangle {
   origin: Point;
+  width: number;
+  height: number;
+  constructor(origin: Point, width: number, height: number) {
+    this.origin = origin;
+    this.width = width;
+    this.height = height;
+  }
+}
+
+export class DetailedRectangle {
+  origin: Point;
   topRightCorner: Point;
   bottomRightCorner: Point;
   bottomLeftCorner: Point;

@@ -1,18 +1,18 @@
 import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 import { ZoneNeighborList } from "../determineZoneNeighbors/determineZoneNeighbors";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
-import { Territory } from "@permadeath/zone-node/dist/Zone/types/Territory";
+import { Rectangle } from "@permadeath/game/dist/base/Rectangles";
 
 export interface ZoneNeigborTerritoryList {
   [id: string]: {
-    north?: { [zoneId: string]: Territory };
-    south?: { [zoneId: string]: Territory };
-    east?: { [zoneId: string]: Territory };
-    west?: { [zoneId: string]: Territory };
-    northEast?: { [zoneId: string]: Territory };
-    northWest?: { [zoneId: string]: Territory };
-    southEast?: { [zoneId: string]: Territory };
-    southWest?: { [zoneId: string]: Territory };
+    north?: { [zoneId: string]: Rectangle };
+    south?: { [zoneId: string]: Rectangle };
+    east?: { [zoneId: string]: Rectangle };
+    west?: { [zoneId: string]: Rectangle };
+    northEast?: { [zoneId: string]: Rectangle };
+    northWest?: { [zoneId: string]: Rectangle };
+    southEast?: { [zoneId: string]: Rectangle };
+    southWest?: { [zoneId: string]: Rectangle };
   };
 }
 

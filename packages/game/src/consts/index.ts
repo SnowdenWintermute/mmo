@@ -4,3 +4,4 @@ export const playerMaxViewDistance = 50;
 export const proxyToClientBroadcastRate = 50;
 export const worldHeight = 1000;
 export const worldWidth = 1000;
+export const frameRate = 33;

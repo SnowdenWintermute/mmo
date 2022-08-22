@@ -6,6 +6,6 @@ export default function drawMobs(ctx: CanvasRenderingContext2D, zone: Zone) {
   else if (zone.id === 2) ctx.fillStyle = "#FA4";
   else if (zone.id === 3) ctx.fillStyle = "#F4A";
   for (const entityId in zone.entities.mobile) {
-    ctx.fillRect(zone.entities.mobile[entityId].pos.x, zone.entities.mobile[entityId].pos.y, 2, 2);
+    ctx.fillRect(zone.entities.mobile[entityId].pos.x, zone.entities.mobile[entityId].pos.y, 3, 3);
   }
 }

@@ -1,5 +1,5 @@
 import Zone from "@permadeath/zone-node/dist/Zone/Zone";
-import drawEdges from "./drawEdges";
+import drawExternalAreaOfInterest from "./drawExternalAreaOfInterest";
 import drawMobs from "./drawMobs";
 import drawTerritory from "./drawTerritory";
 
@@ -9,7 +9,7 @@ export function createNextFrameDrawFunction(zones: { [key: string]: Zone }) {
     for (let zoneIndex = 0; zoneIndex < Object.keys(zones).length; zoneIndex++) {
       const zone = zones[zoneIndex];
       drawTerritory(ctx, zone);
-      drawEdges(ctx, zone);
+      drawExternalAreaOfInterest(ctx, zone);
       drawMobs(ctx, zone);
       ctx.font = "12px serif";
       ctx.fillText(zone.id.toString(), zone.territory.origin.x + 10, zone.territory.origin.y + 20);

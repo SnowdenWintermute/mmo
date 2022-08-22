@@ -35,7 +35,7 @@ if (!process.env.MY_POD_NAME || !process.env.MY_POD_IP)
 const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = (0, setUpZoneBasedOnPodId_1.default)(podId);
-(0, fillZoneWithTestMobileEntities_1.default)(10, zone);
+(0, fillZoneWithTestMobileEntities_1.default)(50, zone);
 const subscriber = publisher.duplicate();
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield subscriber.connect();

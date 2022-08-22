@@ -1,6 +1,5 @@
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
 import { Point } from "@permadeath/game/dist/base/Point";
-import { Rectangle } from "@permadeath/game/dist/base/Rectangle";
 
 export const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 

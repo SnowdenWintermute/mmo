@@ -1,12 +1,10 @@
 import { Point } from "@permadeath/game/dist/base/Point.js";
 import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
-import { Territory } from "./types/Territory";
+import { Rectangle } from "@permadeath/game/dist/base/Rectangles";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
-import { Edge } from "./types/Edge";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
-import { CardinalDirection } from "@permadeath/game/dist/enums/CardinalDirection";
-import { OrdinalDirection } from "@permadeath/game/dist/enums/OrdinalDirection";
+import { EntitiesByZoneId } from "./types/EntityCollections";
 export enum ZoneStatus {
   UNASSIGNED, // has no assigned territory
   NOMINAL, // operating within min/max cpu limits
@@ -18,101 +16,37 @@ export default class Zone {
   id: number;
   ip: string;
   status: ZoneStatus;
-  territory: Territory;
+  territory: Rectangle;
   entities: {
     arriving: MobileEntity[];
-    static: { [name: string]: Entity };
-    mobile: { [name: string]: MobileEntity };
+    static: { [id: string]: Entity };
+    mobile: { [id: string]: MobileEntity };
+    edge: EntitiesByZoneId;
   };
   players: Object;
-  neighboringZones: { [key in CardinalOrdinalDirection]?: Territory };
-  edgeThickness: number;
-  edges: { [key in CardinalDirection]: Edge };
-  corners: {
-    [key in OrdinalDirection]: {
-      width: number;
-      height: number;
-      origin: Point;
-      entities: { [id: string]: Entity | MobileEntity };
+  neighboringZones: {
+    [key in CardinalOrdinalDirection]?: {
+      [id: string]: { territory: Rectangle; entites?: { [id: string]: MobileEntity } };
     };
   };
+  externalAreaOfInterest: Rectangle;
   constructor(id: number, ip: string, origin: Point, width: number, height: number) {
     this.id = id;
     this.ip = ip;
     this.status = ZoneStatus.UNASSIGNED;
-    this.territory = {
-      origin: origin,
-      width: width,
-      height: height,
-    };
+    this.territory = new Rectangle(origin, width, height);
+    this.externalAreaOfInterest = new Rectangle(
+      new Point(origin.x - playerMaxViewDistance, origin.y - playerMaxViewDistance),
+      width + playerMaxViewDistance * 2,
+      height + playerMaxViewDistance * 2
+    );
     this.entities = {
       arriving: [],
       static: {},
       mobile: {},
+      edge: {},
     };
     this.players = {};
     this.neighboringZones = {};
-    this.edgeThickness = playerMaxViewDistance;
-    this.edges = {
-      north: {
-        origin: new Point(this.territory.origin.x, this.territory.origin.y),
-        width: this.territory.width,
-        height: this.edgeThickness,
-        entities: {},
-      },
-      south: {
-        origin: new Point(
-          this.territory.origin.x,
-          this.territory.origin.y + this.territory.height - this.edgeThickness
-        ),
-        width: this.territory.width,
-        height: this.edgeThickness,
-        entities: {},
-      },
-      east: {
-        origin: new Point(this.territory.origin.x + this.territory.width - this.edgeThickness, this.territory.origin.y),
-        width: this.edgeThickness,
-        height: this.territory.height,
-        entities: {},
-      },
-      west: {
-        origin: new Point(this.territory.origin.x, this.territory.origin.y),
-        width: this.edgeThickness,
-        height: this.territory.height,
-        entities: {},
-      },
-    };
-    this.corners = {
-      northEast: {
-        width,
-        height: this.edgeThickness,
-        origin: new Point(this.territory.origin.x + this.territory.width - this.edgeThickness, this.territory.origin.y),
-        entities: {},
-      },
-      northWest: {
-        width,
-        height: this.edgeThickness,
-        origin: new Point(this.territory.origin.x, this.territory.origin.y),
-        entities: {},
-      },
-      southEast: {
-        width,
-        height: this.edgeThickness,
-        origin: new Point(
-          this.territory.origin.x + this.territory.width,
-          this.territory.origin.y + this.territory.height - this.edgeThickness
-        ),
-        entities: {},
-      },
-      southWest: {
-        width,
-        height: this.edgeThickness,
-        origin: new Point(
-          this.territory.origin.x,
-          this.territory.origin.y + this.territory.height - this.edgeThickness
-        ),
-        entities: {},
-      },
-    };
   }
 }

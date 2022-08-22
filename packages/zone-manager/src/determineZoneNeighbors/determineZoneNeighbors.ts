@@ -1,4 +1,4 @@
-import { Rectangle } from "@permadeath/game/dist/base/Rectangle";
+import { DetailedRectangle } from "@permadeath/game/dist/base/Rectangles";
 import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 import rectangleBorderingDirection from "./rectangleBorderingDirection";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
@@ -35,13 +35,17 @@ export default function determineZoneNeighbors(zones: { [key: string]: Zone }) {
     const zone = zones[zoneId];
     if (!zoneNeighborList.hasOwnProperty(zoneId)) zoneNeighborList[zoneId] = {};
     const territory = zone.territory;
-    const currRect = new Rectangle(territory.origin, territory.width, territory.height);
+    const currRect = new DetailedRectangle(territory.origin, territory.width, territory.height);
 
     for (const otherZoneId in zones) {
       if (otherZoneId === zoneId || zonesAlreadyFullyCompared.includes(otherZoneId)) continue;
       const otherZone = zones[otherZoneId];
       const comparingTerritory = otherZone.territory;
-      const otherRect = new Rectangle(comparingTerritory.origin, comparingTerritory.width, comparingTerritory.height);
+      const otherRect = new DetailedRectangle(
+        comparingTerritory.origin,
+        comparingTerritory.width,
+        comparingTerritory.height
+      );
       const border = rectangleBorderingDirection(currRect, otherRect);
       if (!border) continue;
 
