@@ -1,4 +1,4 @@
-import { playerMaxViewDistance } from "@permadeath/game";
+import { playerMaxViewDistance } from "@permadeath/game/dist/consts/index";
 import { Point } from "@permadeath/game/dist/base/Point";
 import { DetailedRectangle } from "@permadeath/game/dist/base/Rectangles";
 import { Entity } from "@permadeath/game/dist/entities/Entity";

@@ -21,10 +21,11 @@ export default class Zone {
     arriving: MobileEntity[];
     static: { [id: string]: Entity };
     mobile: { [id: string]: MobileEntity };
+    unappliedEdgeUpdate: EntitiesByZoneId;
     edge: EntitiesByZoneId;
   };
   players: Object;
-  neighboringZones: {
+  neighboringZonesByDirection: {
     [key in CardinalOrdinalDirection]?: {
       [id: string]: { territory: Rectangle; entites?: { [id: string]: MobileEntity } };
     };
@@ -44,9 +45,10 @@ export default class Zone {
       arriving: [],
       static: {},
       mobile: {},
+      unappliedEdgeUpdate: {},
       edge: {},
     };
     this.players = {};
-    this.neighboringZones = {};
+    this.neighboringZonesByDirection = {};
   }
 }

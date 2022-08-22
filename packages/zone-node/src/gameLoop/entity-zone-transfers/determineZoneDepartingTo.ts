@@ -7,13 +7,13 @@ export default function determineZoneDepartingTo(entity: MobileEntity, zone: Zon
   const territory = zone.territory;
   const territoryRect = new DetailedRectangle(territory.origin, territory.width, territory.height);
   if (territoryRect.containsPoint(entity.pos)) return null;
-  const { neighboringZones } = zone;
+  const { neighboringZonesByDirection } = zone;
   let direction: keyof typeof CardinalOrdinalDirection;
-  for (direction in neighboringZones) {
+  for (direction in neighboringZonesByDirection) {
     let zoneId: string;
-    for (zoneId in neighboringZones[direction]) {
+    for (zoneId in neighboringZonesByDirection[direction]) {
       // @ts-ignore
-      const neighborTerritory = neighboringZones[direction][zoneId].territory;
+      const neighborTerritory = neighboringZonesByDirection[direction][zoneId].territory;
       const neigborRect = new DetailedRectangle(
         neighborTerritory!.origin,
         neighborTerritory!.width,
