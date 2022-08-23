@@ -14,13 +14,20 @@ export default (zone: Zone, publisher: RedisClientType, tickRate: number) => {
   return setInterval(() => {
     const departingEntitiesByDestinationZoneId: EntitiesByZoneId = {};
     const entitiesOfInterestToNeighbors: EntitiesByZoneId = {};
+    // const actionQueue: EntityAction[] = []
 
     for (const entityId in zone.entities.mobile) {
       const currEntity = zone.entities.mobile[entityId];
       moveEntity(currEntity);
+      // processEntityBehaviors
+      //  queueEntityMovements
+      //  queueEntityActions(currEntity)
       determineZoneDepartures(currEntity, zone, departingEntitiesByDestinationZoneId);
       determineEntitiesOfInterestToNeighbors(currEntity, zone, entitiesOfInterestToNeighbors);
     }
+
+    // processActionQueue(actionQueue)
+
     let direction: keyof typeof CardinalOrdinalDirection;
     for (direction in zone.neighboringZonesByDirection) {
       for (const zoneId in zone.neighboringZonesByDirection[direction]) {
