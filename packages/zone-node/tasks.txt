@@ -1,7 +1,7 @@
 1. Compute game logic
     a.  Process queue of received actions sequentially
         i.  Must include actions of players in the zone, as well
-            as actions of players in bordering zones if those actions
+            as actions of players/entities in bordering zones if those actions
             affect entities on this zone's border with the other zone
     b.  Each tick creates a new "server state"
     c.  Implement Cross-Zone Logic
