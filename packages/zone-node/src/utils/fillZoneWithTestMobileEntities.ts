@@ -4,9 +4,10 @@ import { randomInt } from "@permadeath/utils/dist";
 import { worldHeight, worldWidth } from "@permadeath/game/dist/consts";
 import Zone from "../Zone/Zone";
 import { MovementTypes } from "@permadeath/game/dist/entities/movements/MovementTypes";
+import { Engine } from "matter-js";
 const { v1: uuidv1 } = require("uuid");
 
-export default function fillZoneWithTestMobileEntities(numberOfEntities: number, zone: Zone) {
+export default function fillZoneWithTestMobileEntities(numberOfEntities: number, zone: Zone, engine: Engine) {
   const { territory } = zone;
   const { origin } = territory;
   const bottomRightCorner = new Point(origin.x + territory.width, origin.y + territory.height);

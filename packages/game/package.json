@@ -12,10 +12,14 @@
     "serve": "concurrently \"tsc --watch\""
   },
   "devDependencies": {
+    "@types/matter-js": "^0.18.1",
+    "@types/node": "18.6.2",
     "concurrently": "^6.2.2",
     "nodemon": "^2.0.13",
-    "@types/node": "18.6.2",
     "rimraf": "^3.0.2",
     "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "matter-js": "^0.18.0"
   }
 }
