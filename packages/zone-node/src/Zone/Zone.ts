@@ -5,6 +5,7 @@ import { Rectangle } from "@permadeath/game/dist/base/Rectangles";
 import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
 import { EntitiesByZoneId } from "./types/EntityCollections";
+import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
 export enum ZoneStatus {
   UNASSIGNED, // has no assigned territory
   NOMINAL, // operating within min/max cpu limits
@@ -20,7 +21,7 @@ export default class Zone {
   entities: {
     arriving: MobileEntity[];
     static: { [id: string]: Entity };
-    mobile: { [id: string]: MobileEntity };
+    agents: { [id: string]: BehavioralEntity };
     unappliedEdgeUpdate: EntitiesByZoneId;
     edge: EntitiesByZoneId;
   };
@@ -44,7 +45,7 @@ export default class Zone {
     this.entities = {
       arriving: [],
       static: {},
-      mobile: {},
+      agents: {},
       unappliedEdgeUpdate: {},
       edge: {},
     };

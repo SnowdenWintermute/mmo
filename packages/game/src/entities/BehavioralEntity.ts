@@ -11,6 +11,7 @@ export default class BehavioralEntity extends Entity {
     body: Matter.Body,
     behaviors: Behavior[],
     actionsCurrentlyExecuting: Action[],
+    destination: Point | null,
     accelerationInducement?: number | null,
     hp?: { max: number; current: number }
   ) {
@@ -18,5 +19,6 @@ export default class BehavioralEntity extends Entity {
     this.behaviors = behaviors;
     this.actionsCurrentlyExecuting = [];
     this.accelerationInducement = accelerationInducement || null;
+    this.destination = null;
   }
 }

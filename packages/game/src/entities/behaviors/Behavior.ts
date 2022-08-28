@@ -1,10 +1,17 @@
 import Action from "../actions/Action";
+import { EntityZoneBoolean } from "../../base/EntityZoneBoolean";
 
-export default interface Behavior {
-  type: number;
-  prerequisites: boolean[];
-  cue: (props: any) => boolean;
-  action: Action;
+export default class Behavior {
+  typeId: number;
+  prerequisites: EntityZoneBoolean[];
+  cue: EntityZoneBoolean[];
+  actionIds: number[];
+  constructor(typeId: number, prerequisites: EntityZoneBoolean[], cue: EntityZoneBoolean[], actionIds: number[]) {
+    this.typeId = typeId;
+    this.prerequisites = prerequisites;
+    this.cue = cue;
+    this.actionIds = actionIds;
+  }
 }
 
 // behaviors determine what actions an entity will add to the queue each tick

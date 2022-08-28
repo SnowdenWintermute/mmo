@@ -4,6 +4,7 @@ const app = express();
 const server = require("http").createServer(app);
 const keys = require("./keys");
 const redis = require("redis");
+const Matter = require("matter-js");
 import { tickRate, zoneToProxyBroadcastRate } from "@permadeath/game/dist/consts";
 import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
@@ -24,7 +25,8 @@ if (!process.env.MY_POD_NAME || !process.env.MY_POD_IP)
 const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = setUpZoneBasedOnPodId(podId);
-fillZoneWithTestMobileEntities(50, zone);
+const engine = Matter.Engine.create();
+fillZoneWithTestMobileEntities(50, zone, engine);
 const subscriber = publisher.duplicate();
 
 (async () => {
