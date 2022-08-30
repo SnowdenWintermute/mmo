@@ -1,10 +1,10 @@
-import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
+import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
 import { EntitiesByZoneId } from "../../Zone/types/EntityCollections";
 import Zone from "../../Zone/Zone";
 import determineZoneDepartingTo from "../entity-zone-transfers/determineZoneDepartingTo";
 
 export default function determineZoneDepartures(
-  currEntity: MobileEntity,
+  currEntity: BehavioralEntity,
   zone: Zone,
   departingEntitiesByDestinationZoneId: EntitiesByZoneId
 ) {

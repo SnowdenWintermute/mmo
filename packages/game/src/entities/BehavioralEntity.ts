@@ -1,21 +1,21 @@
+import Zone from "@permadeath/zone-node/dist/Zone/Zone";
 import Matter from "matter-js";
 import { Entity } from "..";
-import { Point } from "../base/Point";
-import Action from "../action-creators/Action";
-import Behavior from "../behaviors/Behavior";
+import { Action } from "../base/Action";
+import BTSelector from "../behavior-trees/BTSelector";
 
 export default class BehavioralEntity extends Entity {
   constructor(
     id: string,
     name: string,
     body: Matter.Body,
-    behaviorIds: number[],
+    constructBehaviorTree: (zone: Zone) => BTSelector,
+    updateBehavior: (zone: Zone) => void,
     accelerationInducement?: number | null,
     hp?: { max: number; current: number }
   ) {
-    super(id, name, body, hp);
-    this.behaviorIds = behaviorIds;
-    this.actionsCurrentlyExecuting = [];
+    super(id, name, body, constructBehaviorTree, updateBehavior);
+    this.hp = hp || null;
     this.accelerationInducement = accelerationInducement || null;
     this.destination = null;
   }

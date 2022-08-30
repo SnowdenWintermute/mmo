@@ -10,7 +10,7 @@ import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
 import setUpZoneBasedOnPodId from "./Zone/setUpZoneBasedOnPodId";
 import handleZoneSpecificMessages from "./subscription-handlers/handleZoneSpecificMessages/handleZoneSpecificMessages";
-import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
+// import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
 
 let gameLoopInterval: NodeJS.Timer;
 let broadcastInterval: NodeJS.Timer;
@@ -31,9 +31,9 @@ const subscriber = publisher.duplicate();
 
 (async () => {
   await subscriber.connect();
-  subscriber.subscribe(`zone-${zone.id}-proxied-client-requests`, (message: string) =>
-    handleProxiedClientRequests(message, zone)
-  );
+  // subscriber.subscribe(`zone-${zone.id}-proxied-client-requests`, (message: string) =>
+  //   // handleProxiedClientRequests(message, zone)
+  // );
   subscriber.subscribe(`zone-${zone.id}`, (message: string) => handleZoneSpecificMessages(message, zone));
   await publisher.connect();
   broadcastInterval = setInterval(() => {

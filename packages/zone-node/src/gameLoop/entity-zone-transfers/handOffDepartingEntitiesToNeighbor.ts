@@ -16,6 +16,6 @@ export default function handOffDepartingEntitiesToNeighbor(
     const currEntity = departingEntities[zoneId][entityId];
     // @todo: send write request to db about this entity's location
     publisher.publish(`zone-${zoneId}`, JSON.stringify(new Message(MessageTypes.ENTITY_HANDOFF, currEntity)));
-    delete zone.entities.mobile[entityId];
+    delete zone.entities.agents[entityId];
   }
 }

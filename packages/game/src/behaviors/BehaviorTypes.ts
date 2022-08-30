@@ -1,4 +1,0 @@
-export enum BehaviorTypes {
-  "CHOOSES_RANDOM_DESTINATIONS" = 0,
-  "STARTS_MOVING_TOWARD_DESTINATION" = 1,
-}

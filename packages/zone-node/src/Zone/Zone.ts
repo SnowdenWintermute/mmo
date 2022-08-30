@@ -2,7 +2,6 @@ import { Point } from "@permadeath/game/dist/base/Point.js";
 import { Entity } from "@permadeath/game/dist/entities/Entity.js";
 import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
 import { Rectangle } from "@permadeath/game/dist/base/Rectangles";
-import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
 import { EntitiesByZoneId } from "./types/EntityCollections";
 import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
@@ -19,7 +18,7 @@ export default class Zone {
   status: ZoneStatus;
   territory: Rectangle;
   entities: {
-    arriving: MobileEntity[];
+    arriving: BehavioralEntity[];
     static: { [id: string]: Entity };
     agents: { [id: string]: BehavioralEntity };
     unappliedEdgeUpdate: EntitiesByZoneId;
@@ -28,7 +27,7 @@ export default class Zone {
   players: Object;
   neighboringZonesByDirection: {
     [key in CardinalOrdinalDirection]?: {
-      [id: string]: { territory: Rectangle; entites?: { [id: string]: MobileEntity } };
+      [id: string]: { territory: Rectangle; entites?: { [id: string]: BehavioralEntity } };
     };
   };
   externalAreaOfInterest: Rectangle;

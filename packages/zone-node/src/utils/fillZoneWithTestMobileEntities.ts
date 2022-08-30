@@ -13,6 +13,6 @@ export default function fillZoneWithTestMobileEntities(numberOfEntities: number,
     const zoneMiddle = new Point((origin.x + bottomRightCorner.x) / 2, (origin.y + bottomRightCorner.y) / 2);
     const body: Matter.Body = Matter.Bodies.circle(zoneMiddle.x, zoneMiddle.y, 4);
     Matter.Composite.add(engine.world, body);
-    zone.entities.agents[id] = new DestinationSeeker(id, id, body, 1, { max: 10, current: 10 });
+    zone.entities.agents[id] = new DestinationSeeker(id, id, body, null, 1, { max: 10, current: 10 });
   }
 }

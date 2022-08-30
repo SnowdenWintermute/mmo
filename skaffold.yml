@@ -30,36 +30,39 @@ build:
       docker:
         dockerfile: dockerfiles/proxy-node.dev.Dockerfile
       sync:
-        infer:
-          - "**/*.ts"
-          - "**/*.json"
+        auto: false
+        # infer:
+        # - "**/*.ts"
+        # - "**/*.json"
     - image: snowd3n/permadeath-zone-node
       context: .
       docker:
         dockerfile: dockerfiles/zone-node.dev.Dockerfile
       sync:
         auto: false
-        infer:
-          - "**/*.ts"
-          - "**/*.json"
+        # infer:
+        #   - "**/*.ts"
+        #   - "**/*.json"
     - image: snowd3n/permadeath-zone-manager
       context: .
       docker:
         dockerfile: dockerfiles/zone-manager.dev.Dockerfile
       sync:
-        infer:
-          - "**/*.ts"
-          - "**/*.json"
+        auto: false
+        # infer:
+        # - "**/*.ts"
+        # - "**/*.json"
     - image: snowd3n/permadeath-player-client
       context: .
       docker:
         dockerfile: dockerfiles/player-client.dev.Dockerfile
       sync:
-        infer:
-          - "**/*.ts"
-          - "**/*.tsx"
-          - "**/*.json"
-          - "**/*.css"
+        auto: false
+        # infer:
+        #   - "**/*.ts"
+        #   - "**/*.tsx"
+        #   - "**/*.json"
+        #   - "**/*.css"
     # - image: snowd3n/permadeath-database-node
     #   context: .
     #   docker:

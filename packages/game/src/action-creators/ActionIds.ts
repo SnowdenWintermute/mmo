@@ -1,4 +1,0 @@
-export enum ActionIds {
-  "CHOOSE_RANDOM_DESTINATION" = 0,
-  "ACCELERATE_SELF_TOWARD_DESTINATION" = 1,
-}
