@@ -1,5 +1,6 @@
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
 import { RedisClientType } from "@redis/client";
+import Matter from "matter-js";
 import { EntitiesByZoneId } from "../Zone/types/EntityCollections";
 import Zone from "../Zone/Zone";
 import addArrivingEntitiesToZone from "./entity-zone-transfers/addArrivingEntitiesToZone";
@@ -10,14 +11,14 @@ import moveEntity from "./process-entity-updates/moveEntity";
 import publishEdgeEntitiesForNeigborZones from "./process-entity-updates/publishEdgeEntitiesForNeigborZones";
 const cloneDeep = require("lodash.clonedeep");
 
-export default (zone: Zone, publisher: RedisClientType, tickRate: number) => {
+export default (zone: Zone, engine: Matter.Engine, publisher: RedisClientType, tickRate: number) => {
   return setInterval(() => {
     const departingEntitiesByDestinationZoneId: EntitiesByZoneId = {};
     const entitiesOfInterestToNeighbors: EntitiesByZoneId = {};
     // const actionQueue: EntityAction[] = []
 
-    for (const entityId in zone.entities.mobile) {
-      const currEntity = zone.entities.mobile[entityId];
+    for (const entityId in zone.entities.agents) {
+      const currEntity = zone.entities.agents[entityId];
       moveEntity(currEntity);
       // processEntityBehaviors
       //  queueEntityMovements
@@ -37,5 +38,6 @@ export default (zone: Zone, publisher: RedisClientType, tickRate: number) => {
     }
     addArrivingEntitiesToZone(zone);
     zone.entities.edge = cloneDeep(zone.entities.unappliedEdgeUpdate);
+    Matter.Engine.update(engine, tickRate);
   }, tickRate);
 };

@@ -1,21 +1,25 @@
-import Action from "../actions/Action";
-import { EntityZoneBoolean } from "../../base/EntityZoneBoolean";
+import { EntityZoneBoolean } from "../base/EntityZoneBoolean";
 
 export default class Behavior {
   typeId: number;
   prerequisites: EntityZoneBoolean[];
   cue: EntityZoneBoolean[];
-  actionIds: number[];
-  constructor(typeId: number, prerequisites: EntityZoneBoolean[], cue: EntityZoneBoolean[], actionIds: number[]) {
+  actionCreatorIds: number[];
+  constructor(
+    typeId: number,
+    prerequisites: EntityZoneBoolean[],
+    cue: EntityZoneBoolean[],
+    actionCreatorIds: number[]
+  ) {
     this.typeId = typeId;
     this.prerequisites = prerequisites;
     this.cue = cue;
-    this.actionIds = actionIds;
+    this.actionCreatorIds = actionCreatorIds;
   }
 }
 
 // behaviors determine what actions an entity will add to the queue each tick
-//  priority - entity will exhibit all valid behaviors starting with the lowest priority
+//  priority - entity will exhibit all valid behaviors starting with the lowest priority (first in array)
 //  prerequisites - behavior will not be considered valid if prereqs aren't met (try next prioritized behavior)
 //  cues - a specific prerequisite which determines if an entity wants to do the behaviour's associated action
 //  actions

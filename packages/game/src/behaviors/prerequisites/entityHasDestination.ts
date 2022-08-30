@@ -1,6 +1,7 @@
 import Zone from "@permadeath/zone-node/dist/Zone/Zone";
-import BehavioralEntity from "../../BehavioralEntity";
+import { Point } from "../..";
+import BehavioralEntity from "../../entities/BehavioralEntity";
 
 export default function entityHasDestination(entity: BehavioralEntity, zone: Zone): boolean {
-  return entity.destination !== null && entity.destination !== undefined;
+  return typeof entity.destination === Point;
 }

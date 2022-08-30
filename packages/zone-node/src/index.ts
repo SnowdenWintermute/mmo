@@ -39,7 +39,7 @@ const subscriber = publisher.duplicate();
   broadcastInterval = setInterval(() => {
     publisher.publish("zone-updates", JSON.stringify(zone));
   }, zoneToProxyBroadcastRate);
-  gameLoopInterval = createGameLoopInterval(zone, publisher, tickRate);
+  gameLoopInterval = createGameLoopInterval(zone, engine, publisher, tickRate);
 })();
 
 server.listen(port, () => console.log(process.env.MY_POD_NAME + " listening on " + port));

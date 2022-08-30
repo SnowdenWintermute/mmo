@@ -38,6 +38,7 @@ build:
       docker:
         dockerfile: dockerfiles/zone-node.dev.Dockerfile
       sync:
+        auto: false
         infer:
           - "**/*.ts"
           - "**/*.json"
