@@ -1,8 +1,8 @@
 import { Entity } from "@permadeath/game/dist/entities/Entity";
 import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
-import { EntitiesByZoneId } from "../../Zone/types/EntityCollections";
+import { EntitiesByZoneId } from "@permadeath/game/dist/Zone/types/EntityCollections";
 import { DetailedRectangle } from "@permadeath/game/dist/base/Rectangles";
-import Zone from "../../Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 import entityIsOnZoneEdge from "./entityIsOnZoneEdge";
 import { Point } from "@permadeath/game/dist/base/Point";
 import { playerMaxViewDistance } from "@permadeath/game";

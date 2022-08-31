@@ -1,0 +1,2 @@
+1. Receive credentials from clients
+2. Assign a token to client and realm node

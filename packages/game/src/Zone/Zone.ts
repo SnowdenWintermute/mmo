@@ -1,10 +1,10 @@
-import { Point } from "@permadeath/game/dist/base/Point.js";
-import { Entity } from "@permadeath/game/dist/entities/Entity.js";
-import { playerMaxViewDistance } from "@permadeath/game/dist/consts";
-import { Rectangle } from "@permadeath/game/dist/base/Rectangles";
-import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
+import { Point } from "../base/Point";
+import { Entity } from "../entities/Entity";
+import { playerMaxViewDistance } from "../consts";
+import { Rectangle } from "../base/Rectangles";
+import { CardinalOrdinalDirection } from "../enums/CardinalOrdinalDirection";
 import { EntitiesByZoneId } from "./types/EntityCollections";
-import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
+import BehavioralEntity from "../entities/BehavioralEntity";
 export enum ZoneStatus {
   UNASSIGNED, // has no assigned territory
   NOMINAL, // operating within min/max cpu limits

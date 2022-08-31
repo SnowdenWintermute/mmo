@@ -1,5 +1,5 @@
 import Message from "@permadeath/messages/dist/Message";
-import Zone from "../../Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 
 export default function handleZoneSpecificNeighborTerritoryListMessage(parsedMessage: Message, zone: Zone) {
   for (const direction in parsedMessage.data) {

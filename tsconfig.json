@@ -1,0 +1,15 @@
+{
+  "references": [
+    { "path": "./packages/database-node" },
+    { "path": "./packages/game" },
+    { "path": "./packages/messages" },
+    { "path": "./packages/player-client" },
+    { "path": "./packages/proxy-node" },
+    { "path": "./packages/utils" },
+    { "path": "./packages/zone-manager" },
+    { "path": "./packages/zone-node" }
+  ],
+  "files": [],
+  "include": [],
+  "exclude": ["**/node_modules"]
+}

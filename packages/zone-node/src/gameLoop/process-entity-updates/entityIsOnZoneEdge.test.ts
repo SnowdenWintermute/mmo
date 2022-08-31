@@ -1,5 +1,5 @@
 import entityIsOnZoneEdge from "./entityIsOnZoneEdge";
-import Zone from "../../Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 import { Point } from "@permadeath/game";
 import Matter from "matter-js";
 import DestinationSeeker from "@permadeath/game/dist/entities/test-entities/DestinationSeeker";

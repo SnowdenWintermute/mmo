@@ -1,4 +1,4 @@
-import Zone from "@permadeath/zone-node/src/Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 import { Body, Vector } from "matter-js";
 import BehavioralEntity from "../entities/BehavioralEntity";
 

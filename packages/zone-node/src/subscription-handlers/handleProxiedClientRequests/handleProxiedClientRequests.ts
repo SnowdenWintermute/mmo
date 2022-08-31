@@ -1,4 +1,4 @@
-// import Zone from "../../Zone/Zone";
+// import Zone from "@permadeath/game/dist/Zone/Zone";
 // import createMobileEntityAtLocation from "../../entity-creation/createMobileEntityAtLocation";
 
 // export default function handleProxiedClientRequests(message: string, zone: Zone) {

@@ -1,5 +1,5 @@
-import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
-import { Entity } from "@permadeath/game/dist/entities/Entity";
+import BehavioralEntity from "../../entities/BehavioralEntity";
+import { Entity } from "../../entities/Entity";
 
 export type EntitiesById = { [id: string]: BehavioralEntity | Entity };
 

@@ -1,6 +1,6 @@
 import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
 import { DetailedRectangle } from "@permadeath/game/dist/base/Rectangles";
-import Zone from "../../Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
 
 export default function determineZoneDepartingTo(entity: BehavioralEntity, zone: Zone) {

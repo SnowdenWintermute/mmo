@@ -3,7 +3,7 @@ import { Point } from "@permadeath/game/dist/base/Point";
 import { DetailedRectangle } from "@permadeath/game/dist/base/Rectangles";
 import { Entity } from "@permadeath/game/dist/entities/Entity";
 import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
-import Zone from "../../Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 
 export default function entityIsOnZoneEdge(entity: BehavioralEntity | Entity, zone: Zone) {
   const { origin, width, height } = zone.territory;

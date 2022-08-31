@@ -1,4 +1,4 @@
-import Zone from "../Zone";
+import Zone from "@permadeath/game/dist/Zone";
 import { Point } from "@permadeath/game/dist/base/Point.js";
 import { worldHeight, worldWidth } from "@permadeath/game/dist/consts";
 

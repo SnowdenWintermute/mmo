@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true
   }
   // "references": [
-  //   { "path": "../zone-manager" },
+  //   { "path": "@permadeath/game/dist/Zone-manager" },
   //   { "path": "../game" },
   //   { "path": "../messages" },
   //   { "path": "../utils" }

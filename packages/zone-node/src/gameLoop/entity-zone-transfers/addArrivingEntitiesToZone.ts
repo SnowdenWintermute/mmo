@@ -1,4 +1,4 @@
-import Zone from "../../Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 
 export default function addArrivingEntitiesToZone(zone: Zone) {
   zone.entities.arriving.forEach((entity) => {

@@ -1,6 +1,6 @@
 import { Point } from "@permadeath/game/dist/base/Point";
 import DestinationSeeker from "@permadeath/game/dist/entities/test-entities/DestinationSeeker";
-import Zone from "../Zone/Zone";
+import Zone from "@permadeath/game/dist/Zone/Zone";
 import Matter, { Engine } from "matter-js";
 const { v1: uuidv1 } = require("uuid");
 

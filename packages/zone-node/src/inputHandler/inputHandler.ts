@@ -1,4 +1,4 @@
-// import { receivingQueue } from "../zone/zone";
+// import { receivingQueue } from "@permadeath/game/dist/Zone/zone";
 
 // const inputHandler = (socket: any) => {
 //   console.log("Client connected ", socket);
