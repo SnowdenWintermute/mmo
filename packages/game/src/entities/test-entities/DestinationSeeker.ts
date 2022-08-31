@@ -1,4 +1,4 @@
-import Zone from "@permadeath/zone-node/dist/Zone/Zone";
+import Zone from "../Zone/Zone";
 import { Action } from "../../base/Action";
 import { Point } from "../../base/Point";
 import BTInverter from "../../behavior-trees/BTInverter";

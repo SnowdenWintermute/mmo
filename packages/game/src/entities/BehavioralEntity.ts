@@ -1,4 +1,4 @@
-import Zone from "@permadeath/zone-node/dist/Zone/Zone";
+import Zone from "../Zone/Zone";
 import Matter from "matter-js";
 import { Entity } from "..";
 import { Action } from "../base/Action";

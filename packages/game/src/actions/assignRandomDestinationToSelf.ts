@@ -1,4 +1,4 @@
-import Zone from "@permadeath/zone-node/dist/Zone/Zone";
+import Zone from "../Zone/Zone";
 import BehavioralEntity from "../entities/BehavioralEntity";
 import { randomInt } from "@permadeath/utils/dist";
 import { worldHeight, worldWidth } from "../consts";
