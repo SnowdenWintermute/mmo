@@ -1,5 +1,5 @@
 import { Point } from "../base/Point";
-import { Entity } from "../entities/Entity";
+import Entity from "../entities/Entity";
 import { playerMaxViewDistance } from "../consts";
 import { Rectangle } from "../base/Rectangles";
 import { CardinalOrdinalDirection } from "../enums/CardinalOrdinalDirection";

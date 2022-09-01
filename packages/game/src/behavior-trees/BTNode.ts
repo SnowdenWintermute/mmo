@@ -1,9 +1,7 @@
 export default abstract class BTNode {
-  nodeState: BTNodeState;
-  evaluate: () => BTNodeState;
-  constructor(nodeState: BTNodeState, evaluate: () => BTNodeState) {
-    this.nodeState = nodeState;
-    this.evaluate = evaluate;
+  nodeState: BTNodeState = this.evaluate();
+  evaluate(...args: any[]) {
+    return this.nodeState;
   }
 }
 

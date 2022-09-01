@@ -1,4 +1,4 @@
-import { Entity } from "@permadeath/game/dist/entities/Entity";
+import Entity from "@permadeath/game/dist/entities/Entity";
 import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
 import { EntitiesByZoneId } from "@permadeath/game/dist/Zone/types/EntityCollections";
 import { DetailedRectangle } from "@permadeath/game/dist/base/Rectangles";

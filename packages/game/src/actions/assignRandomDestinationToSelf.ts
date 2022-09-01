@@ -1,6 +1,6 @@
 import Zone from "../Zone/Zone";
 import BehavioralEntity from "../entities/BehavioralEntity";
-import { randomInt } from "@permadeath/utils/dist";
+import { randomInt } from "@permadeath/utils/dist/index";
 import { worldHeight, worldWidth } from "../consts";
 import { Point } from "../base/Point";
 

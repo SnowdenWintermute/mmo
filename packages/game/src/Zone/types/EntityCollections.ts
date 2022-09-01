@@ -1,5 +1,5 @@
 import BehavioralEntity from "../../entities/BehavioralEntity";
-import { Entity } from "../../entities/Entity";
+import Entity from "../../entities/Entity";
 
 export type EntitiesById = { [id: string]: BehavioralEntity | Entity };
 

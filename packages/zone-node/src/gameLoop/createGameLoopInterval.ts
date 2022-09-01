@@ -18,6 +18,7 @@ export default (zone: Zone, engine: Matter.Engine, publisher: RedisClientType, t
 
     for (const entityId in zone.entities.agents) {
       const currEntity = zone.entities.agents[entityId];
+      // console.log(currEntity);
       currEntity.updateBehavior(zone);
       determineZoneDepartures(currEntity, zone, departingEntitiesByDestinationZoneId);
       determineEntitiesOfInterestToNeighbors(currEntity, zone, entitiesOfInterestToNeighbors);

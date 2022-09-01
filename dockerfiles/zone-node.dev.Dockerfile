@@ -8,12 +8,13 @@ COPY packages/game ./packages/game
 WORKDIR /usr/src/app/packages/messages
 RUN yarn install
 RUN yarn run build
-WORKDIR /usr/src/app/packages/game
-RUN yarn install
-RUN yarn run build
 WORKDIR /usr/src/app/packages/utils
 RUN yarn install
 RUN yarn run build
+WORKDIR /usr/src/app/packages/game
+RUN yarn install
+RUN yarn run build
+RUN yarn run tsc --watch &
 WORKDIR /usr/src/app
 COPY packages/zone-node ./packages/zone-node
 
