@@ -1,6 +1,6 @@
 import { MessageTypes } from "./types";
 
-export default class Message {
+export class Message {
   type: keyof typeof MessageTypes;
   data: any;
   constructor(type: keyof typeof MessageTypes, data: any) {

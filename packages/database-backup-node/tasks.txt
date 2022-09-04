@@ -1,3 +1,0 @@
-1. Receive backups
-2. Check backups for integrity
-3. Write backups if they are valid and not corrupted

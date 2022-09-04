@@ -1,6 +1,4 @@
-import BehavioralEntity from "@permadeath/game/dist/entities/BehavioralEntity";
-import { EntitiesByZoneId } from "@permadeath/game/dist/Zone/types/EntityCollections";
-import Zone from "@permadeath/game/dist/Zone/Zone";
+import { BehavioralEntity, EntitiesByZoneId, Zone } from "../../../../game";
 import determineZoneDepartingTo from "../entity-zone-transfers/determineZoneDepartingTo";
 
 export default function determineZoneDepartures(

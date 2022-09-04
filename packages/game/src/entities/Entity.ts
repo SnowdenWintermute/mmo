@@ -1,5 +1,5 @@
 import Matter from "matter-js";
-export default interface Entity {
+export interface Entity {
   id: string;
   name: string;
   body: Matter.Body;

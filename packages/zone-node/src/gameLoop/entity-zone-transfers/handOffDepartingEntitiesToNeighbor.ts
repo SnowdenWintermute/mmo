@@ -1,8 +1,6 @@
-import Message from "@permadeath/messages/dist/Message";
-import { MessageTypes } from "@permadeath/messages/dist/types";
+import { Message, MessageTypes } from "../../../../messages";
+import { EntitiesByZoneId, Zone } from "../../../../game";
 import { RedisClientType } from "@redis/client";
-import { EntitiesByZoneId } from "@permadeath/game/dist/Zone/types/EntityCollections";
-import Zone from "@permadeath/game/dist/Zone/Zone";
 
 export default function handOffDepartingEntitiesToNeighbor(
   departingEntities: EntitiesByZoneId,

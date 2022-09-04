@@ -1,4 +1,4 @@
-import Zone from "../../Zone/Zone";
+import { Zone } from "../../Zone/Zone";
 import { Point } from "../../base/Point";
 import BTInverter from "../../behavior-trees/BTInverter";
 import BTSelector from "../../behavior-trees/BTSelector";
@@ -7,9 +7,9 @@ import ChooseNewRandomDestination from "../../behavior-trees/movement/ChooseNewD
 import HasDestination from "../../behavior-trees/movement/HasDestination";
 import MoveTowardDestination from "../../behavior-trees/movement/MoveTowardDestination";
 import ReachedDestination from "../../behavior-trees/movement/ReachedDestination";
-import BehavioralEntity from "../BehavioralEntity";
+import { BehavioralEntity } from "../BehavioralEntity";
 
-export default class DestinationSeeker implements BehavioralEntity {
+export class DestinationSeeker implements BehavioralEntity {
   id: string;
   name: string;
   body: Matter.Body;

@@ -1,5 +1,5 @@
-import { MessageTypes } from "@permadeath/messages/dist/types";
-import Zone from "@permadeath/game/dist/Zone/Zone";
+import { MessageTypes } from "../../../../messages";
+import { Zone } from "../../../../game";
 import handleEdgeEntityUpdateMessage from "./handleEdgeEntityUpdateMessage";
 import handleEntityHandoffMessage from "./handleEntityHandoffMessage";
 import handleZoneSpecificNeighborTerritoryListMessage from "./handleZoneSpecificNeighborTerritoryListMessage";

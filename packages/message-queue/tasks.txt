@@ -1,5 +1,0 @@
-Notes
-  - Should not be written to while it is being processed
-    a. Can have a current version that is being read/processed while a new version is being prepared/added to
-  - Can be either outgoing (processing an item sends a message) or incomming (processing does something with
-    the received message)

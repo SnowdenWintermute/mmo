@@ -1,9 +1,0 @@
-1. Monitor all nodes
-2. Restart nodes as needed
-3. Handle entire realm restart cycles
-
-Notes
-  - Should have a JSON file with the following:
-    • Unique node id eg. "CLIENT-NODE-1"
-    • IP:port eg. "192.168.0.12:3344"
-    • Means of restarting the node eg. “ftp://192.168.0.12//server//client2-node-restart.bat”

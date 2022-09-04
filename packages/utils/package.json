@@ -1,7 +1,7 @@
 {
   "name": "@permadeath/utils",
   "version": "1.0.0",
-  "main": "dist",
+  "main": "dist/index.js",
   "typings": "dist",
   "license": "MIT",
   "scripts": {

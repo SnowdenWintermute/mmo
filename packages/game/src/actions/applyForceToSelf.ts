@@ -1,6 +1,6 @@
-import Zone from "../Zone/Zone";
+import { Zone } from "../Zone/Zone";
 import { Body, Vector } from "matter-js";
-import BehavioralEntity from "../entities/BehavioralEntity";
+import { BehavioralEntity } from "../entities/BehavioralEntity";
 
 export default function applyForceToSelf(entity: BehavioralEntity, zone: Zone) {
   if (!entity.destination) return new Error("entity has no destination");

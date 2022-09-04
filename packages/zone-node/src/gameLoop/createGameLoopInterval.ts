@@ -1,9 +1,8 @@
-import { Action } from "@permadeath/game/dist/base/Action";
-import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
+import { CardinalOrdinalDirection } from "../../../game";
 import { RedisClientType } from "@redis/client";
 import Matter from "matter-js";
-import { EntitiesByZoneId } from "@permadeath/game/dist/Zone/types/EntityCollections";
-import Zone from "@permadeath/game/dist/Zone/Zone";
+import { EntitiesByZoneId } from "../../../game";
+import { Zone } from "../../../game";
 import addArrivingEntitiesToZone from "./entity-zone-transfers/addArrivingEntitiesToZone";
 import handOffDepartingEntitiesToNeighbor from "./entity-zone-transfers/handOffDepartingEntitiesToNeighbor";
 import determineEntitiesOfInterestToNeighbors from "./process-entity-updates/determineEntitiesOfInterestToNeighbors";

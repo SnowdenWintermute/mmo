@@ -12,7 +12,7 @@ export enum ZoneStatus {
   SHRINKING, // handing off entities and territory to a bordering node
   GROWING, // accepting entities and territory from a bording node
 }
-export default class Zone {
+export class Zone {
   id: number;
   ip: string;
   status: ZoneStatus;

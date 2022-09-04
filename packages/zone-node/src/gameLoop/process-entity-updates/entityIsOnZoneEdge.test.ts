@@ -1,8 +1,6 @@
+import { Point, Zone, DestinationSeeker } from "../../../../game";
 import entityIsOnZoneEdge from "./entityIsOnZoneEdge";
-import Zone from "@permadeath/game/dist/Zone/Zone";
-import { Point } from "@permadeath/game";
 import Matter from "matter-js";
-import DestinationSeeker from "@permadeath/game/dist/entities/test-entities/DestinationSeeker";
 
 test("entity is in inner territory", () => {
   const zone = new Zone(0, "192.168.1.1", new Point(0, 0), 500, 500);

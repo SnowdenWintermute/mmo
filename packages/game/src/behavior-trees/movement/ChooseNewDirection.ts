@@ -1,7 +1,7 @@
 import BTNode, { BTNodeState } from "../BTNode";
 import assignRandomDestinationToSelf from "../../actions/assignRandomDestinationToSelf";
-import BehavioralEntity from "../../entities/BehavioralEntity";
-import Zone from "../../Zone/Zone";
+import { BehavioralEntity } from "../../entities/BehavioralEntity";
+import { Zone } from "../../Zone/Zone";
 
 export default class ChooseNewRandomDestination extends BTNode {
   entity: BehavioralEntity;

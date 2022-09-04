@@ -1,7 +1,7 @@
 import applyForceToSelf from "../../actions/applyForceToSelf";
 import BTNode, { BTNodeState } from "../BTNode";
-import BehavioralEntity from "../../entities/BehavioralEntity";
-import Zone from "../../Zone/Zone";
+import { BehavioralEntity } from "../../entities/BehavioralEntity";
+import { Zone } from "../../Zone/Zone";
 
 export default class MoveTowardDestination extends BTNode {
   entity: BehavioralEntity;

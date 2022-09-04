@@ -1,4 +1,4 @@
-import BehavioralEntity from "../../entities/BehavioralEntity";
+import { BehavioralEntity } from "../../entities/BehavioralEntity";
 import BTNode, { BTNodeState } from "../BTNode";
 
 export default class ReachedDestination extends BTNode {

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    // "composite": true,
+    "composite": true,
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -11,11 +11,5 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-    // "references": [
-    //   { "path": "../game" },
-    //   { "path": "@permadeath/game/dist/Zone-node" },
-    //   { "path": "@permadeath/game/dist/Zone-manager" },
-    //   { "path": "../utils" }
-    // ]
   }
 }

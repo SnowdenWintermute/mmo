@@ -1,6 +1,4 @@
-import Zone from "@permadeath/game/dist/Zone/Zone";
-import { Point } from "@permadeath/game/dist/base/Point.js";
-import { worldHeight, worldWidth } from "@permadeath/game/dist/consts";
+import { Zone, Point, worldHeight, worldWidth } from "../../../game";
 
 const podIp = process.env.MY_POD_IP;
 

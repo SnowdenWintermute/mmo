@@ -5,10 +5,10 @@ const server = require("http").createServer(app);
 const keys = require("./keys");
 const redis = require("redis");
 const Matter = require("matter-js");
-import { tickRate, zoneToProxyBroadcastRate } from "@permadeath/game/dist/consts";
+import { tickRate, zoneToProxyBroadcastRate } from "../../game";
 import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
-import setUpZoneBasedOnPodId from "./Zone/setUpZoneBasedOnPodId";
+import setUpZoneBasedOnPodId from "./utils/setUpZoneBasedOnPodId";
 import handleZoneSpecificMessages from "./subscription-handlers/handleZoneSpecificMessages/handleZoneSpecificMessages";
 // import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
 
