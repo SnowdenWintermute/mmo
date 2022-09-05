@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@permadeath/utils": "*",
+    "behaviortree": "^2.1.0",
     "matter-js": "^0.18.0"
   }
 }

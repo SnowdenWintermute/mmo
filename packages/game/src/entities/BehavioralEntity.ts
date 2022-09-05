@@ -1,12 +1,26 @@
-import { Zone } from "../Zone/Zone";
-import BTSelector from "../behavior-trees/BTSelector";
-import { BTNodeState } from "../behavior-trees/BTNode";
 import { Entity } from "./Entity";
 import { Point } from "../base/Point";
+import { BehaviorTypes } from "../behavior-trees/BehaviorTypes";
 
-export interface BehavioralEntity extends Entity {
+export class BehavioralEntity extends Entity {
+  behaviorType: BehaviorTypes;
   destination?: Point | null;
   accelerationInducement?: number | null;
-  constructBehaviorTree: (zone: Zone) => BTSelector;
-  updateBehavior: (zone: Zone) => void;
+  constructor(
+    id: string,
+    name: string,
+    body: Matter.Body,
+    behaviorType: BehaviorTypes,
+    destination?: Point,
+    accelerationInducement?: number,
+    hp?: {
+      max: number;
+      current: number;
+    }
+  ) {
+    super(id, name, body, hp || null);
+    this.behaviorType = behaviorType;
+    this.destination = destination || null;
+    this.accelerationInducement = accelerationInducement || null;
+  }
 }

@@ -1,2 +1,0 @@
-1. Create packets from data
-2. Unpack packets into game-useable data

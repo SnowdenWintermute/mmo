@@ -1,7 +1,3 @@
-const port = process.env.PORT;
-const express = require("express");
-const app = express();
-const server = require("http").createServer(app);
 const keys = require("./keys");
 const redis = require("redis");
 const Matter = require("matter-js");
@@ -10,7 +6,9 @@ import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
 import setUpZoneBasedOnPodId from "./utils/setUpZoneBasedOnPodId";
 import handleZoneSpecificMessages from "./subscription-handlers/handleZoneSpecificMessages/handleZoneSpecificMessages";
+import { packEntities } from "../../messages";
 // import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
+const clonedeep = require("lodash.clonedeep");
 
 let gameLoopInterval: NodeJS.Timer;
 let broadcastInterval: NodeJS.Timer;
@@ -26,7 +24,11 @@ const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = setUpZoneBasedOnPodId(podId);
 const engine = Matter.Engine.create();
-fillZoneWithTestMobileEntities(50, zone, engine);
+engine.gravity.y = 0;
+engine.gravity.x = 0;
+engine.gravityScale = 0;
+
+fillZoneWithTestMobileEntities(2, zone, engine);
 const subscriber = publisher.duplicate();
 
 (async () => {
@@ -37,9 +39,13 @@ const subscriber = publisher.duplicate();
   subscriber.subscribe(`zone-${zone.id}`, (message: string) => handleZoneSpecificMessages(message, zone));
   await publisher.connect();
   broadcastInterval = setInterval(() => {
-    publisher.publish("zone-updates", JSON.stringify(zone));
+    const zoneToSend = clonedeep(zone);
+    zoneToSend.entities.agents = packEntities(zone.entities.agents);
+    for (const zoneId in zoneToSend.entities.edge)
+      zoneToSend.entities.edge[zoneId] = packEntities(zone.entities.edge[zoneId]);
+    zoneToSend.entities.unappliedEdgeUpdate = {};
+    zoneToSend.entities.arriving = [];
+    publisher.publish("zone-updates", JSON.stringify(zoneToSend));
   }, zoneToProxyBroadcastRate);
   gameLoopInterval = createGameLoopInterval(zone, engine, publisher, tickRate);
 })();
-
-server.listen(port, () => console.log(process.env.MY_POD_NAME + " listening on " + port));

@@ -1,7 +1,7 @@
 {
   "name": "@permadeath/messages",
   "version": "1.0.0",
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "typings": "dist",
   "license": "MIT",
   "scripts": {
@@ -9,6 +9,9 @@
     "watch": "tsc --watch",
     "preserve": "npm run build",
     "serve": "concurrently \"tsc --watch\""
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
     "concurrently": "^6.2.2",

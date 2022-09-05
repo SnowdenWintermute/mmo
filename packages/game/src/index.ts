@@ -5,7 +5,6 @@ export { OrdinalDirection } from "./enums/OrdinalDirection";
 export { CardinalOrdinalDirection } from "./enums/CardinalOrdinalDirection";
 export { Entity } from "./entities/Entity";
 export { BehavioralEntity } from "./entities/BehavioralEntity";
-export { DestinationSeeker } from "./entities/test-entities/DestinationSeeker";
 export {
   tickRate,
   zoneToProxyBroadcastRate,
@@ -20,3 +19,5 @@ export { Action } from "./base/Action";
 export { EntityZoneBoolean } from "./base/EntityZoneBoolean";
 export { Point } from "./base/Point";
 export { Rectangle, DetailedRectangle } from "./base/Rectangles";
+export { createDestinationSeekerBT } from "./behavior-trees/DestinationSeeker";
+export { BehaviorTypes } from "./behavior-trees/BehaviorTypes";

@@ -1,10 +1,10 @@
 import { Point } from "../base/Point";
-import Entity from "../entities/Entity";
+import { Entity } from "../entities/Entity";
 import { playerMaxViewDistance } from "../consts";
 import { Rectangle } from "../base/Rectangles";
 import { CardinalOrdinalDirection } from "../enums/CardinalOrdinalDirection";
 import { EntitiesByZoneId } from "./types/EntityCollections";
-import BehavioralEntity from "../entities/BehavioralEntity";
+import { BehavioralEntity } from "../entities/BehavioralEntity";
 export enum ZoneStatus {
   UNASSIGNED, // has no assigned territory
   NOMINAL, // operating within min/max cpu limits
@@ -27,7 +27,7 @@ export class Zone {
   players: Object;
   neighboringZonesByDirection: {
     [key in CardinalOrdinalDirection]?: {
-      [id: string]: { territory: Rectangle; entites?: { [id: string]: BehavioralEntity } };
+      [id: string]: { territory: Rectangle; entities?: { [id: string]: BehavioralEntity } };
     };
   };
   externalAreaOfInterest: Rectangle;

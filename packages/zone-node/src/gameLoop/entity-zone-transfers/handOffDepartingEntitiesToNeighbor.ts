@@ -1,4 +1,4 @@
-import { Message, MessageTypes } from "../../../../messages";
+import { Message, MessageTypes, packEntity } from "../../../../messages";
 import { EntitiesByZoneId, Zone } from "../../../../game";
 import { RedisClientType } from "@redis/client";
 
@@ -13,7 +13,8 @@ export default function handOffDepartingEntitiesToNeighbor(
   for (entityId in departingEntities[zoneId]) {
     const currEntity = departingEntities[zoneId][entityId];
     // @todo: send write request to db about this entity's location
-    publisher.publish(`zone-${zoneId}`, JSON.stringify(new Message(MessageTypes.ENTITY_HANDOFF, currEntity)));
+    const packedEntity = packEntity(currEntity);
+    publisher.publish(`zone-${zoneId}`, JSON.stringify(new Message(MessageTypes.ENTITY_HANDOFF, packedEntity)));
     delete zone.entities.agents[entityId];
   }
 }

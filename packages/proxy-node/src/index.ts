@@ -6,11 +6,9 @@ const ws = require("ws");
 const wss = new ws.Server({ server });
 const keys = require("./keys");
 import { WebSocket } from "ws";
-import Zone from "@permadeath/zone-node/dist/Zone/Zone";
-import { proxyToClientBroadcastRate } from "@permadeath/game/dist/consts";
+import { proxyToClientBroadcastRate, Zone } from "../../game";
 
 const zones: { [key: string]: Zone } = {};
-const broadcastRate = 500;
 let broadcastInterval: NodeJS.Timer;
 
 const redis = require("redis");

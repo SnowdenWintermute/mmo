@@ -21,7 +21,7 @@ spec:
             backend:
               service:
                 # UPDATE SERVICE FIELDS
-                name: player-client-cluster-ip
+                name: dev-client-cluster-ip
                 port:
                   number: 3000
           - path: /api/?(.*)

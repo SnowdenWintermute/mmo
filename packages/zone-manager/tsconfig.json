@@ -10,7 +10,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-    // "composite": true
-  }
-  // "references": [{ "path": "../game" }, { "path": "@permadeath/game/dist/Zone-node" }, { "path": "../messages" }, { "path": "../utils" }]
+  },
+  "references": [{ "path": "../game" }, { "path": "../messages" }, { "path": "../utils" }]
 }

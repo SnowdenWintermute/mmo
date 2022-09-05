@@ -1,8 +1,12 @@
-import { CardinalOrdinalDirection } from "../../../game";
+import {
+  EntitiesByZoneId,
+  Zone,
+  CardinalOrdinalDirection,
+  createDestinationSeekerBT,
+  BehavioralEntity,
+} from "../../../game";
 import { RedisClientType } from "@redis/client";
 import Matter from "matter-js";
-import { EntitiesByZoneId } from "../../../game";
-import { Zone } from "../../../game";
 import addArrivingEntitiesToZone from "./entity-zone-transfers/addArrivingEntitiesToZone";
 import handOffDepartingEntitiesToNeighbor from "./entity-zone-transfers/handOffDepartingEntitiesToNeighbor";
 import determineEntitiesOfInterestToNeighbors from "./process-entity-updates/determineEntitiesOfInterestToNeighbors";
@@ -11,14 +15,16 @@ import publishEdgeEntitiesForNeigborZones from "./process-entity-updates/publish
 const cloneDeep = require("lodash.clonedeep");
 
 export default (zone: Zone, engine: Matter.Engine, publisher: RedisClientType, tickRate: number) => {
+  const blackboard = { entity: zone.entities.agents[0], zone };
+  const destinationSeekerBT = createDestinationSeekerBT(blackboard);
   return setInterval(() => {
     const departingEntitiesByDestinationZoneId: EntitiesByZoneId = {};
     const entitiesOfInterestToNeighbors: EntitiesByZoneId = {};
-
     for (const entityId in zone.entities.agents) {
       const currEntity = zone.entities.agents[entityId];
-      // console.log(currEntity);
-      currEntity.updateBehavior(zone);
+      blackboard.entity = currEntity;
+      destinationSeekerBT.step();
+      // console.log(currEntity.id.slice(2)[0], currEntity.body.position.x, currEntity.body.position.y);
       determineZoneDepartures(currEntity, zone, departingEntitiesByDestinationZoneId);
       determineEntitiesOfInterestToNeighbors(currEntity, zone, entitiesOfInterestToNeighbors);
     }
