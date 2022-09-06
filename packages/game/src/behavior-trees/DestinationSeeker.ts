@@ -3,7 +3,7 @@ import moveSelfTowardDestination from "../actions/moveSelfTowardDestination";
 import { BehavioralEntity } from "../entities/BehavioralEntity";
 import { Zone } from "../Zone/Zone";
 
-const { BehaviorTree, Selector, Task, SUCCESS, FAILURE, RUNNING } = require("behaviortree");
+const { BehaviorTree, Selector, Sequence, Task, SUCCESS, FAILURE, RUNNING } = require("behaviortree");
 
 type Blackboard = { entity: BehavioralEntity; zone: Zone };
 
@@ -27,7 +27,10 @@ const moveTowardDestination = new Task({
     const tolerance = 5;
     if (!destination) return FAILURE;
     const entityReachedDestination =
-      Math.abs(position.x - destination.x) <= tolerance && Math.abs(position.y - destination.y) <= tolerance;
+      position.x <= destination.x + tolerance &&
+      position.x >= destination.x - tolerance &&
+      position.y <= destination.y + tolerance &&
+      position.y >= destination.y - tolerance;
     if (entityReachedDestination) {
       entity.destination = null;
       return SUCCESS;
@@ -36,7 +39,7 @@ const moveTowardDestination = new Task({
   },
 });
 
-const rootNode = new Selector({
+const rootNode = new Sequence({
   nodes: [selectNewDestination, moveTowardDestination],
 });
 

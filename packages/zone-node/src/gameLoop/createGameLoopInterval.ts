@@ -33,10 +33,10 @@ export default (zone: Zone, engine: Matter.Engine, publisher: RedisClientType, t
     for (direction in zone.neighboringZonesByDirection) {
       for (const zoneId in zone.neighboringZonesByDirection[direction]) {
         publishEdgeEntitiesForNeigborZones(entitiesOfInterestToNeighbors, zoneId, zone, publisher);
-        handOffDepartingEntitiesToNeighbor(departingEntitiesByDestinationZoneId, zoneId, zone, publisher);
+        handOffDepartingEntitiesToNeighbor(departingEntitiesByDestinationZoneId, zoneId, zone, engine, publisher);
       }
     }
-    addArrivingEntitiesToZone(zone);
+    addArrivingEntitiesToZone(zone, engine);
     zone.entities.edge = cloneDeep(zone.entities.unappliedEdgeUpdate);
     Matter.Engine.update(engine, tickRate);
   }, tickRate);

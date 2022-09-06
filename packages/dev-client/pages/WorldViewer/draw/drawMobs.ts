@@ -13,23 +13,16 @@ export default function drawMobs(ctx: CanvasRenderingContext2D, zone: Zone) {
     const { x, y } = zone.entities.agents[entityId].body.position;
     const { circleRadius } = zone.entities.agents[entityId].body;
     ctx.beginPath();
-    ctx.arc(x, y, circleRadius || 1, 0, 2 * Math.PI);
+    ctx.arc(x, y, circleRadius || 8, 0, 2 * Math.PI);
     ctx.fill();
   }
   for (const zoneFromId in zone.entities.edge) {
     for (const entityId in zone.entities.edge[zoneFromId]) {
-      console.log(zone.entities.edge[zoneFromId][entityId]);
-      if (zone.entities.edge[zoneFromId][entityId]?.body?.position) {
-        const { x, y } = zone.entities.edge[zoneFromId][entityId].body.position;
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, 2 * Math.PI);
-        ctx.stroke();
-      } else {
-        ctx.strokeStyle = "red";
-        ctx.beginPath();
-        ctx.arc(25, 25, 10, 0, 2 * Math.PI);
-        ctx.stroke();
-      }
+      const { x, y } = zone.entities.edge[zoneFromId][entityId].body.position;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.stroke();
     }
   }
 }

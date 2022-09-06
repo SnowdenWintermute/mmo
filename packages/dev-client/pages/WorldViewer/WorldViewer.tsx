@@ -26,6 +26,8 @@ const WorldViewer = () => {
       Object.keys(newZoneData).forEach((key) => {
         const zoneId: keyof typeof zones.current = key;
         newZoneData[key].entities.agents = unpackEntities(newZoneData[key].entities.agents);
+        for (const zoneId in newZoneData[key].entities.edge)
+          newZoneData[key].entities.edge[zoneId] = unpackEntities(newZoneData[key].entities.edge[zoneId]);
         zones.current[zoneId] = newZoneData[key];
         console.log(zones.current);
       });

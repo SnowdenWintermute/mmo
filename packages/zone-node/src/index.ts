@@ -28,7 +28,7 @@ engine.gravity.y = 0;
 engine.gravity.x = 0;
 engine.gravityScale = 0;
 
-fillZoneWithTestMobileEntities(2, zone, engine);
+fillZoneWithTestMobileEntities(5, zone, engine);
 const subscriber = publisher.duplicate();
 
 (async () => {
