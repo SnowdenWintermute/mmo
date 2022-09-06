@@ -1,5 +1,5 @@
-import { Message, MessageTypes, packEntity } from "../../../../messages";
-import { EntitiesByZoneId, Zone } from "../../../../game";
+import { Message, MessageTypes, packEntity } from "../../../messages";
+import { EntitiesByZoneId, Zone } from "../../../game";
 import { RedisClientType } from "@redis/client";
 import Matter from "matter-js";
 

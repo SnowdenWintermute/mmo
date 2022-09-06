@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Display from "./Display";
+import Display from "../../components/Display";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { Zone } from "../../../game";
 import { unpackEntities } from "../../../messages";
@@ -26,10 +26,10 @@ const WorldViewer = () => {
       Object.keys(newZoneData).forEach((key) => {
         const zoneId: keyof typeof zones.current = key;
         newZoneData[key].entities.agents = unpackEntities(newZoneData[key].entities.agents);
+        // console.log(newZoneData[key].entities.agents);
         for (const zoneId in newZoneData[key].entities.edge)
           newZoneData[key].entities.edge[zoneId] = unpackEntities(newZoneData[key].entities.edge[zoneId]);
         zones.current[zoneId] = newZoneData[key];
-        console.log(zones.current);
       });
     }
   }, [lastMessage]);

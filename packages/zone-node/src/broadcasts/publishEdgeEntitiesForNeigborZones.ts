@@ -1,5 +1,5 @@
-import { Message, MessageTypes, packEntities } from "../../../../messages";
-import { EntitiesByZoneId, Zone } from "../../../../game";
+import { Message, MessageTypes, packEntities } from "../../../messages";
+import { EntitiesByZoneId, Zone } from "../../../game";
 import { RedisClientType } from "@redis/client";
 
 export default function publishEdgeEntitiesForNeigborZones(

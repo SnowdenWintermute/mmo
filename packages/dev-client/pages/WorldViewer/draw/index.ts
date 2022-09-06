@@ -1,4 +1,5 @@
 import { Zone } from "../../../../game";
+import drawEdgeMobs from "./drawEdgeMobs";
 import drawExternalAreaOfInterest from "./drawExternalAreaOfInterest";
 import drawMobs from "./drawMobs";
 import drawTerritory from "./drawTerritory";
@@ -11,6 +12,7 @@ export function createNextFrameDrawFunction(zones: { [key: string]: Zone }) {
       drawTerritory(ctx, zone);
       drawExternalAreaOfInterest(ctx, zone);
       drawMobs(ctx, zone);
+      drawEdgeMobs(ctx, zone);
       ctx.font = "12px serif";
       ctx.fillText(zone.id.toString(), zone.territory.origin.x + 10, zone.territory.origin.y + 20);
     }

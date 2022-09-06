@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import Canvas from "../../components/Canvas/Canvas";
-import { createNextFrameDrawFunction } from "./draw";
-import { Zone } from "../../../game";
+import Canvas from "./Canvas/Canvas";
+import { createNextFrameDrawFunction } from "../pages/WorldViewer/draw";
+import { Zone } from "../../game";
 
 interface Props {
   zones: { [key: string]: Zone };
