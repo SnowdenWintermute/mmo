@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": true,
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -10,5 +11,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "references": [{ "path": "../utils" }]
 }

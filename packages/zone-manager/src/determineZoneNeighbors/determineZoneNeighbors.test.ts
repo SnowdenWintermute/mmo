@@ -1,6 +1,5 @@
 import determineZoneNeighbors from "./determineZoneNeighbors";
-import Zone from "@permadeath/zone-node/dist/Zone/Zone";
-import { Point } from "@permadeath/game/dist/base/Point";
+import { Point, Zone } from "../../../game";
 
 test("8 surrounding zones bordering 1 and each other", () => {
   const zones = {

@@ -1,15 +1,13 @@
-const port = process.env.PORT;
-const express = require("express");
-const app = express();
-const server = require("http").createServer(app);
 const keys = require("./keys");
 const redis = require("redis");
-import { tickRate, zoneToProxyBroadcastRate } from "@permadeath/game/dist/consts";
+import { tickRate, zoneToProxyBroadcastRate } from "../../game";
 import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
-import setUpZoneBasedOnPodId from "./Zone/setUpZoneBasedOnPodId";
+import setUpZoneBasedOnPodId from "./utils/setUpZoneBasedOnPodId";
 import handleZoneSpecificMessages from "./subscription-handlers/handleZoneSpecificMessages/handleZoneSpecificMessages";
-import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
+import createMatterEngine from "./utils/createMatterEngine";
+import broadcastZoneUpdate from "./broadcasts/broadcastZoneUpdate";
+// import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
 
 let gameLoopInterval: NodeJS.Timer;
 let broadcastInterval: NodeJS.Timer;
@@ -21,23 +19,21 @@ const publisher = redis.createClient({
 
 if (!process.env.MY_POD_NAME || !process.env.MY_POD_IP)
   throw new Error("environment variables for pod id and ip address not found");
+
 const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = setUpZoneBasedOnPodId(podId);
-fillZoneWithTestMobileEntities(50, zone);
+const engine = createMatterEngine();
+fillZoneWithTestMobileEntities(2, zone, engine);
 const subscriber = publisher.duplicate();
 
 (async () => {
   await subscriber.connect();
-  subscriber.subscribe(`zone-${zone.id}-proxied-client-requests`, (message: string) =>
-    handleProxiedClientRequests(message, zone)
-  );
+  // subscriber.subscribe(`zone-${zone.id}-proxied-client-requests`, (message: string) =>
+  //   // handleProxiedClientRequests(message, zone)
+  // );
   subscriber.subscribe(`zone-${zone.id}`, (message: string) => handleZoneSpecificMessages(message, zone));
   await publisher.connect();
-  broadcastInterval = setInterval(() => {
-    publisher.publish("zone-updates", JSON.stringify(zone));
-  }, zoneToProxyBroadcastRate);
-  gameLoopInterval = createGameLoopInterval(zone, publisher, tickRate);
+  broadcastInterval = setInterval(() => broadcastZoneUpdate(zone, publisher), zoneToProxyBroadcastRate);
+  gameLoopInterval = createGameLoopInterval(zone, engine, publisher, tickRate);
 })();
-
-server.listen(port, () => console.log(process.env.MY_POD_NAME + " listening on " + port));

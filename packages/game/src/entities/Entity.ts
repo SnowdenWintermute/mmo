@@ -1,18 +1,24 @@
-import { Point } from "../base/Point";
+import Matter from "matter-js";
 export class Entity {
   id: string;
   name: string;
-  pos: Point;
-  mass?: number;
+  body: Matter.Body;
   hp?: {
     max: number;
     current: number;
-  };
-  constructor(id: string, name: string, pos: Point, hp?: { max: number; current: number }, mass?: number) {
+  } | null;
+  constructor(
+    id: string,
+    name: string,
+    body: Matter.Body,
+    hp: {
+      max: number;
+      current: number;
+    } | null
+  ) {
     this.id = id;
     this.name = name;
-    this.pos = pos;
-    this.hp = hp;
-    this.mass = mass;
+    this.body = body;
+    this.hp = hp || null;
   }
 }

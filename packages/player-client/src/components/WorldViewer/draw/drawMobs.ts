@@ -17,7 +17,7 @@ export default function drawMobs(ctx: CanvasRenderingContext2D, zone: Zone) {
   // }
   for (const zoneFromId in zone.entities.edge) {
     for (const entityId in zone.entities.edge[zoneFromId]) {
-      const { x, y } = zone.entities.edge[zoneFromId][entityId].pos;
+      const { x, y } = zone.entities.edge[zoneFromId][entityId].body.position;
       ctx.beginPath();
       ctx.arc(x, y, 5, 0, 2 * Math.PI);
       ctx.stroke();

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-client-cluster-ip
+spec:
+  type: ClusterIP
+  selector:
+    component: dev-client
+  ports:
+    - port: 3000
+      targetPort: 3000

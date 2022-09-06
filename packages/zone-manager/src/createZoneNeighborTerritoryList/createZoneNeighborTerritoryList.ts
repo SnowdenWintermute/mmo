@@ -1,7 +1,5 @@
-import Zone from "@permadeath/zone-node/dist/Zone/Zone";
+import { Zone, CardinalOrdinalDirection, Rectangle } from "../../../game";
 import { ZoneNeighborList } from "../determineZoneNeighbors/determineZoneNeighbors";
-import { CardinalOrdinalDirection } from "@permadeath/game/dist/enums/CardinalOrdinalDirection";
-import { Rectangle } from "@permadeath/game/dist/base/Rectangles";
 
 export interface ZoneNeigborTerritoryList {
   [id: string]: {

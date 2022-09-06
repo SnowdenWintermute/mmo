@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: dev-client
+  template:
+    metadata:
+      labels:
+        component: dev-client
+    spec:
+      containers:
+        - name: dev-client
+          image: snowd3n/permadeath-dev-client
+          ports:
+            - containerPort: 3000

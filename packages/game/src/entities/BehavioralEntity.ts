@@ -1,20 +1,30 @@
-import { Entity } from "..";
+import { Entity } from "./Entity";
 import { Point } from "../base/Point";
-import Action from "./actions/Action";
-import Behavior from "./behaviors/Behavior";
+import { BehaviorTypes } from "../behavior-trees/BehaviorTypes";
 
-export default class BehavioralEntity extends Entity {
+export class BehavioralEntity extends Entity {
+  behaviorType: BehaviorTypes;
+  currentAction: string | null;
+  destination?: Point | null;
+  accelerationInducement?: number | null;
   constructor(
     id: string,
     name: string,
-    pos: Point,
-    behaviors: Behavior[],
-    actionsCurrentlyExecuting: Action[],
-    hp?: { max: number; current: number },
-    mass?: number
+    body: Matter.Body,
+    behaviorType: BehaviorTypes,
+    currentAction?: string,
+    destination?: Point,
+    accelerationInducement?: number,
+    hp?: {
+      max: number;
+      current: number;
+    }
   ) {
-    super(id, name, pos, hp, mass);
-    this.behaviors = behaviors;
-    this.actionsCurrentlyExecuting = [];
+    super(id, name, body, hp || null);
+    this.behaviorType = behaviorType;
+    this.currentAction = currentAction || null;
+    this.destination = destination || null;
+    this.accelerationInducement = accelerationInducement || null;
+    this.currentAction = currentAction || null;
   }
 }

@@ -1,24 +1,26 @@
-import { Point } from "@permadeath/game/dist/base/Point";
-import { MobileEntity } from "@permadeath/game/dist/entities/MobileEntity";
-import { randomInt } from "@permadeath/utils/dist";
-import { worldHeight, worldWidth } from "@permadeath/game/dist/consts";
-import Zone from "../Zone/Zone";
-import { MovementTypes } from "@permadeath/game/dist/entities/movements/MovementTypes";
+import { Point, BehavioralEntity, Zone, BehaviorTypes } from "../../../game";
+import Matter, { Engine } from "matter-js";
 const { v1: uuidv1 } = require("uuid");
 
-export default function fillZoneWithTestMobileEntities(numberOfEntities: number, zone: Zone) {
+export default function fillZoneWithTestMobileEntities(numberOfEntities: number, zone: Zone, engine: Engine) {
   const { territory } = zone;
   const { origin } = territory;
   const bottomRightCorner = new Point(origin.x + territory.width, origin.y + territory.height);
   for (let i = numberOfEntities; i > 0; i--) {
     const id = uuidv1();
-    zone.entities.mobile[id] = new MobileEntity(
+    const zoneMiddle = new Point((origin.x + bottomRightCorner.x) / 2, (origin.y + bottomRightCorner.y) / 2);
+    const body: Matter.Body = Matter.Bodies.circle(zoneMiddle.x, zoneMiddle.y, 50);
+    body.frictionAir = 1;
+    Matter.Composite.add(engine.world, body);
+    zone.entities.agents[id] = new BehavioralEntity(
       id,
       id,
-      new Point((origin.x + bottomRightCorner.x) / 2, (origin.y + bottomRightCorner.y) / 2),
-      randomInt(1, 2),
-      MovementTypes.MoveTowardDestinationAndAssignNewIfReached,
-      new Point(randomInt(0, worldWidth), randomInt(0, worldHeight))
+      body,
+      BehaviorTypes.MOVES_TOWARD_RANDOM_DESTINATIONS,
+      undefined,
+      undefined,
+      1,
+      { max: 10, current: 10 }
     );
   }
 }

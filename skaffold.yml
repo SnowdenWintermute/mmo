@@ -10,8 +10,8 @@ deploy:
       # - ./k8s/zone-node-headless-service.yml
       - ./k8s/proxy-node-deployment.yml
       - ./k8s/proxy-node-cluster-ip.yml
-      - ./k8s/player-client-deployment.yml
-      - ./k8s/player-client-cluster-ip.yml
+      - ./k8s/dev-client-deployment.yml
+      - ./k8s/dev-client-cluster-ip.yml
       # - ./k8s/zone-node-hpa.yml
       - ./k8s/redis-deployment.yml
       - ./k8s/redis-cluster-ip.yml
@@ -49,10 +49,10 @@ build:
         infer:
           - "**/*.ts"
           - "**/*.json"
-    - image: snowd3n/permadeath-player-client
+    - image: snowd3n/permadeath-dev-client
       context: .
       docker:
-        dockerfile: dockerfiles/player-client.dev.Dockerfile
+        dockerfile: dockerfiles/dev-client.dev.Dockerfile
       sync:
         infer:
           - "**/*.ts"
