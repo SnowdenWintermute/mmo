@@ -5,7 +5,7 @@ const server = require("http").createServer(app);
 const ws = require("ws");
 const wss = new ws.Server({ server });
 const keys = require("./keys");
-import { Message, MessageTypes, packMessage, unpackZone } from "../../messages";
+import { Message, MessageTypes, packMessage, unpackMessage, unpackZone } from "../../messages";
 import { WebSocket } from "ws";
 import { proxyToClientBroadcastRate, Zone } from "../../game";
 
@@ -22,7 +22,7 @@ const subscriber = redis.createClient({
 (async () => {
   await subscriber.connect();
   await subscriber.subscribe("zone-updates", (message: string) => {
-    const updatedZone = JSON.parse(message);
+    const updatedZone = unpackMessage(message);
     zones[updatedZone.id] = updatedZone;
   });
 })();

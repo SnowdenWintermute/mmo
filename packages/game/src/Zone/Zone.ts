@@ -14,6 +14,7 @@ export enum ZoneStatus {
 }
 export class Zone {
   id: number;
+  timeOfLastUpdate: number;
   ip: string;
   status: ZoneStatus;
   territory: Rectangle;
@@ -23,6 +24,8 @@ export class Zone {
     agents: { [id: string]: BehavioralEntity };
     unappliedEdgeUpdate: EntitiesByZoneId;
     edge: EntitiesByZoneId;
+    departing: EntitiesByZoneId;
+    ofInterestToNeighbors: EntitiesByZoneId;
   };
   players: Object;
   neighboringZonesByDirection: {
@@ -33,6 +36,7 @@ export class Zone {
   externalAreaOfInterest: Rectangle;
   constructor(id: number, ip: string, origin: Point, width: number, height: number) {
     this.id = id;
+    this.timeOfLastUpdate = Date.now();
     this.ip = ip;
     this.status = ZoneStatus.UNASSIGNED;
     this.territory = new Rectangle(origin, width, height);
@@ -47,6 +51,8 @@ export class Zone {
       agents: {},
       unappliedEdgeUpdate: {},
       edge: {},
+      departing: {},
+      ofInterestToNeighbors: {},
     };
     this.players = {};
     this.neighboringZonesByDirection = {};

@@ -2,16 +2,12 @@ import { Message, MessageTypes, packEntities, packMessage } from "../../../messa
 import { EntitiesByZoneId, Zone } from "../../../game";
 import { RedisClientType } from "@redis/client";
 
-export default function publishEdgeEntitiesForNeigborZones(
-  entitiesOfInterest: EntitiesByZoneId,
-  zoneId: string,
-  zone: Zone,
-  publisher: RedisClientType
-) {
+export default function publishEdgeEntitiesForNeigborZones(zoneId: string, zone: Zone, publisher: RedisClientType) {
+  const { ofInterestToNeighbors } = zone.entities;
   let data = {};
-  if (entitiesOfInterest[zoneId]) data = entitiesOfInterest[zoneId];
-  const packedMessage = JSON.stringify(
-    new Message(MessageTypes.EDGE_ENTITY_UPDATE, { zoneFromId: zone.id, entities: packEntities(data) })
+  if (ofInterestToNeighbors[zoneId]) data = ofInterestToNeighbors[zoneId];
+  const packedMessage = packMessage(
+    new Message(MessageTypes.EDGE_ENTITY_UPDATE, { zoneFromId: zone.id, entities: data })
   );
   publisher.publish(`zone-${zoneId}`, packedMessage);
 }

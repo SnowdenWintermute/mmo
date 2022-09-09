@@ -4,20 +4,20 @@ import { RedisClientType } from "@redis/client";
 import Matter from "matter-js";
 
 export default function handOffDepartingEntitiesToNeighbor(
-  departingEntities: EntitiesByZoneId,
   zoneId: string,
   zone: Zone,
   engine: Matter.Engine,
   publisher: RedisClientType
 ) {
-  if (!departingEntities[zoneId]) return;
+  const { departing } = zone.entities;
+  if (!departing[zoneId]) return;
   let entityId: string;
-  for (entityId in departingEntities[zoneId]) {
-    const currEntity = departingEntities[zoneId][entityId];
+  for (entityId in departing[zoneId]) {
+    const currEntity = departing[zoneId][entityId];
     // @todo: send write request to db about this entity's location
-    const packedMessage = JSON.stringify(new Message(MessageTypes.ENTITY_HANDOFF, packEntity(currEntity)));
-    publisher.publish(`zone-${zoneId}`, packedMessage);
+    const packedMessage = packMessage(new Message(MessageTypes.ENTITY_HANDOFF, currEntity));
     Matter.Composite.remove(engine.world, currEntity.body);
+    publisher.publish(`zone-${zoneId}`, packedMessage);
     delete zone.entities.agents[entityId];
   }
 }

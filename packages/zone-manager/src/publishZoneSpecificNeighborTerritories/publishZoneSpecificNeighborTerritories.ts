@@ -10,6 +10,6 @@ export default function publishZoneSpecificNeighborIps(
     const channel = `zone-${zoneId}`;
     const territoryListForZone = zoneNeigborTerritoryList[zoneId];
     const message = new Message(MessageTypes.ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST, territoryListForZone);
-    publisher.publish(channel, JSON.stringify(message));
+    publisher.publish(channel, packMessage(message));
   }
 }

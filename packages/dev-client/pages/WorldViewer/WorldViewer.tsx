@@ -23,8 +23,17 @@ const WorldViewer = () => {
   useEffect(() => {
     if (lastMessage !== null) {
       const newZoneData: { [key: string]: Zone } = unpackMessage(lastMessage.data).data;
+      console.log(newZoneData);
       const unpackedZones: { [key: string]: Zone } = {};
       for (const zoneId in newZoneData) unpackedZones[zoneId] = unpackZone(newZoneData[zoneId]);
+      //       for(const zoneId in unpackedZones){
+      //         let key: keyof Zone
+      //         if(!zones.current[zoneId]) zones.current[zoneId] = unpackedZones[zoneId]
+      //         else
+      //         for(key in unpackedZones[zoneId]){
+      // //
+      //         }
+      //       }
       zones.current = unpackedZones;
     }
   }, [lastMessage]);

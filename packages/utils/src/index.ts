@@ -11,6 +11,15 @@ export const between = (x: number, min: number, max: number) => {
   return x >= min && x <= max;
 };
 
+import Matter from "matter-js";
+export const setBodyPropertiesFromAnother = (a: Matter.Body, b: Matter.Body) => {
+  Matter.Body.setPosition(a, { x: b.position.x, y: b.position.y });
+  Matter.Body.setInertia(a, b.inertia);
+  Matter.Body.setVelocity(a, b.velocity);
+  Matter.Body.setAngle(a, b.angle);
+  Matter.Body.setAngularVelocity(a, b.angularVelocity);
+};
+
 // export const createRandomArrayMobileEntitiesInArea = (
 //   numberOfEntities: number,
 //   area: { topLeft: Point; botRight: Point }

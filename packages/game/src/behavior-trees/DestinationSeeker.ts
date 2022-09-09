@@ -38,7 +38,7 @@ const moveTowardDestination = new Task({
       return SUCCESS;
     } else {
       entity.currentAction = "moving";
-      moveSelfTowardDestination(entity);
+      moveSelfTowardDestination(entity, blackboard.zone.timeOfLastUpdate);
       return RUNNING;
     }
   },

@@ -5,7 +5,7 @@ import handleEntityHandoffMessage from "./handleEntityHandoffMessage";
 import handleZoneSpecificNeighborTerritoryListMessage from "./handleZoneSpecificNeighborTerritoryListMessage";
 
 export default function handleZoneSpecificMessages(message: string, zone: Zone) {
-  const parsedMessage = JSON.parse(message);
+  const parsedMessage = unpackMessage(message);
   const { type } = parsedMessage;
   if (type === MessageTypes.ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST)
     return handleZoneSpecificNeighborTerritoryListMessage(parsedMessage, zone);

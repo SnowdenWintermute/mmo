@@ -17,7 +17,7 @@ const publisher: RedisClientType = redis.createClient({
   const subscriber = publisher.duplicate();
   await subscriber.connect();
   await subscriber.subscribe("zone-updates", (message: string) => {
-    const updatedZone = JSON.parse(message);
+    const updatedZone = unpackMessage(message);
     zones[updatedZone.id] = unpackZone(updatedZone);
   });
   await publisher.connect();

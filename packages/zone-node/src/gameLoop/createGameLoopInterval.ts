@@ -19,32 +19,21 @@ import predictEdgeEntityBehaviors from "./entity-behavior-execution/predictEdgeE
 export default (zone: Zone, engine: Matter.Engine, publisher: RedisClientType, tickRate: number) => {
   const blackboard = { entity: zone.entities.agents[0], zone };
   const destinationSeekerBT = createDestinationSeekerBT(blackboard);
-  let departingEntitiesByDestinationZoneId: EntitiesByZoneId = {};
-  let entitiesOfInterestToNeighbors: EntitiesByZoneId = {};
   return setInterval(() => {
+    zone.entities.departing = {};
+    zone.entities.ofInterestToNeighbors = {};
     applyEdgeEntitiesUpdate(zone, engine);
+    addArrivingEntitiesToZone(zone, engine);
     // predictEdgeEntityBehaviors(destinationSeekerBT, blackboard);
-    departingEntitiesByDestinationZoneId = {};
-    entitiesOfInterestToNeighbors = {};
 
-    let lastEntity: BehavioralEntity | null = null;
     for (const entityId in zone.entities.agents) {
       const currEntity = zone.entities.agents[entityId];
       executeEntityBehaviors(currEntity, destinationSeekerBT, blackboard);
-      determineZoneDepartures(currEntity, zone, departingEntitiesByDestinationZoneId);
-      determineEntitiesOfInterestToNeighbors(currEntity, zone, entitiesOfInterestToNeighbors);
-      lastEntity = currEntity;
+      determineZoneDepartures(currEntity, zone);
+      determineEntitiesOfInterestToNeighbors(currEntity, zone);
     }
 
-    let direction: keyof typeof CardinalOrdinalDirection;
-    for (direction in zone.neighboringZonesByDirection) {
-      for (const zoneId in zone.neighboringZonesByDirection[direction]) {
-        publishEdgeEntitiesForNeigborZones(entitiesOfInterestToNeighbors, zoneId, zone, publisher);
-        handOffDepartingEntitiesToNeighbor(departingEntitiesByDestinationZoneId, zoneId, zone, engine, publisher);
-      }
-    }
-
-    Matter.Engine.update(engine, tickRate);
-    addArrivingEntitiesToZone(zone, engine);
+    Matter.Engine.update(engine);
+    zone.timeOfLastUpdate = Date.now();
   }, tickRate);
 };

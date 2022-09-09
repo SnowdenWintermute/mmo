@@ -7,6 +7,7 @@ import setUpZoneBasedOnPodId from "./utils/setUpZoneBasedOnPodId";
 import handleZoneSpecificMessages from "./subscription-handlers/handleZoneSpecificMessages";
 import createMatterEngine from "./utils/createMatterEngine";
 import broadcastZoneUpdate from "./broadcasts/broadcastZoneUpdate";
+import publishUpdates from "./broadcasts/broadcastUpdates";
 // import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
 
 let gameLoopInterval: NodeJS.Timer;
@@ -24,13 +25,13 @@ const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = setUpZoneBasedOnPodId(podId);
 const engine = createMatterEngine();
-fillZoneWithTestMobileEntities(2, zone, engine);
+fillZoneWithTestMobileEntities(1, zone, engine);
 const subscriber = publisher.duplicate();
 
 (async () => {
   await subscriber.connect();
   subscriber.subscribe(`zone-${zone.id}`, (message: string) => handleZoneSpecificMessages(message, zone));
   await publisher.connect();
-  broadcastInterval = setInterval(() => broadcastZoneUpdate(zone, publisher), zoneToProxyBroadcastRate);
+  broadcastInterval = setInterval(() => publishUpdates(publisher, zone, engine), zoneToProxyBroadcastRate);
   gameLoopInterval = createGameLoopInterval(zone, engine, publisher, tickRate);
 })();
