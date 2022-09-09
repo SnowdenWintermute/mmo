@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Display from "../../components/Display";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { Zone } from "../../../game";
-import { unpackEntities } from "../../../messages";
+import { unpackEntities, unpackMessage, unpackZone } from "../../../messages";
 
 const WorldViewer = () => {
   const socketUrl = "ws://192.168.49.2/api";
@@ -22,15 +22,10 @@ const WorldViewer = () => {
 
   useEffect(() => {
     if (lastMessage !== null) {
-      const newZoneData: { [key: string]: Zone } = JSON.parse(lastMessage?.data);
-      Object.keys(newZoneData).forEach((key) => {
-        const zoneId: keyof typeof zones.current = key;
-        newZoneData[key].entities.agents = unpackEntities(newZoneData[key].entities.agents);
-        // console.log(newZoneData[key].entities.agents);
-        for (const zoneId in newZoneData[key].entities.edge)
-          newZoneData[key].entities.edge[zoneId] = unpackEntities(newZoneData[key].entities.edge[zoneId]);
-        zones.current[zoneId] = newZoneData[key];
-      });
+      const newZoneData: { [key: string]: Zone } = unpackMessage(lastMessage.data).data;
+      const unpackedZones: { [key: string]: Zone } = {};
+      for (const zoneId in newZoneData) unpackedZones[zoneId] = unpackZone(newZoneData[zoneId]);
+      zones.current = unpackedZones;
     }
   }, [lastMessage]);
 

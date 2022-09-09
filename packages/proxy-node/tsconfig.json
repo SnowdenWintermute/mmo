@@ -11,5 +11,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "references": [{ "path": "../game" }]
+  "references": [{ "path": "../game" }, { "path": "../messages" }]
 }

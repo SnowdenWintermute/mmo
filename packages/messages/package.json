@@ -11,7 +11,8 @@
     "serve": "concurrently \"tsc --watch\""
   },
   "dependencies": {
-    "lodash.clonedeep": "^4.5.0"
+    "lodash.clonedeep": "^4.5.0",
+    "replicator": "^1.0.5"
   },
   "devDependencies": {
     "concurrently": "^6.2.2",

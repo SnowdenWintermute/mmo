@@ -1,28 +1,39 @@
-import { EntitiesByZoneId, Zone, CardinalOrdinalDirection, createDestinationSeekerBT } from "../../../game";
+import {
+  EntitiesByZoneId,
+  Zone,
+  CardinalOrdinalDirection,
+  createDestinationSeekerBT,
+  BehavioralEntity,
+} from "../../../game";
 import { RedisClientType } from "@redis/client";
-import Matter from "matter-js";
+import Matter, { Collision, Vector } from "matter-js";
 import addArrivingEntitiesToZone from "./entity-zone-transfers/addArrivingEntitiesToZone";
 import handOffDepartingEntitiesToNeighbor from "../broadcasts/handOffDepartingEntitiesToNeighbor";
-import determineEntitiesOfInterestToNeighbors from "./process-entity-updates/determineEntitiesOfInterestToNeighbors";
-import determineZoneDepartures from "./process-entity-updates/determineZoneDepartures";
+import determineEntitiesOfInterestToNeighbors from "./neighbor-entity-update-creators/determineEntitiesOfInterestToNeighbors";
+import determineZoneDepartures from "./neighbor-entity-update-creators/determineZoneDepartures";
 import publishEdgeEntitiesForNeigborZones from "../broadcasts/publishEdgeEntitiesForNeigborZones";
 import applyEdgeEntitiesUpdate from "./entity-zone-transfers/applyEdgeEntitiesUpdate";
+import executeEntityBehaviors from "./entity-behavior-execution/executeEntityBehaviors";
+import predictEdgeEntityBehaviors from "./entity-behavior-execution/predictEdgeEntityBehaviors";
 
 export default (zone: Zone, engine: Matter.Engine, publisher: RedisClientType, tickRate: number) => {
   const blackboard = { entity: zone.entities.agents[0], zone };
   const destinationSeekerBT = createDestinationSeekerBT(blackboard);
+  let departingEntitiesByDestinationZoneId: EntitiesByZoneId = {};
+  let entitiesOfInterestToNeighbors: EntitiesByZoneId = {};
   return setInterval(() => {
-    addArrivingEntitiesToZone(zone, engine);
     applyEdgeEntitiesUpdate(zone, engine);
-    const departingEntitiesByDestinationZoneId: EntitiesByZoneId = {};
-    const entitiesOfInterestToNeighbors: EntitiesByZoneId = {};
+    // predictEdgeEntityBehaviors(destinationSeekerBT, blackboard);
+    departingEntitiesByDestinationZoneId = {};
+    entitiesOfInterestToNeighbors = {};
 
+    let lastEntity: BehavioralEntity | null = null;
     for (const entityId in zone.entities.agents) {
       const currEntity = zone.entities.agents[entityId];
-      blackboard.entity = currEntity;
-      destinationSeekerBT.step();
+      executeEntityBehaviors(currEntity, destinationSeekerBT, blackboard);
       determineZoneDepartures(currEntity, zone, departingEntitiesByDestinationZoneId);
       determineEntitiesOfInterestToNeighbors(currEntity, zone, entitiesOfInterestToNeighbors);
+      lastEntity = currEntity;
     }
 
     let direction: keyof typeof CardinalOrdinalDirection;
@@ -32,6 +43,8 @@ export default (zone: Zone, engine: Matter.Engine, publisher: RedisClientType, t
         handOffDepartingEntitiesToNeighbor(departingEntitiesByDestinationZoneId, zoneId, zone, engine, publisher);
       }
     }
+
     Matter.Engine.update(engine, tickRate);
+    addArrivingEntitiesToZone(zone, engine);
   }, tickRate);
 };

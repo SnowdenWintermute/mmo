@@ -11791,6 +11791,11 @@ repeat-string@^1.6.1:
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
   integrity sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==
 
+replicator@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/replicator/-/replicator-1.0.5.tgz#f1e56df7e276a62afe80c2248b8ac03896f4708f"
+  integrity sha512-saxS4y7NFkLMa92BR4bPHR41GD+f/qoDAwD2xZmN+MpDXgibkxwLO2qk7dCHYtskSkd/bWS8Jy6kC5MZUkg1tw==
+
 request-promise-core@1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/request-promise-core/-/request-promise-core-1.1.4.tgz#3eedd4223208d419867b78ce815167d10593a22f"

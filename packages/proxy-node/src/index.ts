@@ -5,6 +5,7 @@ const server = require("http").createServer(app);
 const ws = require("ws");
 const wss = new ws.Server({ server });
 const keys = require("./keys");
+import { Message, MessageTypes, packMessage, unpackZone } from "../../messages";
 import { WebSocket } from "ws";
 import { proxyToClientBroadcastRate, Zone } from "../../game";
 
@@ -29,7 +30,7 @@ const subscriber = redis.createClient({
 wss.on("connection", (socket: WebSocket) => {
   console.log("player client connected to proxy node");
   broadcastInterval = setInterval(() => {
-    socket.send(JSON.stringify(zones));
+    socket.send(packMessage(new Message(MessageTypes.ALL_ZONES_COMPLETE, zones)));
   }, proxyToClientBroadcastRate);
 });
 

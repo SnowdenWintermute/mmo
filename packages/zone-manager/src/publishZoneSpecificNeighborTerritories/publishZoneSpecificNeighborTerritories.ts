@@ -1,5 +1,5 @@
 import { RedisClientType } from "@redis/client";
-import { Message, MessageTypes } from "../../../messages";
+import { Message, MessageTypes, packMessage } from "../../../messages";
 import { ZoneNeigborTerritoryList } from "../createZoneNeighborTerritoryList/createZoneNeighborTerritoryList";
 
 export default function publishZoneSpecificNeighborIps(

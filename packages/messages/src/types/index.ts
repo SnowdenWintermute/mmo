@@ -1,15 +1,7 @@
-// exports.testText = "test shared text";
-export const UserInput = class UserInput {
-  sender: string;
-  data: string;
-  constructor(sender: string, data: string) {
-    this.sender = sender;
-    this.data = data;
-  }
-};
-
 export enum MessageTypes {
+  ALL_ZONES_COMPLETE = "ALL_ZONES_COMPLETE",
   ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST = "ZONE_SPECIFIC_NEIGHBOR_TERRITORY_LIST",
   ENTITY_HANDOFF = "ENTITY_HANDOFF",
   EDGE_ENTITY_UPDATE = "EDGE_ENTITY_UPDATE",
+  EDGE_ENTITIES_RETURNING_TO_OWN_ZONE_CENTER = "EDGE_ENTITIES_RETURNING_TO_OWN_ZONE_CENTER",
 }

@@ -12,5 +12,6 @@ export function unpackEntity(packed: any) {
     accelerationInducement,
     hp
   );
+  unpacked.body.id = body.id;
   return unpacked;
 }

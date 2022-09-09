@@ -3,7 +3,7 @@ const keys = require("./keys");
 import { Zone } from "../../game";
 import { RedisClientType } from "@redis/client";
 import manageZones from "./manageZones/manageZones";
-import { unpackEntities } from "../../messages";
+import { unpackMessage, unpackZone } from "../../messages";
 
 const zones: { [id: string]: Zone } = {};
 let zoneManagementInterval: NodeJS.Timer;
@@ -18,8 +18,7 @@ const publisher: RedisClientType = redis.createClient({
   await subscriber.connect();
   await subscriber.subscribe("zone-updates", (message: string) => {
     const updatedZone = JSON.parse(message);
-    updatedZone.entities.agents = unpackEntities(updatedZone.entities.agents);
-    zones[updatedZone.id] = updatedZone;
+    zones[updatedZone.id] = unpackZone(updatedZone);
   });
   await publisher.connect();
   zoneManagementInterval = setInterval(() => {

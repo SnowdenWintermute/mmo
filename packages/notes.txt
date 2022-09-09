@@ -1,2 +1,7 @@
   - When writing to globally available data in a non-atomic way, access must be locked to other writers
   - Locks create a potential for deadlocks (two processes try to lock something at the same time)
+
+  - adjust current entity bodies positions instead of deleting/creating bodies
+  - decouple entity handoff messages from game loop
+  - only delete entity from edge upon recieving it as a handoff or getting a message that it returned to the 
+    interior of it's own zone

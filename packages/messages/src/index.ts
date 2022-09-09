@@ -1,6 +1,10 @@
 export { Message } from "./Message";
-export { MessageTypes, UserInput } from "./types";
+export { MessageTypes } from "./types";
 export { packEntity } from "./packet-handlers/packEntity";
 export { packEntities } from "./packet-handlers/packEntities";
 export { unpackEntity } from "./packet-handlers/unpackEntity";
 export { unpackEntities } from "./packet-handlers/unpackEntities";
+export { packZone } from "./packet-handlers/packZone";
+export { unpackZone } from "./packet-handlers/unpackZone";
+export { packMessage } from "./packet-handlers/packMessage";
+export { unpackMessage } from "./packet-handlers/unpackMessage";

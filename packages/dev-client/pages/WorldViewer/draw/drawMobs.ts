@@ -8,7 +8,7 @@ export default function drawMobs(ctx: CanvasRenderingContext2D, zone: Zone) {
   else if (zone.id === 3) ctx.fillStyle = red(1);
   for (const entityId in zone.entities.agents) {
     const currEntity = zone.entities.agents[entityId];
-    const { x, y } = currEntity.body.position;
+    const { x, y } = currEntity.body?.position;
     const { circleRadius } = currEntity.body;
     const { destination } = currEntity;
     ctx.beginPath();

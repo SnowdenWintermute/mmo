@@ -4,7 +4,7 @@ import { tickRate, zoneToProxyBroadcastRate } from "../../game";
 import createGameLoopInterval from "./gameLoop/createGameLoopInterval";
 import fillZoneWithTestMobileEntities from "./utils/fillZoneWithTestMobileEntities";
 import setUpZoneBasedOnPodId from "./utils/setUpZoneBasedOnPodId";
-import handleZoneSpecificMessages from "./subscription-handlers/handleZoneSpecificMessages/handleZoneSpecificMessages";
+import handleZoneSpecificMessages from "./subscription-handlers/handleZoneSpecificMessages";
 import createMatterEngine from "./utils/createMatterEngine";
 import broadcastZoneUpdate from "./broadcasts/broadcastZoneUpdate";
 // import handleProxiedClientRequests from "./subscription-handlers/handleProxiedClientRequests/handleProxiedClientRequests";
@@ -29,9 +29,6 @@ const subscriber = publisher.duplicate();
 
 (async () => {
   await subscriber.connect();
-  // subscriber.subscribe(`zone-${zone.id}-proxied-client-requests`, (message: string) =>
-  //   // handleProxiedClientRequests(message, zone)
-  // );
   subscriber.subscribe(`zone-${zone.id}`, (message: string) => handleZoneSpecificMessages(message, zone));
   await publisher.connect();
   broadcastInterval = setInterval(() => broadcastZoneUpdate(zone, publisher), zoneToProxyBroadcastRate);

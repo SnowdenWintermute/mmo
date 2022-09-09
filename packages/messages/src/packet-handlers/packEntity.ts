@@ -6,6 +6,7 @@ export function packEntity(entity: BehavioralEntity | Entity) {
     x: entity.body.position.x,
     y: entity.body.position.y,
     r: entity.body.circleRadius,
+    id: entity.body.id,
   };
   return packed;
 }

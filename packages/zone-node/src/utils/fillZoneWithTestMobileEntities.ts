@@ -9,8 +9,8 @@ export default function fillZoneWithTestMobileEntities(numberOfEntities: number,
   for (let i = numberOfEntities; i > 0; i--) {
     const id = uuidv1();
     const zoneMiddle = new Point((origin.x + bottomRightCorner.x) / 2, (origin.y + bottomRightCorner.y) / 2);
-    const body: Matter.Body = Matter.Bodies.circle(zoneMiddle.x, zoneMiddle.y, 50);
-    body.frictionAir = 1;
+    const body: Matter.Body = Matter.Bodies.circle(zoneMiddle.x, zoneMiddle.y, 100, { frictionAir: 1 });
+    body.id = parseInt(zone.id.toString() + body.id.toString());
     Matter.Composite.add(engine.world, body);
     zone.entities.agents[id] = new BehavioralEntity(
       id,
