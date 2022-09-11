@@ -3,7 +3,7 @@ import { Entity } from "../entities/Entity";
 import { playerMaxViewDistance } from "../consts";
 import { Rectangle } from "../base/Rectangles";
 import { CardinalOrdinalDirection } from "../enums/CardinalOrdinalDirection";
-import { EntitiesByZoneId } from "./types/EntityCollections";
+import { EntitiesById, EntitiesByZoneId } from "./types/EntityCollections";
 import { BehavioralEntity } from "../entities/BehavioralEntity";
 export enum ZoneStatus {
   UNASSIGNED, // has no assigned territory
@@ -19,13 +19,15 @@ export class Zone {
   status: ZoneStatus;
   territory: Rectangle;
   entities: {
-    arriving: BehavioralEntity[];
     static: { [id: string]: Entity };
     agents: { [id: string]: BehavioralEntity };
-    unappliedEdgeUpdate: EntitiesByZoneId;
     edge: EntitiesByZoneId;
-    departing: EntitiesByZoneId;
-    ofInterestToNeighbors: EntitiesByZoneId;
+  };
+  queues: {
+    arrivingEntities: (BehavioralEntity | Entity)[];
+    departingEntities: EntitiesByZoneId[];
+    outgoingEdgeEntityUpdates: EntitiesByZoneId[];
+    incomingEdgeEntityUpdates: { zoneFromId: number; entities: EntitiesById }[];
   };
   players: Object;
   neighboringZonesByDirection: {
@@ -46,13 +48,15 @@ export class Zone {
       height + playerMaxViewDistance * 2
     );
     this.entities = {
-      arriving: [],
       static: {},
       agents: {},
-      unappliedEdgeUpdate: {},
       edge: {},
-      departing: {},
-      ofInterestToNeighbors: {},
+    };
+    this.queues = {
+      arrivingEntities: [],
+      departingEntities: [],
+      outgoingEdgeEntityUpdates: [],
+      incomingEdgeEntityUpdates: [],
     };
     this.players = {};
     this.neighboringZonesByDirection = {};

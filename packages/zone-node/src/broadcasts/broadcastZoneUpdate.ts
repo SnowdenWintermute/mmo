@@ -5,8 +5,7 @@ import { packMessage, packZone } from "../../../messages";
 
 export default function broadcastZoneUpdate(zone: Zone, publisher: RedisClientType) {
   const zoneToSend = clonedeep(zone);
-  zoneToSend.entities.unappliedEdgeUpdate = {};
-  zoneToSend.entities.arriving = [];
+  zoneToSend.queues = null;
   const packedMessage = packMessage(packZone(zoneToSend));
   publisher.publish("zone-updates", packedMessage);
 }

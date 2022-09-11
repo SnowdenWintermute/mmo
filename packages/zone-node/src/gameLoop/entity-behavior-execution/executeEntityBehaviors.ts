@@ -8,6 +8,7 @@ export default function executeEntityBehaviors(
     zone: Zone;
   }
 ) {
+  if (!entity) return;
   blackboard.entity = entity;
   bt.step();
 }

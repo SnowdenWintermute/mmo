@@ -1,9 +1,7 @@
 // import { receivingQueue } from "@permadeath/game/dist/Zone/zone";
 
-// const inputHandler = (socket: any) => {
-//   console.log("Client connected ", socket);
+// const inputHandler = (socket: any) =>
 //   socket.on("message", (text: string) => {
-//     console.log("Message from client " + text);
 //   });
 // };
 // module.exports = inputHandler;

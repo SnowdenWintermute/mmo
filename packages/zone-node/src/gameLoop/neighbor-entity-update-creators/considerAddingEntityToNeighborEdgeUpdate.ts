@@ -1,7 +1,19 @@
-import { Point, playerMaxViewDistance, Entity, BehavioralEntity, DetailedRectangle, Zone } from "../../../../game";
+import {
+  Point,
+  playerMaxViewDistance,
+  Entity,
+  BehavioralEntity,
+  DetailedRectangle,
+  Zone,
+  EntitiesByZoneId,
+} from "../../../../game";
 import entityIsOnZoneEdge from "./entityIsOnZoneEdge";
 
-export default function determineEntitiesOfInterestToNeighbors(currEntity: BehavioralEntity | Entity, zone: Zone) {
+export default function considerAddingEntityToNeighborEdgeUpdate(
+  currEntity: BehavioralEntity | Entity,
+  zone: Zone,
+  edgeEntitiesUpdateForNeighbors: EntitiesByZoneId
+) {
   if (!entityIsOnZoneEdge(currEntity, zone)) return;
   let direction: keyof typeof zone.neighboringZonesByDirection;
   for (direction in zone.neighboringZonesByDirection) {
@@ -14,9 +26,8 @@ export default function determineEntitiesOfInterestToNeighbors(currEntity: Behav
         height + playerMaxViewDistance * 2
       );
       if (externalAreaOfInterest.containsPoint(currEntity.body.position)) {
-        if (!zone.entities.ofInterestToNeighbors.hasOwnProperty(zoneId))
-          zone.entities.ofInterestToNeighbors[zoneId] = {};
-        zone.entities.ofInterestToNeighbors[zoneId][currEntity.id] = currEntity;
+        if (!edgeEntitiesUpdateForNeighbors.hasOwnProperty(zoneId)) edgeEntitiesUpdateForNeighbors[zoneId] = {};
+        edgeEntitiesUpdateForNeighbors[zoneId][currEntity.id] = currEntity;
       }
     }
   }

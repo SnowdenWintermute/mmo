@@ -5,28 +5,26 @@ const cloneDeep = require("lodash.clonedeep");
 
 export default function applyEdgeEntitiesUpdate(zone: Zone, engine: Matter.Engine) {
   const entitiesUpdatedById: string[] = [];
-
-  for (const zoneId in zone.entities.unappliedEdgeUpdate) {
-    if (!zone.entities.edge[zoneId]) zone.entities.edge[zoneId] = {};
-    for (const entityId in zone.entities.unappliedEdgeUpdate[zoneId]) {
-      if (zone.entities.agents[entityId]) return;
-      const currUpdate = zone.entities.unappliedEdgeUpdate[zoneId][entityId];
-      entitiesUpdatedById.push(currUpdate.id);
-      if (!zone.entities.edge[zoneId][entityId]) {
-        zone.entities.edge[zoneId][entityId] = cloneDeep(currUpdate);
-        Matter.Composite.add(engine.world, zone.entities.edge[zoneId][entityId].body);
+  const numUpdates = zone.queues.incomingEdgeEntityUpdates.length;
+  for (let i = 0; i < numUpdates; i++) {
+    const update = zone.queues.incomingEdgeEntityUpdates.shift();
+    if (!update) return;
+    const { zoneFromId, entities } = update;
+    if (!zone.entities.edge[zoneFromId]) zone.entities.edge[zoneFromId] = {};
+    for (const entityId in entities) {
+      if (zone.entities.agents[entityId]) continue; // we own this entity so it wouldn't be on the edge anymore
+      const currUpdate = entities[entityId];
+      entitiesUpdatedById.push(currUpdate.id); // use this list later to remove any entity which wasn't in this update
+      if (!zone.entities.edge[zoneFromId][entityId]) {
+        zone.entities.edge[zoneFromId][entityId] = currUpdate;
+        Matter.Composite.add(engine.world, currUpdate.body);
       } else {
-        const entityToUpdate = zone.entities.edge[zoneId][entityId];
+        const entityToUpdate = zone.entities.edge[zoneFromId][entityId];
         setBodyPropertiesFromAnother(entityToUpdate.body, currUpdate.body);
-        for (const key in currUpdate) {
-          if (key !== "body") {
-            // @ts-ignore
-            entityToUpdate[key] = cloneDeep(currUpdate[key]);
-          }
-        }
+        let key: keyof typeof entityToUpdate;
+        for (key in currUpdate) if (key !== "body") entityToUpdate[key] = cloneDeep(currUpdate[key]);
       }
     }
-    zone.entities.unappliedEdgeUpdate[zoneId] = {};
   }
 
   for (const zoneId in zone.entities.edge) {
