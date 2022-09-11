@@ -16,7 +16,7 @@ export default (zone: Zone, engine: Matter.Engine, tickRate: number) => {
     const edgeEntitiesUpdateForNeighbors: EntitiesByZoneId = {};
     addArrivingEntitiesToZone(zone, engine);
     applyEdgeEntitiesUpdate(zone, engine);
-    // predictEdgeEntityBehaviors(destinationSeekerBT, blackboard);
+    predictEdgeEntityBehaviors(destinationSeekerBT, blackboard);
 
     for (const entityId in zone.entities.agents) {
       const currEntity = zone.entities.agents[entityId];

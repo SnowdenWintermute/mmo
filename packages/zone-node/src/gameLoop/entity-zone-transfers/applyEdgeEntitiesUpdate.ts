@@ -20,9 +20,12 @@ export default function applyEdgeEntitiesUpdate(zone: Zone, engine: Matter.Engin
         Matter.Composite.add(engine.world, currUpdate.body);
       } else {
         const entityToUpdate = zone.entities.edge[zoneFromId][entityId];
-        setBodyPropertiesFromAnother(entityToUpdate.body, currUpdate.body);
+        // setBodyPropertiesFromAnother(entityToUpdate.body, currUpdate.body);
         let key: keyof typeof entityToUpdate;
-        for (key in currUpdate) if (key !== "body") entityToUpdate[key] = cloneDeep(currUpdate[key]);
+        for (key in currUpdate)
+          if (key !== "body") {
+            entityToUpdate[key] = cloneDeep(currUpdate[key]);
+          }
       }
     }
   }

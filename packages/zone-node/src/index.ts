@@ -32,6 +32,6 @@ const subscriber = publisher.duplicate();
   await subscriber.connect();
   subscriber.subscribe(`zone-${zone.id}`, (message: string) => handleZoneSpecificMessages(message, zone));
   await publisher.connect();
-  gameLoopInterval = createGameLoopInterval(zone, engine, tickRate);
+  gameLoopInterval = createGameLoopInterval(zone, engine, 300);
   broadcastInterval = setInterval(() => publishUpdates(publisher, zone, engine), zoneToProxyBroadcastRate);
 })();

@@ -1,7 +1,6 @@
 import Matter from "matter-js";
 import { BehavioralEntity, EntitiesByZoneId, Zone } from "../../../../game";
-import determineZoneDepartingTo from "../entity-zone-transfers/determineZoneDepartingTo";
-const cloneDeep = require("lodash.clonedeep");
+import determineZoneDepartingTo from "./determineZoneDepartingTo";
 
 export default function handlePotentialZoneDeparture(
   currEntity: BehavioralEntity,
@@ -12,10 +11,9 @@ export default function handlePotentialZoneDeparture(
   const zoneDepartingTo = determineZoneDepartingTo(currEntity, zone);
   if (typeof zoneDepartingTo === "string") {
     if (!departingEntities[zoneDepartingTo]) departingEntities[zoneDepartingTo] = {};
-    const entityToSend = cloneDeep(currEntity);
-    departingEntities[zoneDepartingTo][currEntity.id] = entityToSend;
+    departingEntities[zoneDepartingTo][currEntity.id] = currEntity;
     Matter.Composite.remove(engine.world, currEntity.body);
+    zone.entities.edge[zoneDepartingTo][currEntity.id] = currEntity;
     delete zone.entities.agents[currEntity.id];
-    zone.entities.edge[zoneDepartingTo][entityToSend.id] = cloneDeep(currEntity);
   }
 }

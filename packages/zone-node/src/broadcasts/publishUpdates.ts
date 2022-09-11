@@ -2,6 +2,7 @@ import { RedisClientType } from "@redis/client";
 import Matter from "matter-js";
 import { CardinalOrdinalDirection, EntitiesByZoneId, Zone } from "../../../game/src";
 import broadcastZoneUpdate from "./broadcastZoneUpdate";
+import getCurrentDepartingQueue from "./getCurrentDepartingQueue";
 import handOffDepartingEntitiesToNeighbor from "./handOffDepartingEntitiesToNeighbor";
 import publishEdgeEntitiesForNeighbor from "./publishEdgeEntitiesForNeighbor";
 
@@ -9,13 +10,8 @@ export default function publishUpdates(publisher: RedisClientType, zone: Zone, e
   broadcastZoneUpdate(zone, publisher);
   // we only want the most recent update for edge entities
   const edgeEntitiesForNeighborZones = zone.queues.outgoingEdgeEntityUpdates.pop();
-  const departingEntityUpdates: EntitiesByZoneId[] = [];
-  const departingQueueLength = zone.queues.departingEntities.length;
-  for (let i = 0; i < departingQueueLength; i++) {
-    const update = zone.queues.departingEntities.pop();
-    if (update) departingEntityUpdates.push(update);
-  }
-
+  // separate the current queue from the zone in case it gets new entries while we're looping
+  const departingEntityUpdates: EntitiesByZoneId[] = getCurrentDepartingQueue(zone);
   let direction: keyof typeof CardinalOrdinalDirection;
   for (direction in zone.neighboringZonesByDirection) {
     for (const neighborZoneId in zone.neighboringZonesByDirection[direction]) {
