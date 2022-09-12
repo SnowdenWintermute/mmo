@@ -25,13 +25,13 @@ const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = setUpZoneBasedOnPodId(podId);
 const engine = createMatterEngine();
-fillZoneWithTestMobileEntities(1, zone, engine);
+podId === 0 && fillZoneWithTestMobileEntities(1, zone, engine);
 const subscriber = publisher.duplicate();
 
 (async () => {
   await subscriber.connect();
   subscriber.subscribe(`zone-${zone.id}`, (message: string) => handleZoneSpecificMessages(message, zone));
   await publisher.connect();
-  gameLoopInterval = createGameLoopInterval(zone, engine, 300);
+  gameLoopInterval = createGameLoopInterval(zone, engine, tickRate);
   broadcastInterval = setInterval(() => publishUpdates(publisher, zone, engine), zoneToProxyBroadcastRate);
 })();

@@ -23,7 +23,6 @@ const WorldViewer = () => {
   useEffect(() => {
     if (lastMessage !== null) {
       const newZoneData: { [key: string]: Zone } = unpackMessage(lastMessage.data).data;
-      console.log(newZoneData);
       const unpackedZones: { [key: string]: Zone } = {};
       for (const zoneId in newZoneData) unpackedZones[zoneId] = unpackZone(newZoneData[zoneId]);
       //       for(const zoneId in unpackedZones){

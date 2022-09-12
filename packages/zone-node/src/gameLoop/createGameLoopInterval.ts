@@ -16,7 +16,8 @@ export default (zone: Zone, engine: Matter.Engine, tickRate: number) => {
     const edgeEntitiesUpdateForNeighbors: EntitiesByZoneId = {};
     addArrivingEntitiesToZone(zone, engine);
     applyEdgeEntitiesUpdate(zone, engine);
-    predictEdgeEntityBehaviors(destinationSeekerBT, blackboard);
+    // predictEdgeEntityBehaviors(destinationSeekerBT, blackboard);
+    // Matter.Engine.update(engine);
 
     for (const entityId in zone.entities.agents) {
       const currEntity = zone.entities.agents[entityId];
@@ -28,7 +29,7 @@ export default (zone: Zone, engine: Matter.Engine, tickRate: number) => {
     // keep the queue of edge updates to no more than 2, we only ever want to keep the most recent update anyway
     if (zone.queues.outgoingEdgeEntityUpdates.length > 1) zone.queues.outgoingEdgeEntityUpdates.shift();
     zone.queues.outgoingEdgeEntityUpdates.push(cloneDeep(edgeEntitiesUpdateForNeighbors));
-    Matter.Engine.update(engine);
     zone.timeOfLastUpdate = Date.now();
+    Matter.Engine.update(engine);
   }, tickRate);
 };

@@ -1,4 +1,4 @@
-import Matter from "matter-js";
+import Matter, { Body } from "matter-js";
 import { BehavioralEntity, tickRate, Zone } from "../../../../game";
 
 export default function predictEdgeEntityBehaviors(
@@ -15,6 +15,7 @@ export default function predictEdgeEntityBehaviors(
       if (currEntity instanceof BehavioralEntity) {
         blackboard.entity = currEntity;
         bt.step();
+        Body.update(currEntity.body, Date.now() - zone.timeOfLastUpdate, 1, 1);
       }
     }
 }
