@@ -4,48 +4,36 @@ import { setBodyPropertiesFromAnother } from "../../../../utils";
 const cloneDeep = require("lodash.clonedeep");
 
 export default function applyEdgeEntitiesUpdate(zone: Zone, engine: Matter.Engine) {
-  const entitiesUpdatedById: string[] = [];
   const numUpdates = zone.queues.incomingEdgeEntityUpdates.length;
   for (let i = 0; i < numUpdates; i++) {
     const update = zone.queues.incomingEdgeEntityUpdates.shift();
     if (!update) return;
-    const { zoneFromId, entities } = update;
-    if (!zone.entities.edge[zoneFromId]) zone.entities.edge[zoneFromId] = {};
-    for (const entityId in entities) {
-      if (zone.entities.agents[entityId]) continue; // we own this entity so it wouldn't be on the edge anymore
-      const currUpdate = entities[entityId];
-      entitiesUpdatedById.push(currUpdate.id); // use this list later to remove any entity which wasn't in this update
+    const { zoneFromId } = update;
+    const updatedEntities = update.entities;
 
-      // check if this entity is already saved to an edge from a different zone,
-      // happens when entity travels between two neighbors so quickly that the update from the last neighbor is still applied
-      // leading to a duplicate ghost of this entity, instead move the entity to the new edge neigbor zone
-      for (const zoneId in zone.entities.edge)
-        for (const entityId in zone.entities.edge[zoneId])
-          if (entityId === currUpdate.id && parseInt(zoneId) !== zoneFromId) {
-            zone.entities.edge[zoneFromId][currUpdate.id] = zone.entities.edge[zoneId][currUpdate.id];
-            delete zone.entities.edge[zoneId][currUpdate.id];
-          }
-
-      if (!zone.entities.edge[zoneFromId][entityId]) {
-        zone.entities.edge[zoneFromId][entityId] = currUpdate;
-        Matter.Composite.add(engine.world, currUpdate.body);
-      } else {
-        const entityToUpdate = zone.entities.edge[zoneFromId][entityId];
-        setBodyPropertiesFromAnother(entityToUpdate.body, currUpdate.body);
-        let key: keyof typeof entityToUpdate;
-        for (key in currUpdate)
-          if (key !== "body") {
-            entityToUpdate[key] = cloneDeep(currUpdate[key]);
-          }
+    // update entities that are already being tracked
+    // remove entities that are no longer in the edge
+    for (const zoneId in zone.entities.edge) {
+      for (const entityId in zone.entities.edge[zoneId]) {
+        const currEntity = zone.entities.edge[entityId].entity;
+        const entityUpdate = updatedEntities[entityId];
+        if (entityUpdate) {
+          setBodyPropertiesFromAnother(currEntity.body, entityUpdate.body);
+          let key: keyof typeof currEntity;
+          for (key in entityUpdate) if (key !== "body") currEntity[key] = cloneDeep(entityUpdate[key]);
+          zone.entities.edge[entityId].zoneId = zoneFromId;
+          delete updatedEntities[entityId]; // delete it so we know whatever remains are newly added
+        } else {
+          // if an entity we have didn't get an update it should be removed
+          Matter.Composite.remove(engine.world, currEntity.body);
+          delete zone.entities.edge[entityId];
+        }
       }
-    }
-  }
 
-  for (const zoneId in zone.entities.edge) {
-    for (const entityId in zone.entities.edge[zoneId]) {
-      if (!entitiesUpdatedById.includes(entityId)) {
-        Matter.Composite.remove(engine.world, zone.entities.edge[zoneId][entityId].body);
-        delete zone.entities.edge[zoneId][entityId];
+      // whatever is left is a new entity and should be added to the physics engine
+      for (const entityId in updatedEntities) {
+        zone.entities.edge[entityId] = { entity: updatedEntities[entityId], zoneId: zoneFromId };
+        Matter.Composite.add(engine.world, updatedEntities[entityId].body);
       }
     }
   }

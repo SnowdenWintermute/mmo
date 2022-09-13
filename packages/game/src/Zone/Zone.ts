@@ -3,7 +3,7 @@ import { Entity } from "../entities/Entity";
 import { playerMaxViewDistance } from "../consts";
 import { Rectangle } from "../base/Rectangles";
 import { CardinalOrdinalDirection } from "../enums/CardinalOrdinalDirection";
-import { EntitiesById, EntitiesByZoneId } from "./types/EntityCollections";
+import { EntitiesById, EntitiesByZoneId, EntitiesWithZoneIds } from "./types/EntityCollections";
 import { BehavioralEntity } from "../entities/BehavioralEntity";
 export enum ZoneStatus {
   UNASSIGNED, // has no assigned territory
@@ -21,7 +21,7 @@ export class Zone {
   entities: {
     static: { [id: string]: Entity };
     agents: { [id: string]: BehavioralEntity };
-    edge: EntitiesByZoneId;
+    edge: EntitiesWithZoneIds;
   };
   queues: {
     arrivingEntities: (BehavioralEntity | Entity)[];

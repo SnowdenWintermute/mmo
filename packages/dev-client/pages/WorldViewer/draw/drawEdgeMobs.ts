@@ -1,10 +1,10 @@
-import { Zone } from "../../../../game/src";
+import { Zone } from "../../../../game";
 import { blue, green, orange, red } from "./colors";
 
 export default function drawEdgeMobs(ctx: CanvasRenderingContext2D, zone: Zone) {
   for (const zoneFromId in zone.entities.edge) {
     for (const entityId in zone.entities.edge[zoneFromId]) {
-      const currEntity = zone.entities.edge[zoneFromId][entityId];
+      const currEntity = zone.entities.edge[entityId].entity;
       const { x, y } = currEntity.body.position;
       const { circleRadius } = currEntity.body;
 

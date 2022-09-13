@@ -19,8 +19,8 @@ export default function addArrivingEntitiesToZone(zone: Zone, engine: Matter.Eng
     for (const zoneId in zone.entities.edge)
       for (const entityId in zone.entities.edge[zoneId]) {
         if (entityId === arrivingEntity.id) {
-          Matter.Composite.remove(engine.world, zone.entities.edge[zoneId][entityId].body);
-          delete zone.entities.edge[zoneId][entityId];
+          Matter.Composite.remove(engine.world, zone.entities.edge[entityId].entity.body);
+          delete zone.entities.edge[entityId];
         }
       }
 
