@@ -1,5 +1,5 @@
 export { Zone } from "./Zone/Zone";
-export { EntitiesById, EntitiesByZoneId } from "./Zone/types/EntityCollections";
+export { EntitiesById, EntitiesByZoneId, EntitiesWithZoneIds } from "./Zone/types/EntityCollections";
 export { CardinalDirection } from "./enums/CardinalDirection";
 export { OrdinalDirection } from "./enums/OrdinalDirection";
 export { CardinalOrdinalDirection } from "./enums/CardinalOrdinalDirection";

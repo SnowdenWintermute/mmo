@@ -15,12 +15,11 @@ export default function drawMobs(ctx: CanvasRenderingContext2D, zone: Zone) {
   //   ctx.arc(x, y, 3, 0, 2 * Math.PI);
   //   ctx.fill();
   // }
-  for (const zoneFromId in zone.entities.edge) {
-    for (const entityId in zone.entities.edge[zoneFromId]) {
-      const { x, y } = zone.entities.edge[zoneFromId][entityId].body.position;
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, 2 * Math.PI);
-      ctx.stroke();
-    }
+
+  for (const entityId in zone.entities.edge) {
+    const { x, y } = zone.entities.edge[entityId].body.position;
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.stroke();
   }
 }

@@ -1,16 +1,11 @@
 import { Zone } from "../../../../game";
 
-export default function drawMatterBodyList(ctx: CanvasRenderingContext2D, zone: Zone) {
+export default function drawZoneStats(ctx: CanvasRenderingContext2D, zone: Zone) {
   const bodies = [];
   const edgeBodies = [];
   for (const entityId in zone.entities.agents) bodies.push(zone.entities.agents[entityId].body.id.toString());
+  for (const entityId in zone.entities.edge) edgeBodies.push(zone.entities.edge[entityId].entity.body.id.toString());
 
-  for (const zoneId in zone.entities.edge)
-    for (const entityId in zone.entities.edge[zoneId]) {
-      edgeBodies.push(zone.entities.edge[zoneId][entityId].body.id.toString());
-    }
-
-  zone.id === 2 && console.log(edgeBodies);
   const fontSize = 18;
   const initialMarginTop = 10;
   const marginTop = 15;

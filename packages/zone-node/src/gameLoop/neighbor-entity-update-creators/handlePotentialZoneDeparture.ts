@@ -13,8 +13,7 @@ export default function handlePotentialZoneDeparture(
     if (!departingEntities[zoneDepartingTo]) departingEntities[zoneDepartingTo] = {};
     departingEntities[zoneDepartingTo][currEntity.id] = currEntity;
     Matter.Composite.remove(engine.world, currEntity.body);
-    if (!zone.entities.edge[zoneDepartingTo]) zone.entities.edge[zoneDepartingTo] = {};
-    zone.entities.edge[zoneDepartingTo][currEntity.id] = currEntity;
+    zone.entities.edge[currEntity.id] = { entity: currEntity, zoneId: parseInt(zoneDepartingTo) };
     delete zone.entities.agents[currEntity.id];
   }
 }

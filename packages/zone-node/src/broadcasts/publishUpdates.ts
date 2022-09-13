@@ -16,7 +16,8 @@ export default function publishUpdates(publisher: RedisClientType, zone: Zone, e
   for (direction in zone.neighboringZonesByDirection) {
     for (const neighborZoneId in zone.neighboringZonesByDirection[direction]) {
       handOffDepartingEntitiesToNeighbor(neighborZoneId, zone, departingEntityUpdates, engine, publisher);
-      publishEdgeEntitiesForNeighbor(neighborZoneId, zone, edgeEntitiesForNeighborZones, publisher);
+      if (edgeEntitiesForNeighborZones)
+        publishEdgeEntitiesForNeighbor(neighborZoneId, zone, edgeEntitiesForNeighborZones, publisher);
     }
   }
 }

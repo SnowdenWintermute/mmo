@@ -10,8 +10,8 @@ export default function predictEdgeEntityBehaviors(
 ) {
   const { zone } = blackboard;
   for (const zoneId in zone.entities.edge)
-    for (const entityId in zone.entities.edge[zoneId]) {
-      const currEntity = zone.entities.edge[zoneId][entityId];
+    for (const entityId in zone.entities.edge) {
+      const currEntity = zone.entities.edge[entityId].entity;
       if (currEntity instanceof BehavioralEntity) {
         blackboard.entity = currEntity;
         bt.step();
