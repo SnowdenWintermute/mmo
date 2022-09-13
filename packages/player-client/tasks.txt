@@ -1,8 +1,0 @@
-1. Draw the game state
-2. Interpolate between frames
-3. Predict movements of self
-4. Interpolate past movements of others
-5. Predict mob behavior of far-away mobs using client-side mob ai
-
-Notes
-  - Do not predict uninterruptable events like death or loot window opening

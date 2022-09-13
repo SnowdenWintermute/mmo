@@ -1,5 +1,0 @@
-ENV=CI in dockerfile
-.env FAST_REFRESH=false
-CHOKIDAR_USEPOLLING=true in package.json before react-scripts start command
-dowgrading react version - this worked
-downgrading node image / not use alpine

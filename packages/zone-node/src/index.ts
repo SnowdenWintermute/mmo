@@ -25,7 +25,7 @@ const podName = process.env.MY_POD_NAME;
 const podId = parseInt(podName.replace(/\D/g, ""));
 const zone = setUpZoneBasedOnPodId(podId);
 const engine = createMatterEngine();
-podId === 0 && fillZoneWithTestMobileEntities(1, zone, engine);
+fillZoneWithTestMobileEntities(2, zone, engine);
 const subscriber = publisher.duplicate();
 
 (async () => {
