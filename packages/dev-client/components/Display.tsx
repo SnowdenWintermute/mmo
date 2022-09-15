@@ -40,9 +40,7 @@ const Display = (props: Props) => {
         <Canvas draw={drawRef.current} frameRate={33} height={1000} width={1000} className={""} />
       </div>
     );
-  else {
-  }
-  return <p>preparing render...</p>;
+  else return <p>preparing render...</p>;
 };
 
 export default Display;

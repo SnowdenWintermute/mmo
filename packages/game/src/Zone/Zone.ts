@@ -28,6 +28,8 @@ export class Zone {
     departingEntities: EntitiesByZoneId[];
     outgoingEdgeEntityUpdates: EntitiesByZoneId[];
     incomingEdgeEntityUpdates: { zoneFromId: number; entities: EntitiesById }[];
+    outgoingGhostUpdateRequests: EntitiesByZoneId[];
+    incomingGhostUpdateRequests: { zoneFromId: number; entities: EntitiesById }[];
   };
   players: Object;
   neighboringZonesByDirection: {
@@ -57,6 +59,8 @@ export class Zone {
       departingEntities: [],
       outgoingEdgeEntityUpdates: [],
       incomingEdgeEntityUpdates: [],
+      outgoingGhostUpdateRequests: [],
+      incomingGhostUpdateRequests: [],
     };
     this.players = {};
     this.neighboringZonesByDirection = {};
